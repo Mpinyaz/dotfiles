@@ -1,4 +1,0 @@
-#!/bin/sh
-
-
-setopt autocd
