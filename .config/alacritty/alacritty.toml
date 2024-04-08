@@ -1,0 +1,33 @@
+import = [
+    "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+normal = { family = "Agave Nerd Font", style = "Regular"}
+bold = { family = "Agave Nerd Font", style = "Regular"}
+italic = { family = "Agave Nerd Font", style = "Regular"}
+size = 20.0
+builtin_box_drawing = true
+
+
+[cursor]
+style = "Beam"
+unfocused_hollow = true
+[mouse]
+hide_when_typing = true
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+
+[window]
+decorations = "Transparent"
+opacity = 0.9
+blur = true
+
+[scrolling]
+history = 5000
