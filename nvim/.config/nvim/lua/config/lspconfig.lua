@@ -13,7 +13,7 @@ local servers = {
 	clangd = {},
 	taplo = {},
 	sqlls = {},
-	sqlfluff = {},
+	-- sqlfluff = {},
 }
 
 local server_names = {}
