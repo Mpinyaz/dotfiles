@@ -1,3 +1,6 @@
+[init]
+  defaultBranch = main
+
 [user]
 	name = Mpinyaz
 	email = ebmpinyuri@gmail.com
