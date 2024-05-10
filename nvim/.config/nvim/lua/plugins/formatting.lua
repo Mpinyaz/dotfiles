@@ -1,60 +1,59 @@
 return {
-        "stevearc/conform.nvim",
-        lazy = true,
-        event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
-        keys = {
-                {
-                        "<leader>Cf",
-                        function()
-                                require("conform").format({ formatters = { "injected" } })
-                        end,
-                        mode = { "n", "v" },
-                        desc = "Format Injected Langs",
-                },
-        },
-        config = function()
-                local conform = require("conform")
+	"stevearc/conform.nvim",
+	lazy = true,
+	event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
+	keys = {
+		{
+			"<leader>Cf",
+			function()
+				require("conform").format({ formatters = { "injected" } })
+			end,
+			mode = { "n", "v" },
+			desc = "Format Injected Langs",
+		},
+	},
+	config = function()
+		local conform = require("conform")
 
-                conform.setup({
-                        formatters_by_ft = {
-                                javascript = { "prettierd", "prettier" },
-                                typescript = { "prettierd", "prettier" },
-                                javascriptreact = { "prettierd", "prettier" },
-                                typescriptreact = { "prettierd", "prettier" },
+		conform.setup({
+			formatters_by_ft = {
+				javascript = { "prettierd", "prettier" },
+				typescript = { "prettierd", "prettier" },
+				javascriptreact = { "prettierd", "prettier" },
+				typescriptreact = { "prettierd", "prettier" },
 
-                                svelte = { "prettierd" },
-                                css = { "prettierd" },
-                                html = { "prettierd" },
-                                json = { "prettierd" },
-                                yaml = { "prettierd" },
-                                markdown = { "prettierd" },
-                                graphql = { "prettierd" },
-                                lua = { "stylua" },
-                                rust = { "rustfmt" },
-                                python = { "isort", "black" },
-                                fish = { "fish_indent" },
-                                sh = { "shfmt" },
-                                toml = { "taplo" },
+				svelte = { "prettierd" },
+				css = { "prettierd" },
+				html = { "prettierd" },
+				json = { "prettierd" },
+				yaml = { "prettierd" },
+				markdown = { "prettierd" },
+				graphql = { "prettierd" },
+				lua = { "stylua" },
+				rust = { "rustfmt" },
+				python = { "isort", "black" },
+				fish = { "fish_indent" },
+				sh = { "shfmt" },
+				toml = { "taplo" },
+			},
+			format_on_save = {
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 1000,
+			},
+			formatters = {
+				injected = { options = { ignore_errors = true } },
+			},
+		})
 
-                        },
-                        format_on_save = {
-                                lsp_fallback = true,
-                                async = false,
-                                timeout_ms = 1000,
-                        },
-                        formatters = {
-                                injected = { options = { ignore_errors = true } },
-                        },
-                })
-
-                vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-                        conform.format({
-                                lsp_fallback = true,
-                                async = false,
-                                timeout_ms = 1000,
-                        })
-                end, { desc = "Format file or range (in visual mode)" })
-        end,
+		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+			conform.format({
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 1000,
+			})
+		end, { desc = "Format file or range (in visual mode)" })
+	end,
 }
 -- return {
 --         "nvimtools/none-ls.nvim",

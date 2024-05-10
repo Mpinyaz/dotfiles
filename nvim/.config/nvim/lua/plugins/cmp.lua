@@ -88,10 +88,14 @@ return {
 			{
 				"saecki/crates.nvim",
 				event = { "BufRead Cargo.toml" },
+				tag = "stable",
 				ft = { "rust", "toml" },
 				requires = { { "nvim-lua/plenary.nvim" } },
 				config = function()
-					require("crates").setup()
+					require("crates").setup({
+						autoload = true,
+						autoupdate = true,
+					})
 				end,
 			},
 			"hrsh7th/cmp-nvim-lua",
@@ -129,8 +133,8 @@ return {
 						vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
 						""
 					)
-				elseif require("copilot.suggestion").is_visible() then
-					require("copilot.suggestion").accept()
+					-- elseif require("copilot.suggestion").is_visible() then
+					-- 	require("copilot.suggestion").accept()
 				elseif require("luasnip").expandable() then
 					require("luasnip").expand()
 				elseif check_backspace() then
@@ -239,7 +243,6 @@ return {
 							dictionary = "[Dictionary]",
 							cmdline = "[Cmd]",
 							npm = "[NPM]",
-							cmdline_history = "[History]",
 							tailwindcss_colorizer_cmp = "[Tailwind]",
 						},
 					}),
@@ -251,14 +254,9 @@ return {
 						group_index = 1,
 					},
 					{
-						name = "copilot",
-						max_item_count = 20,
-						group_index = 1,
-					},
-					{
 						name = "cmdline",
 						max_item_count = 5,
-						group_index = 1,
+						group_index = 2,
 					},
 					{
 						name = "luasnip",
@@ -272,6 +270,11 @@ return {
 					{
 						name = "nvim_lua",
 						group_index = 1,
+					},
+					{
+						name = "copilot",
+						max_item_count = 20,
+						group_index = 2,
 					},
 					{
 						name = "vim-dadbod-completion",
@@ -318,20 +321,21 @@ return {
 						group_index = 2,
 					},
 					{ name = "npm", keyword_length = 2, max_item_count = 5, group_index = 2 },
+					{ name = "crates", keyword_length = 2, max_item_count = 5, group_index = 2 },
 				},
 			})
 			local presentAutopairs, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
 			if not presentAutopairs then
 				return
 			end
-			cmp.event:on(
-				"confirm_done",
-				cmp_autopairs.on_confirm_done({
-					map_char = {
-						tex = "",
-					},
-				})
-			)
+			-- cmp.event:on(
+			-- 	"confirm_done",
+			-- 	cmp_autopairs.on_confirm_done({
+			-- 		map_char = {
+			-- 			tex = "",
+			-- 		},
+			-- 	})
+			-- )
 			cmp.config.formatting = {
 				format = require("tailwindcss-colorizer-cmp").formatter,
 			}

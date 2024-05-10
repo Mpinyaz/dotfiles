@@ -51,11 +51,11 @@ local lazy_plugins = {
 			require("colorizer").setup({})
 		end,
 	},
-	{
-		"tzachar/highlight-undo.nvim",
-		event = "VeryLazy",
-		opts = {},
-	},
+	-- {
+	-- 	"tzachar/highlight-undo.nvim",
+	-- 	event = "VeryLazy",
+	-- 	opts = {},
+	-- },
 	{
 		"piersolenski/wtf.nvim",
 		dependencies = {
