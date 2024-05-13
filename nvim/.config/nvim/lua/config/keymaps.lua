@@ -39,15 +39,15 @@ keymap("n", "<C-n>", ":tabnew<new><CR>", opts)
 -- Press jk fast to enteoirce
 keymap("i", "jk", "<ESC>", opts)
 -- Spell check correct
-keymap("i", "<F2>", "<Esc>mti<C-X>s<Esc>`tla", opts)
 -- Visual --
 -- Stay in indent mode
+keymap("i", "<F2>", "<Esc>mti<C-X>s<Esc>`tla", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 --Telescope keymaps
 keymap("n", "<leader>s", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<C-S-j>", "<Esc>:m .+1<CR>", opts)
-keymap("n", "<C-S-k>", "<Esc>:m .-2<CR>", opts)
+keymap("n", "<M-k>", "<Esc>:m .-2<CR>", opts)
+keymap("n", "<M-j>", "<Esc>:m .+1<CR>", opts)
 keymap("n", "<leader>bu", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>f", "<cmd>Telescope file_browser<cr>", opts)
@@ -74,10 +74,16 @@ augroup run_file
 	autocmd BufEnter *.java let @g=":w\<CR>:vsp | terminal java %\<CR>i"
 		autocmd BufEnter *.py let @g=":w\<CR>:vsp |terminal python %\<CR>i"
 		autocmd BufEnter *.asm let @g=":w\<CR> :!nasm -f elf64 -o out.o % && ld out.o -o a.out \<CR> | :vsp |terminal ./a.out\<CR>i"
-		autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ -std=c++17 -O3 %\<CR> | :vsp |terminal ./a.out\<CR>i"
+autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ -std=c++17 -O3 %\<CR> | :vsp |terminal ./a.out\<CR>i"
 		autocmd BufEnter *.c let @g=":w\<CR> :!gcc -O3 -std=c99 -Wno-deprecated-declarations -pedantic -Wall -Wextra %\<CR> | :vsp |terminal ./a.out\<CR>i"
 		autocmd BufEnter *.go let @g=":w\<CR> :vsp | terminal go run % \<CR>i"
 		autocmd BufEnter *.js let @g=":w\<CR> :vsp | terminal node % \<CR>i"
 		autocmd BufEnter *.rs let @g=":w\<CR> :vsp | terminal cargo run  \<CR>i"
 	augroup end
 ]])
+
+-- map leader+w to save current file in normal mode
+vim.keymap.set("n", "<Leader>w", ":write<CR>", { noremap = true, silent = true })
+
+-- map leader+y to copy to system clipboard in normal and visual mode
+vim.keymap.set({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true })

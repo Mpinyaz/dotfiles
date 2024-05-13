@@ -1,3 +1,6 @@
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append("c")
+
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
 	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
@@ -241,7 +244,6 @@ return {
 							rg = "[Rg]",
 							treesitter = "[TS]",
 							dictionary = "[Dictionary]",
-							cmdline = "[Cmd]",
 							npm = "[NPM]",
 							tailwindcss_colorizer_cmp = "[Tailwind]",
 						},
@@ -252,11 +254,6 @@ return {
 						name = "nvim_lsp",
 						max_item_count = 20,
 						group_index = 1,
-					},
-					{
-						name = "cmdline",
-						max_item_count = 5,
-						group_index = 2,
 					},
 					{
 						name = "luasnip",
@@ -355,6 +352,7 @@ return {
 					{ name = "cmdline" },
 				}),
 			})
+			cmp.filetype({ "sql" }, { sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
 		end,
 	},
 }

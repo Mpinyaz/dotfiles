@@ -10,7 +10,7 @@ local servers = {
 	cssls = {},
 	tailwindcss = {},
 	rust_analyzer = require("plugins.lsp.servers.rust")(on_attach),
-	clangd = {},
+	clangd = require("plugins.lsp.servers.clangd")(on_attach),
 	taplo = {},
 	sqlls = {},
 	-- sqlfluff = {},
@@ -318,10 +318,10 @@ end
 -- border = "rounded",
 -- })
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-	border = "shadow",
-	close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
-})
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+-- 	border = "shadow",
+-- 	close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
+-- })
 
 -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 --   underline = true,

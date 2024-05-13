@@ -97,3 +97,9 @@ vim.api.nvim_create_user_command("DeleteBlankLines", function()
 	vim.cmd(input)
 	vim.fn.histadd("cmd", input)
 end, { force = true })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		vim.opt.formatoptions = { c = false, r = false, o = false }
+	end,
+})
