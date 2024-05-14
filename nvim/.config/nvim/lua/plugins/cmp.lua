@@ -352,7 +352,7 @@ return {
 					{ name = "cmdline" },
 				}),
 			})
-			cmp.filetype({ "sql" }, { sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
+			-- cmp.filetype({ "sql" }, { sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
 		end,
 	},
 }

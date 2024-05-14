@@ -51,11 +51,11 @@ local lazy_plugins = {
 			require("colorizer").setup({})
 		end,
 	},
-	-- {
-	-- 	"tzachar/highlight-undo.nvim",
-	-- 	event = "VeryLazy",
-	-- 	opts = {},
-	-- },
+	{
+		"tzachar/highlight-undo.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
 	{
 		"piersolenski/wtf.nvim",
 		dependencies = {
@@ -166,16 +166,6 @@ local lazy_plugins = {
 			require("cmp").config.formatting = {
 				format = require("tailwindcss-colorizer-cmp").formatter,
 			}
-		end,
-	},
-	{
-		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
 		end,
 	},
 	-- {
