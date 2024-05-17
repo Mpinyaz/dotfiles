@@ -13,10 +13,41 @@ export HISTFILE=~/.zsh_history
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export HISTSIZE=100000000
 export HISTFILESIZE=100000000
+export HISTDUP=erase
 setopt appendhistory
+setopt sharehistory
 setopt HIST_FIND_NO_DUPS
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 export HISTTIMEFORMAT="[%F %T]"
 export ZSH="$HOME/.oh-my-zsh"
+
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add in snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+# zinit snippet OMZP::archlinux
+zinit snippet OMZP::command-not-found
+
+# Load completions
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # Uncomment the following line to use hyphen-insensitive completion.
@@ -125,6 +156,7 @@ setopt autocd
 # Start graphical server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && ! pidof -s Xorg >/dev/null 2>&1 && exec startx "$XINITRC"
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(fzf --zsh)"
 # Enable colors and change prompt:
 autoload -U colors && colors # Load colors
 export PATH=":$PATH"

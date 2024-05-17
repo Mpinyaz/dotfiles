@@ -70,7 +70,6 @@ return {
 						history = true,
 						delete_check_events = "TextChanged",
 
-						-- Display a cursor-like placeholder in unvisited nodes of the snippet.
 						ext_opts = {
 							[types.insertNode] = {
 								unvisited = {
@@ -170,7 +169,6 @@ return {
 					end
 				end
 			end
-
 			local snip_status_ok, luasnip = pcall(require, "luasnip")
 			if not snip_status_ok then
 				return
@@ -185,13 +183,14 @@ return {
 				history = true,
 				region_check_events = "InsertEnter",
 				updateevents = "TextChanged,TextChangedI",
-				-- minimal increase in priority
-				enable_autosnippets = true,
+				-- enable_autosnippets = true,
 			})
 
-			lsp_kind.init({ symbol_map = { Copilot = "" } })
+			lsp_kind.init({ mode = "text_symbol", symbol_map = { Copilot = "" } })
+			for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
+				loadfile(ft_path)()
+			end
 
-			---@diagnostic disable-next-line
 			cmp.setup({
 				enabled = true,
 				preselect = cmp.PreselectMode.None,
@@ -203,13 +202,15 @@ return {
 						winhighlight = "Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None",
 					}),
 				},
-				---@diagnostic disable-next-line
 				view = {
 					entries = "bordered",
 				},
+				completion = {
+					completeopt = "menu,menuone,noinsert",
+				},
 				snippet = {
 					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 				mapping = {
@@ -222,31 +223,22 @@ return {
 						select = true,
 					}),
 					["<tab>"] = cmp_next,
-					-- ["<down>"] = cmp_next,
 					["<S-tab>"] = cmp_prev,
-					-- ["<up>"] = cmp_prev,
 				},
 				formatting = {
-					format = lsp_kind.cmp_format({
+					format = require("lspkind").cmp_format({
+						mode = "text_symbol", -- show only symbol annotations
 						with_text = true,
-						menu = {
-
-							buffer = "[Buffer]",
-							nvim_lsp = "[LSP]",
-							copilot = "[Copilot]",
-							luasnip = "[LuaSnip]",
-							nvim_lua = "[NeovimLua]",
-							path = "[Path]",
-							omni = "[Omni]",
-							spell = "[Spell]",
-							emoji = "[Emoji]",
-							calc = "[Calc]",
-							rg = "[Rg]",
-							treesitter = "[TS]",
-							dictionary = "[Dictionary]",
-							npm = "[NPM]",
-							tailwindcss_colorizer_cmp = "[Tailwind]",
-						},
+						maxwidth = 50,
+						-- menu = {
+						-- 	buffer = "[BUF]",
+						-- 	nvim_lsp = "[LSP]",
+						-- 	nvim_lsp_signature_help = "[LSP]",
+						-- 	nvim_lsp_document_symbol = "[LSP]",
+						-- 	nvim_lua = "[API]",
+						-- 	path = "[PATH]",
+						-- 	luasnip = "[Snippets]",
+						-- },
 					}),
 				},
 				sources = {
@@ -262,10 +254,6 @@ return {
 					},
 					{
 						name = "nvim_lsp_signature_help",
-						group_index = 1,
-					},
-					{
-						name = "nvim_lua",
 						group_index = 1,
 					},
 					{
@@ -325,14 +313,14 @@ return {
 			if not presentAutopairs then
 				return
 			end
-			-- cmp.event:on(
-			-- 	"confirm_done",
-			-- 	cmp_autopairs.on_confirm_done({
-			-- 		map_char = {
-			-- 			tex = "",
-			-- 		},
-			-- 	})
-			-- )
+			cmp.event:on(
+				"confirm_done",
+				cmp_autopairs.on_confirm_done({
+					map_char = {
+						tex = "",
+					},
+				})
+			)
 			cmp.config.formatting = {
 				format = require("tailwindcss-colorizer-cmp").formatter,
 			}
@@ -352,7 +340,6 @@ return {
 					{ name = "cmdline" },
 				}),
 			})
-			-- cmp.filetype({ "sql" }, { sources = { { name = "vim-dadbod-completion" }, { name = "buffer" } } })
 		end,
 	},
 }

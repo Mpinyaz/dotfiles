@@ -19,3 +19,10 @@ setopt auto_list             # Display a list of possible completions with ^I (w
 setopt auto_menu             # Automatic completion of completion candidates in order by hitting completion key repeatedly
 setopt auto_param_keys       # Automatically completes bracket correspondence, etc.
 setopt auto_resume           # Resume when executing the same command name as a suspended process
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
