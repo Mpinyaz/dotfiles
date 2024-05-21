@@ -78,7 +78,7 @@ local lazy_plugins = {
 			require("nvim-cursorline").setup({})
 		end,
 	},
-	{ "jdhao/whitespace.nvim", event = "VimEnter" },
+	{ "jdhao/whitespace.nvim", event = "BufEnter" },
 	"rcarriga/nvim-dap-ui",
 	{
 		"ggandor/leap.nvim",
@@ -168,29 +168,6 @@ local lazy_plugins = {
 			}
 		end,
 	},
-	-- {
-	-- 	"luckasRanarison/nvim-devdocs",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-telescope/telescope.nvim",
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- 	opts = {},
-	-- 	cmd = {
-	-- 		"DevdocsFetch",
-	-- 		"DevdocsInstall",
-	-- 		"DevdocsUninstall",
-	-- 		"DevdocsOpen",
-	-- 		"DevdocsOpenFloat",
-	-- 		"DevdocsOpenCurrent",
-	-- 		"DevdocsOpenCurrentFloat",
-	-- 		"DevdocsUpdate",
-	-- 		"DevdocsUpdateAll",
-	-- 	},
-	-- 	config = function()
-	-- 		require("nvim-devdocs").setup()
-	-- 	end,
-	-- },
 	{ "HiPhish/rainbow-delimiters.nvim" },
 	{
 		"ThePrimeagen/git-worktree.nvim",

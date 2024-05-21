@@ -1,25 +1,7 @@
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 
-local check_backspace = function()
-	local col = vim.fn.col(".") - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-end
-
 return {
-	-- {
-	-- 	"github/copilot.vim",
-	-- 	event = "BufRead",
-	-- 	config = function()
-	-- 		vim.cmd([[imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")]])
-	-- 		vim.cmd([[imap <silent><script><expr> <C-e> copilot#Cancel("\<CR>")]])
-	-- 		vim.g.copilot_no_tab_map = true
-	-- 		vim.cmd([[highlight CopilotSuggestion guifg=#555555 ctermfg=8]])
-	-- 		vim.api.nvim_command("highlight link CopilotAnnotation LineNr")
-	-- 		vim.api.nvim_command("highlight link CopilotSuggestion LineNr")
-	-- 	end,
-	-- },
-
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -127,48 +109,6 @@ return {
 		config = function()
 			local cmp = require("cmp")
 			local lsp_kind = require("lspkind")
-			local cmp_next = function(fallback)
-				if cmp.visible() then
-					cmp.select_next_item()
-				elseif require("luasnip").expand_or_jumpable() then
-					vim.fn.feedkeys(
-						vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true),
-						""
-					)
-					-- elseif require("copilot.suggestion").is_visible() then
-					-- 	require("copilot.suggestion").accept()
-				elseif require("luasnip").expandable() then
-					require("luasnip").expand()
-				elseif check_backspace() then
-					fallback()
-				else
-					fallback()
-				end
-			end
-			local cmp_prev = function(fallback)
-				if cmp.visible() then
-					cmp.select_prev_item()
-				elseif require("luasnip").jumpable(-1) then
-					vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-				else
-					fallback()
-				end
-			end
-			local function get_lsp_completion_context(completion, source)
-				local config_ok, source_name = pcall(function()
-					return source.source.client.config.name
-				end)
-				if not config_ok then
-					return nil
-				end
-				if source_name == "tsserver" or source_name == "typescript-tools" then
-					return completion.detail
-				elseif source_name == "pyright" then
-					if completion.labelDetails ~= nil then
-						return completion.labelDetails.description
-					end
-				end
-			end
 			local snip_status_ok, luasnip = pcall(require, "luasnip")
 			if not snip_status_ok then
 				return
@@ -183,7 +123,7 @@ return {
 				history = true,
 				region_check_events = "InsertEnter",
 				updateevents = "TextChanged,TextChangedI",
-				-- enable_autosnippets = true,
+				enable_autosnippets = true,
 			})
 
 			lsp_kind.init({ mode = "text_symbol", symbol_map = { Copilot = "" } })
@@ -194,14 +134,6 @@ return {
 			cmp.setup({
 				enabled = true,
 				preselect = cmp.PreselectMode.None,
-				window = {
-					completion = cmp.config.window.bordered({
-						winhighlight = "Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None",
-					}),
-					documentation = cmp.config.window.bordered({
-						winhighlight = "Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None",
-					}),
-				},
 				view = {
 					entries = "bordered",
 				},
@@ -218,12 +150,15 @@ return {
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({
-						behavior = cmp.ConfirmBehavior.Replace,
-						select = true,
-					}),
-					["<tab>"] = cmp_next,
-					["<S-tab>"] = cmp_prev,
+					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+					["<C-y>"] = cmp.mapping(
+						cmp.mapping.confirm({
+							behavior = cmp.ConfirmBehavior.Insert,
+							select = true,
+						}),
+						{ "i", "c" }
+					),
 				},
 				formatting = {
 					format = require("lspkind").cmp_format({
@@ -331,7 +266,12 @@ return {
 					{ name = "buffer" },
 				},
 			})
-
+			cmp.setup.filetype({ "sql" }, {
+				sources = {
+					{ name = "vim-dadbod-completion" },
+					{ name = "buffer" },
+				},
+			})
 			cmp.setup.cmdline(":", {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({

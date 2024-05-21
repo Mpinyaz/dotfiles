@@ -92,12 +92,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight yank",
 })
 
-vim.api.nvim_create_user_command("DeleteBlankLines", function()
-	local input = vim.fn.input("", ":g/^$/d")
-	vim.cmd(input)
-	vim.fn.histadd("cmd", input)
-end, { force = true })
-
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		vim.opt.formatoptions = { c = false, r = false, o = false }
