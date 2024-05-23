@@ -13,7 +13,7 @@ local servers = {
 	clangd = require("plugins.lsp.servers.clangd")(on_attach),
 	taplo = {},
 	sqlls = {},
-	-- sqlfluff = {},
+	markdown_oxide = {},
 }
 
 local server_names = {}

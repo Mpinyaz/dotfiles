@@ -1,6 +1,7 @@
 return function(on_attach)
 	return {
 		on_attach = on_attach,
+		capbilities = default,
 		settings = {
 			Lua = {
 				hint = {
@@ -10,7 +11,7 @@ return function(on_attach)
 					version = "LuaJIT",
 				},
 				diagnostics = {
-					globals = { 'vim' },
+					globals = { "vim" },
 					disable = {
 						"lowercase-global",
 						"undefined-global",
@@ -25,9 +26,6 @@ return function(on_attach)
 						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 						[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
 					},
-					maxPreload = 2000,
-					preloadFileSize = 50000,
-					checkThirdParty = false,
 				},
 				-- do not send telemetry data containing a randomized but unique identifier
 				telemetry = { enable = false },

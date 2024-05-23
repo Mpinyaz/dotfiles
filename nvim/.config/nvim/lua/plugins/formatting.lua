@@ -21,7 +21,6 @@ return {
 				typescript = { "prettierd", "prettier" },
 				javascriptreact = { "prettierd", "prettier" },
 				typescriptreact = { "prettierd", "prettier" },
-
 				svelte = { "prettierd" },
 				css = { "prettierd" },
 				html = { "prettierd" },

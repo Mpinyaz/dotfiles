@@ -154,11 +154,20 @@ return {
 					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
 					["<C-y>"] = cmp.mapping(
 						cmp.mapping.confirm({
-							behavior = cmp.ConfirmBehavior.Insert,
+							behavior = cmp.ConfirmBehavior.Replace,
 							select = true,
 						}),
 						{ "i", "c" }
 					),
+				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				performance = {
+					trigger_debounce_time = 500,
+					throttle = 550,
+					fetching_timeout = 80,
 				},
 				formatting = {
 					format = require("lspkind").cmp_format({

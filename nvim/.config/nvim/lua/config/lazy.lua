@@ -170,6 +170,24 @@ local lazy_plugins = {
 	},
 	{ "HiPhish/rainbow-delimiters.nvim" },
 	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		keys = {
+			{
+				"<leader>mp",
+				function()
+					vim.cmd("MarkdownPreviewToggle")
+				end,
+				desc = "Toggle",
+			},
+		},
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+
+	{
 		"ThePrimeagen/git-worktree.nvim",
 		opts = {},
 		config = function()
