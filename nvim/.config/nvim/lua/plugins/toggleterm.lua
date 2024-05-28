@@ -19,7 +19,7 @@ return {
 			yazi:toggle()
 		end
 
-		vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
+		vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
 		vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua _YAZI_TOGGLE()<CR>", { noremap = true, silent = true })
 		toggleterm.setup({
 			size = 20,

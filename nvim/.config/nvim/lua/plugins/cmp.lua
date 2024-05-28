@@ -38,6 +38,7 @@ return {
 			"hrsh7th/cmp-calc",
 			"roobert/tailwindcss-colorizer-cmp.nvim",
 			"lukas-reineke/cmp-rg",
+			"luckasRanarison/tailwind-tools.nvim",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
@@ -174,6 +175,7 @@ return {
 						mode = "text_symbol", -- show only symbol annotations
 						with_text = true,
 						maxwidth = 50,
+						before = require("tailwind-tools.cmp").lspkind_format,
 						-- menu = {
 						-- 	buffer = "[BUF]",
 						-- 	nvim_lsp = "[LSP]",

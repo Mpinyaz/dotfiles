@@ -63,3 +63,6 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Lazygit alias
+alias lg="lazygit"
