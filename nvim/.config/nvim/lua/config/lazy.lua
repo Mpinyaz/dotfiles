@@ -35,8 +35,8 @@ local lazy_plugins = {
 
 					local icon, color = require("nvim-web-devicons").get_icon_color(filename)
 					return { { icon, guifg = color }, { " " }, { filename } }
-				--[[ end,
-                        }) ]]
+				end,
+                        })
 		end,
 	},
 	-- {
