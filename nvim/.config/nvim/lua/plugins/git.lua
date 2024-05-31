@@ -1,33 +1,34 @@
 return {
 	{ "tpope/vim-rhubarb", keys = { { "n", "<leader>gb", ":Gbrowse<cr>", desc = "Open in browser" } } },
+	-- {
+	-- 	"akinsho/git-conflict.nvim",
+	-- 	version = "*",
+	-- 	keys = {
+	-- 		"<leader>gq",
+	-- 		":GitConflictQf<CR>",
+	-- 		desc = "Git conflict",
+	-- 		{ noremap = true, silent = true },
+	-- 	},
+	--
+	-- 	config = function()
+	-- 		vim.api.nvim_create_autocmd("User", {
+	-- 			pattern = "GitConflictDetected",
+	-- 			callback = function()
+	-- 				vim.notify("Conflict detected in file " .. vim.api.nvim_buf_get_name(0))
+	-- 				vim.cmd("LspStop")
+	-- 			end,
+	-- 		})
+	--
+	-- 		vim.api.nvim_create_autocmd("User", {
+	-- 			pattern = "GitConflictResolved",
+	-- 			callback = function()
+	-- 				vim.cmd("LspRestart")
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
 	{
-		"akinsho/git-conflict.nvim",
-		version = "*",
-		keys = {
-			"<leader>gq",
-			":GitConflictQf<CR>",
-			desc = "Git conflict",
-			{ noremap = true, silent = true },
-		},
-
-		config = function()
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "GitConflictDetected",
-				callback = function()
-					vim.notify("Conflict detected in file " .. vim.api.nvim_buf_get_name(0))
-					vim.cmd("LspStop")
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "GitConflictResolved",
-				callback = function()
-					vim.cmd("LspRestart")
-				end,
-			})
-		end,
-	},
-	{
+		--[[  ]]
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
@@ -69,12 +70,16 @@ return {
 		},
                 --stylua: ignore
                 keys = {
-                        { "<leader>gwm",
+                        {
+                                "<leader>gwm",
                                 function() require("telescope").extensions.git_worktree.git_worktrees() end,
-                                desc = "Manage" },
-                        { "<leader>gwc",
+                                desc = "Manage"
+                        },
+                        {
+                                "<leader>gwc",
                                 function() require("telescope").extensions.git_worktree.create_git_worktree() end,
-                                desc = "Create" },
+                                desc = "Create"
+                        },
                 },
 	},
 }

@@ -36,7 +36,7 @@ local lazy_plugins = {
 					local icon, color = require("nvim-web-devicons").get_icon_color(filename)
 					return { { icon, guifg = color }, { " " }, { filename } }
 				end,
-                        })
+			})
 		end,
 	},
 	-- {
@@ -44,6 +44,13 @@ local lazy_plugins = {
 	-- 	version = "*",
 	-- 	-- event = "VeryLazy",
 	-- },
+	{
+		"xiyaowong/nvim-transparent",
+		config = function()
+			require("transparent").setup({ enable = true })
+			vim.api.nvim_set_keymap("n", "TT", ":TransparentToggle<CR>", { noremap = true })
+		end,
+	},
 	{ "gbprod/yanky.nvim" },
 	{
 		"luckasRanarison/tailwind-tools.nvim",
