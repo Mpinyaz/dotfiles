@@ -24,7 +24,6 @@ local options = {
 	splitright = true, -- force all vertical splits to go to the right of current window
 	swapfile = false, -- creates a swapfile
 	termguicolors = true, -- set term gui colors (most terminals support this)
-	-- virtualedit = "all",
 	timeoutlen = 1000, -- time to wait for a mapped sequence to complete (in milliseconds)
 	writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 	expandtab = true, -- convert tabs to spaces
@@ -34,7 +33,7 @@ local options = {
 	numberwidth = 4, -- set number column width to 2 {default 4}
 	signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 	wrap = true, -- display lines as one long line
-	scrolloff = 8, -- is one of my fav
+	scrolloff = 8,
 	sidescrolloff = 8,
 	ttyfast = true,
 	undofile = true,
@@ -45,7 +44,7 @@ local options = {
 	hidden = true,
 	magic = true,
 	updatetime = 500,
-	-- conceallevel = 0,
+	conceallevel = 2,
 }
 
 for k, v in pairs(options) do

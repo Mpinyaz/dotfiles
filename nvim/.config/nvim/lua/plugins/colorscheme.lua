@@ -36,14 +36,20 @@ return {
 		-- 	vim.cmd.colorscheme("catppuccin")
 		-- end,
 	},
+	-- {
+	-- 	"tiagovla/tokyodark.nvim",
+	-- 	opts = {
+	-- 		-- custom options here
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("tokyodark").setup(opts) -- calling setup is optional
+	-- 		vim.cmd([[colorscheme tokyodark]])
+	-- 	end,
+	-- },
 	{
-		"tiagovla/tokyodark.nvim",
-		opts = {
-			-- custom options here
-		},
-		config = function(_, opts)
-			require("tokyodark").setup(opts) -- calling setup is optional
-			vim.cmd([[colorscheme tokyodark]])
+		"EdenEast/nightfox.nvim",
+		config = function()
+			vim.cmd([[colorscheme carbonfox]])
 		end,
 	},
 }

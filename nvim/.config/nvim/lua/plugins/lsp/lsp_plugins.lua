@@ -105,7 +105,6 @@ return {
 			vim.g.rustfmt_autosave = 1
 		end,
 	},
-	{ "folke/neodev.nvim", opts = {} },
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "hrsh7th/cmp-nvim-lsp" },

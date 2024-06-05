@@ -240,6 +240,10 @@ return {
 						group_index = 2,
 					},
 					{
+						name = "lazydev",
+						group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+					},
+					{
 						name = "tailwindcss_colorizer_cmp",
 						keyword_length = 2,
 						max_item_count = 5,

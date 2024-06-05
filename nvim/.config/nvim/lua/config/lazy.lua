@@ -44,19 +44,28 @@ local lazy_plugins = {
 	-- 	version = "*",
 	-- 	-- event = "VeryLazy",
 	-- },
-	{
-		"xiyaowong/nvim-transparent",
-		config = function()
-			require("transparent").setup({ enable = true })
-			vim.api.nvim_set_keymap("n", "TT", ":TransparentToggle<CR>", { noremap = true })
-		end,
-	},
 	{ "gbprod/yanky.nvim" },
 	{
 		"luckasRanarison/tailwind-tools.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		opts = {}, -- your configuration
 	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+				-- always load the LazyVim library
+				"LazyVim",
+				-- Only load the lazyvim library when the `LazyVim` global is found
+				{ path = "LazyVim", words = { "LazyVim" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true },
 	{
 		"NvChad/nvim-colorizer.lua",
 		config = function()
