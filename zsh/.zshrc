@@ -7,7 +7,9 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.config/zsh/.zshrc
 source /Users/eltonmpinyuri/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 alias shopt='/usr/bin/shopt'
+export PATH="/Library/TeX/texbin:$PATH"
 alias lf='yazi'
 
+source <(fzf --zsh)
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

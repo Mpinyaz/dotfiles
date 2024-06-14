@@ -36,8 +36,9 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 keymap("n", "<C-n>", ":tabnew<new><CR>", opts)
 -- Insert --
--- Press jk fast to enteoirce
+-- Press jk fast to exit insert mode
 keymap("i", "jk", "<ESC>", opts)
+keymap("i", "<S-Tab>", "<C-d>", opts)
 -- Spell check correct
 -- Visual --
 -- Stay in indent mode

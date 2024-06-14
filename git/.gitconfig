@@ -22,3 +22,7 @@
 
 [diff]
     colorMoved = default
+[pull]
+        rebase = true
+[fetch]
+        prune = true
