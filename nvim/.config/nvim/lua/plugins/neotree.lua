@@ -20,9 +20,11 @@ return {
 	config = function()
 		require("neo-tree").setup({
 			open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy" },
+			popup_border_style = "rounded",
 			close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 			enable_git_status = true,
 			enable_diagnostics = true,
+
 			default_component_configs = {
 				container = {
 					enable_character_fade = true,
@@ -30,14 +32,10 @@ return {
 				indent = {
 					indent_size = 2,
 					padding = 1, -- extra padding on left hand side
-					-- indent guides
 					with_markers = true,
-					-- indent_marker = "│",
-					-- last_indent_marker = "└",-- └
 					indent_marker = "▏",
 					last_indent_marker = "▏",
 					highlight = "NeoTreeIndentMarker",
-					-- expander config, needed for nesting files
 					with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
 					expander_collapsed = "",
 					expander_expanded = "",
@@ -106,6 +104,7 @@ return {
 					["<cr>"] = "open",
 					["o"] = "open",
 					["S"] = "open_split",
+					["l"] = "focus_preview",
 					["s"] = "open_vsplit",
 					-- ["S"] = "split_with_window_picker",
 					-- ["s"] = "vsplit_with_window_picker",
@@ -144,22 +143,17 @@ return {
 						--"*.meta"
 					},
 					never_show = { -- remains hidden even if visible is toggled to true
-						--".DS_Store",
-						--"thumbs.db"
+						".DS_Store",
+						"thumbs.db",
 					},
 				},
 				follow_current_file = {
-					enabled = true, -- This will find and focus the file in the active buffer every
+					enabled = false, -- This will find and focus the file in the active buffer every
+					leave_dirs_open = false,
 				},
-				-- time the current file is changed while the tree is open.
 				group_empty_dirs = false, -- when true, empty folders will be grouped together
-				hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-				-- in whatever position is specified in window.position
-				-- "open_current",  -- netrw disabled, opening a directory opens within the
-				-- window like netrw would, regardless of window.position
-				-- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+				hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
 				use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
-				-- instead of relying on nvim autocmd events.
 				window = {
 					mappings = {
 						["H"] = "navigate_up",

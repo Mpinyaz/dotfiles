@@ -39,11 +39,11 @@ local lazy_plugins = {
 			})
 		end,
 	},
-	-- {
-	-- 	"echasnovski/mini.animate",
-	-- 	version = "*",
-	-- 	-- event = "VeryLazy",
-	-- },
+	{
+		"vhyrro/luarocks.nvim",
+		priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+		config = true,
+	},
 	{ "gbprod/yanky.nvim" },
 	{
 		"luckasRanarison/tailwind-tools.nvim",
@@ -230,3 +230,4 @@ require("lazy").setup({
 		colorscheme = { "darkplus" },
 	},
 })
+vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<cr>")

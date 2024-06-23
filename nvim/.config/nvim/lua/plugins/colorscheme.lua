@@ -1,14 +1,14 @@
 return {
 	{ "bluz71/vim-nightfly-guicolors" },
-	-- {
-	-- 	"rose-pine/neovim",
-	-- 	name = "rose-pine",
-	-- 	config = function()
-	-- 		vim.g.rose_pine_variant = "auto"
-	-- 		vim.g.rose_pine_disable_background = true
-	-- 		vim.cmd("colorscheme rose-pine")
-	-- 	end,
-	-- },
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		config = function()
+			vim.g.rose_pine_variant = "auto"
+			vim.g.rose_pine_disable_background = true
+			vim.cmd("colorscheme rose-pine")
+		end,
+	},
 	"folke/tokyonight.nvim",
 	{
 		-- "catppuccin/nvim",
@@ -46,10 +46,10 @@ return {
 	-- 		vim.cmd([[colorscheme tokyodark]])
 	-- 	end,
 	-- },
-	{
-		"EdenEast/nightfox.nvim",
-		config = function()
-			vim.cmd([[colorscheme carbonfox]])
-		end,
-	},
+	-- {
+	-- 	"EdenEast/nightfox.nvim",
+	-- 	config = function()
+	-- 		vim.cmd([[colorscheme nightfox]])
+	-- 	end,
+	-- },
 }
