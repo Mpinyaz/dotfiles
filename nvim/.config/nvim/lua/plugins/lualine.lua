@@ -156,6 +156,7 @@ return {
 					lualine_c = {},
 					lualine_x = {},
 				},
+				extensions = { "lazy", "toggleterm", "mason", "neo-tree", "trouble" },
 			}
 
 			-- insert active component in lualine_c at left section

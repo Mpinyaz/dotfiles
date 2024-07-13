@@ -32,6 +32,7 @@ return {
 				rust = { "rustfmt" },
 				python = { "isort", "black" },
 				fish = { "fish_indent" },
+				c = { "clang_format" },
 				sh = { "shfmt" },
 				toml = { "taplo" },
 			},
