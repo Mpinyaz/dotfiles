@@ -7,25 +7,21 @@ return {
 		lazy = false,
 		init = function()
 			local wk = require("which-key")
-			wk.register({
-				["/"] = {
+			wk.add({
+				{
+					"<leader>/",
 					function()
 						require("Comment.api").toggle.linewise.current()
 					end,
-					"Toggle comment",
+					desc = "Toggle comment",
+					mode = "n",
 				},
-			}, {
-				prefix = "<leader>",
-				mode = "n",
-			})
-			wk.register({
-				["/"] = {
+				{
+					"<leader>/",
 					"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-					"Toggle comment",
+					desc = "Toggle comment",
+					mode = "v",
 				},
-			}, {
-				prefix = "<leader>",
-				mode = "v",
 			})
 		end,
 		config = function(_, opts)
