@@ -1,12 +1,24 @@
 local servers = {
 	pyright = {},
 	bashls = {},
+	cmake = {},
 	omnisharp = {},
 	tsserver = require("plugins.lsp.servers.tsserver")(on_attach),
 	vimls = {},
 	lua_ls = require("plugins.lsp.servers.luals")(on_attach),
-	html = {},
-	jsonls = {},
+	html = {
+		init_options = {
+			configurationSection = { "html", "css", "javascript" },
+			embeddedLanguages = {
+				css = true,
+				javascript = true,
+			},
+			provideFormatter = true,
+		},
+	},
+	jsonls = {
+		settings = { json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } } },
+	},
 	cssls = {},
 	tailwindcss = {},
 	rust_analyzer = require("plugins.lsp.servers.rust")(on_attach),
@@ -14,6 +26,25 @@ local servers = {
 	taplo = {},
 	sqlls = {},
 	markdown_oxide = {},
+	yamlls = {
+		-- Have to add this for yamlls to understand that we support line folding
+		capabilities = { textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } } },
+		settings = {
+			redhat = { telemetry = { enabled = false } },
+			yaml = {
+				schemas = require("schemastore").yaml.schemas(),
+				keyOrdering = false,
+				format = { enable = true },
+				validate = true,
+				schemaStore = {
+					--Must disable built-in schemaStore support to use schemas from SchemaStore.nvim plugin
+					enable = false,
+					-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+					url = "",
+				},
+			},
+		},
+	},
 }
 
 local server_names = {}
@@ -58,9 +89,8 @@ if not lspconfig_ok then
 	return
 end
 
-local presentCmpNvimLsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+local _, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 local icons = require("utils.icons")
-local presentLspSignature, lsp_signature = pcall(require, "lsp_signature")
 
 local capabilities =
 	vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities(), {
@@ -173,7 +203,7 @@ end
 map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
 map("n", "ge", "<Cmd>Lspsaga show_line_diagnostic<CR>", "Show diagnostics of the current line")
 map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the current line")
-map("n", "gr", "<Cmd>Lspsaga rename<CR>", "Rename variable under cursor")
+map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
 map("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", "Code actions")
 map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
 map("n", "K", "<cmd>Lspsaga hover_doc", "Show hover doc")

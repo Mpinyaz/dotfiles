@@ -34,7 +34,7 @@ return {
 		event = "InsertEnter",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp-signature-help",
-			"hrsh7th/cmp-nvim-lsp",
+			-- "hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-calc",
 			"roobert/tailwindcss-colorizer-cmp.nvim",
 			"lukas-reineke/cmp-rg",
@@ -187,6 +187,11 @@ return {
 						-- },
 					}),
 				},
+				experimental = {
+					ghost_text = {
+						hl_group = "LspCodelens",
+					},
+				},
 				sources = {
 					{
 						name = "nvim_lsp",
@@ -198,10 +203,10 @@ return {
 						max_item_count = 5,
 						group_index = 1,
 					},
-					{
-						name = "nvim_lsp_signature_help",
-						group_index = 1,
-					},
+					-- {
+					-- 	name = "nvim_lsp_signature_help",
+					-- 	group_index = 1,
+					-- },
 					{
 						name = "copilot",
 						max_item_count = 20,

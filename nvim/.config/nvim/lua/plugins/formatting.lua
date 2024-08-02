@@ -1,21 +1,30 @@
 return {
 	"stevearc/conform.nvim",
-	lazy = true,
+	cmd = { "ConformInfo", "FormatToggle", "FormatEnable", "FormatDisable" },
 	event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
 	keys = {
 		{
 			"<leader>Cf",
 			function()
-				require("conform").format({ formatters = { "injected" } })
+				require("conform").format({ formatters = { "injected" }, async = true, lsp_fallback = true })
 			end,
 			mode = { "n", "v" },
 			desc = "Format Injected Langs",
 		},
 	},
+	init = function()
+		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+	end,
 	config = function()
 		local conform = require("conform")
 
 		conform.setup({
+			format = {
+				timeout_ms = 3000,
+				async = true,
+				quiet = false,
+				lsp_fallback = true,
+			},
 			formatters_by_ft = {
 				javascript = { "prettierd", "prettier" },
 				typescript = { "prettierd", "prettier" },
@@ -35,6 +44,7 @@ return {
 				c = { "clang_format" },
 				sh = { "shfmt" },
 				toml = { "taplo" },
+				sql = { "sqlfmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

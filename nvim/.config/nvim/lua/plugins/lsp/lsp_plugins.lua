@@ -6,8 +6,13 @@ return {
 		config = function()
 			require("lsp_signature").setup({
 				bind = true, -- This is mandatory, otherwise border config won't get registered.
+				max_height = 12,
+				max_width = 80,
+				transparency = 30,
+				hint_enable = true,
+				shadow_blend = 36,
 				handler_opts = {
-					border = "single",
+					border = "rounded",
 				},
 			})
 		end,
