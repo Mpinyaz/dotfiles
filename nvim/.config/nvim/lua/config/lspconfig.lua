@@ -24,7 +24,7 @@ local servers = {
 	rust_analyzer = require("plugins.lsp.servers.rust")(on_attach),
 	clangd = require("plugins.lsp.servers.clangd")(on_attach),
 	taplo = {},
-	sqlls = {},
+	sqlls = { cmd = { "sql-language-server", "up", "--method", "stdio" }, filetypes = { "sql", "mysql" } },
 	markdown_oxide = {},
 	yamlls = {
 		-- Have to add this for yamlls to understand that we support line folding

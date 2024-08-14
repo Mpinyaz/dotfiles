@@ -63,7 +63,7 @@ zstyle ':omz:update' mode auto # update automatically without asking
 # zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_MAGIC_FUNCTIONS="false"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -75,7 +75,7 @@ DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git node fig zsh-autosuggestions copypath ripgrep npm vi-mode zsh-syntax-highlighting)
+plugins=(git node rust fig zsh-autosuggestions copypath eza fig macos sudo npm vi-mode zsh-syntax-highlighting)
 
 
 # You may need to manually set your language environment

@@ -187,11 +187,11 @@ return {
 						-- },
 					}),
 				},
-				experimental = {
-					ghost_text = {
-						hl_group = "LspCodelens",
-					},
-				},
+				-- experimental = {
+				-- 	ghost_text = {
+				-- 		hl_group = "LspCodelens",
+				-- 	},
+				-- },
 				sources = {
 					{
 						name = "nvim_lsp",

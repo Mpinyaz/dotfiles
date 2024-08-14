@@ -148,8 +148,8 @@ return {
 					},
 				},
 				follow_current_file = {
-					enabled = false, -- This will find and focus the file in the active buffer every
-					leave_dirs_open = false,
+					enabled = true, -- This will find and focus the file in the active buffer every
+					leave_dirs_open = true,
 				},
 				group_empty_dirs = false, -- when true, empty folders will be grouped together
 				hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
@@ -166,6 +166,10 @@ return {
 						["]g"] = "next_git_modified",
 					},
 				},
+			},
+			file_size = {
+				enabled = true,
+				required_width = 10,
 			},
 			buffers = {
 				follow_current_file = {
