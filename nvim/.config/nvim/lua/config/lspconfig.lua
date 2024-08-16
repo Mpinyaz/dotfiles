@@ -1,6 +1,6 @@
 local servers = {
 	pyright = {},
-	bashls = {},
+	bashls = { filetypes = { "sh", "zsh" } },
 	cmake = {},
 	omnisharp = {},
 	tsserver = require("plugins.lsp.servers.tsserver")(on_attach),
