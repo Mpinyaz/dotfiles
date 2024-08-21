@@ -47,8 +47,10 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 --Telescope keymaps
 keymap("n", "<leader>s", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<M-k>", "<Esc>:m .-2<CR>", opts)
-keymap("n", "<M-j>", "<Esc>:m .+1<CR>", opts)
+keymap("n", "<M-k>", "<Esc>:m .-2<CR>==", { opts, desc = "Move line up" })
+keymap("n", "<M-j>", "<Esc>:m .+1<CR>==", { opts, desc = "Move line down" })
+keymap("v", "<M-k>", "<Esc>:m .-2<CR>==", { opts, desc = "Move line up" })
+keymap("v", "<M-j>", "<Esc>:m .+1<CR>==", { opts, desc = "Move line down" })
 keymap("n", "<leader>bu", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>f", "<cmd>Telescope file_browser<cr>", opts)
@@ -86,6 +88,19 @@ autocmd BufEnter *.cpp let @g=":w\<CR> :!g++ -std=c++17 -O3 %\<CR> | :vsp |termi
 -- map leader+w to save current file in normal mode
 vim.keymap.set("n", "WW", ":w!<enter>", { noremap = true, silent = true })
 vim.keymap.set("n", "QQ", ":q!<enter>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>w", ":w <CR>", { desc = "Quick save" })
+vim.keymap.set(
+	"n",
+	"<leader>cpf",
+	':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
+	{ noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
+)
+
+vim.keymap.set("i", "<c-p>", function()
+	require("telescope.builtin").registers()
+end, { remap = true, silent = false, desc = "copy and paste register in insert mode" })
 
 -- map leader+y to copy to system clipboard in normal and visual mode
 vim.keymap.set({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true })
+
+vim.keymap.set("n", "<BS>", "^", { desc = "Move to the first character of the line" })
