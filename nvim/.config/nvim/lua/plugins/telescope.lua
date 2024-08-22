@@ -8,8 +8,9 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ "ThePrimeagen/harpoon", branch = "harpoon2" },
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			"nvim-telescope/telescope-fzy-native.nvim",
 			"nvim-telescope/telescope-media-files.nvim",
+			{ "tiagovla/scope.nvim" },
 			"nvim-tree/nvim-web-devicons",
 			"jvgrootveld/telescope-zoxide",
 			{
@@ -180,6 +181,8 @@ return {
 						"--line-number",
 						"--column",
 						"--smart-case",
+						"--iglob",
+						"!.git",
 					},
 					entry_prefix = "  ",
 					initial_mode = "insert",
@@ -256,7 +259,7 @@ return {
 					},
 				},
 				extensions = {
-					fzf = {
+					fzy_native = {
 						override_generic_sorter = true,
 						override_file_sorter = true,
 						case_mode = "smart_case",
@@ -269,13 +272,14 @@ return {
 					},
 				},
 			})
-			telescope.load_extension("fzf")
 			telescope.load_extension("file_browser")
 			telescope.load_extension("harpoon")
 			telescope.load_extension("repo")
 			telescope.load_extension("projects") -- project.nvim
 			telescope.load_extension("media_files")
 			telescope.load_extension("luasnip")
+			telescope.load_extension("fzy_native")
+			require("telescope").load_extension("scope")
 		end,
 	},
 }

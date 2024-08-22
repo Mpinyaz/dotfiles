@@ -16,7 +16,7 @@ return {
 			lua = { "luacheck" },
 			zsh = { "zsh" },
 			sh = { "shellcheck" },
-			stylelint = { "styelint" },
+			stylelint = { "stylelint" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

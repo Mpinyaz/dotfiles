@@ -190,6 +190,7 @@ local lazy_plugins = {
 		end,
 	},
 	{ "HiPhish/rainbow-delimiters.nvim" },
+	{ "tiagovla/scope.nvim" },
 	-- {
 	-- 	"echasnovski/mini.icons",
 	-- 	opts = {},

@@ -1,56 +1,9 @@
 return {
 	{
-		"Pheon-Dev/pigeon",
-		event = "VeryLazy",
-		config = function()
-			local config = {
-				enabled = true,
-				os = "osx", -- windows, osx
-				plugin_manager = "lazy", -- packer, paq, vim-plug
-				callbacks = {
-					killing_pigeon = nil,
-					respawning_pigeon = nil,
-				},
-				battery = {
-					enabled = true,
-					show_percentage = true,
-					show_status_text = false,
-					view = {
-						charge = {
-							zeros = { icon = "󰂎 " },
-							tens = { icon = "󰁺 " },
-							twenties = { icon = "󰁻 " },
-							thirties = { icon = "󰁼 " },
-							forties = { icon = "󰁽 " },
-							fifties = { icon = "󰁾 " },
-							sixties = { icon = "󰁿 " },
-							seventies = { icon = "󰂀 " },
-							eighties = { icon = "󰂁 " },
-							nineties = { icon = "󰂂 " },
-							hundred = { icon = "󰁹 " },
-						},
-						status = {
-							enabled = true,
-							charging = { icon = " 󱐋" },
-							discharging = { icon = " 󱐌" },
-							not_charging = { icon = "  " },
-							full = { icon = "  " },
-							unknown = { icon = " " },
-							critical = { icon = " " },
-							percentage = { icon = " 󰏰" },
-						},
-					},
-				},
-			}
-			require("pigeon").setup(config)
-		end,
-	},
-	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
-			"Pheon-Dev/pigeon",
 		},
 		init = function()
 			-- disable until lualine loads
@@ -109,19 +62,6 @@ return {
 				["r?"] = colors.cyan,
 				["!"] = colors.red,
 				t = colors.red,
-			}
-			local battery = {
-				function()
-					local enabled = require("pigeon.config").options.battery.enabled
-					local battery = require("pigeon.battery").battery()
-
-					if enabled then
-						return battery
-					else
-						return ""
-					end
-				end,
-				colored = true,
 			}
 
 			-- config
