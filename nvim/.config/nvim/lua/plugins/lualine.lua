@@ -66,6 +66,7 @@ return {
 
 			-- config
 			local config = {
+
 				options = {
 					-- remove default sections and component separators
 					component_separators = "",

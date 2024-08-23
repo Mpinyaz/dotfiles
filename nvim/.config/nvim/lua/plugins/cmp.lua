@@ -30,6 +30,28 @@ return {
 		end,
 	},
 	{
+		"luckasRanarison/tailwind-tools.nvim",
+		name = "tailwind-tools",
+		build = ":UpdateRemotePlugins",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim", -- optional
+			"neovim/nvim-lspconfig", -- optional
+		},
+		opts = {}, -- your configuration
+		config = function()
+			require("tailwind-tools").setup({
+				lsp = {
+					enabled = true,
+					debounce = 150,
+				},
+				telescope = {
+					enabled = true,
+				},
+			})
+		end,
+	},
+	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
@@ -94,14 +116,6 @@ return {
 								name = "emoji",
 							},
 						},
-					})
-				end,
-			},
-			{
-				"roobert/tailwindcss-colorizer-cmp.nvim",
-				config = function()
-					require("tailwindcss-colorizer-cmp").setup({
-						color_square_width = 2,
 					})
 				end,
 			},
@@ -177,11 +191,6 @@ return {
 						before = require("tailwind-tools.cmp").lspkind_format,
 					}),
 				},
-				-- experimental = {
-				--     ghost_text = {
-				--         hl_group = "LspCodelens",
-				--     },
-				-- },
 				sources = {
 					{
 						name = "nvim_lsp",
@@ -237,12 +246,6 @@ return {
 					{
 						name = "lazydev",
 						group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-					},
-					{
-						name = "tailwindcss_colorizer_cmp",
-						keyword_length = 2,
-						max_item_count = 5,
-						group_index = 2,
 					},
 					{
 						name = "emoji",

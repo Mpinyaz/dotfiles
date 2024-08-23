@@ -124,6 +124,7 @@ return {
 					["y"] = "copy_to_clipboard",
 					["x"] = "cut_to_clipboard",
 					["p"] = "paste_from_clipboard",
+					["P"] = "toggle_preview",
 					["c"] = "copy", -- takes text input for destination
 					["m"] = "move", -- takes text input for destination
 					["q"] = "close_window",
@@ -152,7 +153,7 @@ return {
 					leave_dirs_open = true,
 				},
 				group_empty_dirs = false, -- when true, empty folders will be grouped together
-				hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
+				hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
 				use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
 				window = {
 					mappings = {

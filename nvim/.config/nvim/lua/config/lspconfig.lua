@@ -145,37 +145,6 @@ for _, sign in ipairs(signs) do
 	})
 end
 
------------------------------------------------------------ --------------------
--- Set up LSP servers mapping
--------------------------------------------------------------------------------
-local function lsp_keymaps(bufnr)
-	local opts = {
-		noremap = true,
-		silent = true,
-	}
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(
-	-- 	bufnr,
-	-- 	"n",
-	-- 	"gl",
-	-- 	'<cmd>lua vim.lsp.diagnostic.open_float(0,{ scope = "line",border = "rounded" })<CR>',
-	-- 	opts
-	-- )
-	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format()' ]])
-end
-
 local telescope_ok, telescope = pcall(require, "telescope.builtin")
 
 -- Wrapper for keymapping with default opts
@@ -209,9 +178,6 @@ map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation un
 map("n", "K", "<cmd>Lspsaga hover_doc", "Show hover doc")
 map("n", "go", "<cmd>Lspsaga outline", "Show Lsp outline")
 map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
--- map("n", "]d", function()
--- 	vim.diagnostic.goto_next({ float = { border = "rounded" } })
--- end, "Go to the next diagnostic")
 if telescope_ok then
 	map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
 else
@@ -229,20 +195,10 @@ local function on_attach(client, bufnr)
 	-- Mappings
 	local opts = { noremap = true, silent = true }
 	buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	-- buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	-- buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	-- buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	-- buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-	-- buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-	-- buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
 	buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 	buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-	-- buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	-- buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-	-- buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-	-- buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
 	buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
 
 	if client.server_capabilities.documentFormattingProvider then
@@ -252,39 +208,6 @@ local function on_attach(client, bufnr)
 	if client.server_capabilities.documentRangeFormattingProvider then
 		buf_set_keymap("v", "<leader>cf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 	end
-
-	if client.server_capabilities.documentHighlightProvider then
-		vim.api.nvim_exec(
-			[[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-			false
-		)
-	end
-end
-
--- config that activates keymaps and enables snippet support
-local function make_config()
-	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	capabilities.textDocument.completion.completionItem.resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	}
-
-	return {
-		-- enable snippet support
-		capabilities = capabilities,
-		-- map buffer local keybindings when the language server attaches
-		on_attach = on_attach,
-	}
 end
 
 local config = {
@@ -335,25 +258,6 @@ for server_name, server_config in pairs(servers) do
 		end
 	end
 end
--------------------------------------------------------------------------------
--- Setup UI for LSP
--------------------------------------------------------------------------------
--- Popped up window borders
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
--- border = "rounded",
--- })
-
--- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
--- 	border = "shadow",
--- 	close_events = { "CursorMoved", "BufHidden", "InsertCharPre" },
--- })
-
--- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---   underline = true,
---   update_in_insert = true,
---   virtual_text = { spacing = 4, prefix = "●" },
---   severity_sort = true,
--- })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 	silent = true,

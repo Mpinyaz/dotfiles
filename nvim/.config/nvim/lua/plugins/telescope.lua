@@ -31,8 +31,7 @@ return {
 		keys = {
 			{ "<leader>gf", require("config.pickers").git_diff_picker, desc = "Diff Files" },
 			{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-			-- { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find" },
-			-- { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+			{ "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
 			{ "<leader>r", "<cmd>Telescope registers<cr>", desc = "Registers" },
 			{ "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Recent Folders" },
 			{
@@ -55,8 +54,6 @@ return {
 			local Path = require("plenary.path")
 			local action_set = require("telescope.actions.set")
 			local action_state = require("telescope.actions.state")
-			local transform_mod = require("telescope.actions.mt").transform_mod
-			local actions = require("telescope.actions")
 			local conf = require("telescope.config").values
 			local finders = require("telescope.finders")
 			local make_entry = require("telescope.make_entry")
