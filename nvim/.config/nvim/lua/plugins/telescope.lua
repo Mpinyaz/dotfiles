@@ -31,8 +31,8 @@ return {
 		keys = {
 			{ "<leader>gf", require("config.pickers").git_diff_picker, desc = "Diff Files" },
 			{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-			{ "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find" },
-			{ "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+			-- { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find" },
+			-- { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
 			{ "<leader>r", "<cmd>Telescope registers<cr>", desc = "Registers" },
 			{ "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Recent Folders" },
 			{

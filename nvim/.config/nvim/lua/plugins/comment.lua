@@ -9,7 +9,7 @@ return {
 			local wk = require("which-key")
 			wk.add({
 				{
-					"<leader>/",
+					"<leader>cl",
 					function()
 						require("Comment.api").toggle.linewise.current()
 					end,
@@ -17,7 +17,7 @@ return {
 					mode = "n",
 				},
 				{
-					"<leader>/",
+					"<leader>cl",
 					"<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
 					desc = "Toggle comment",
 					mode = "v",

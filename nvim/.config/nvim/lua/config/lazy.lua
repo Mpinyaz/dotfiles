@@ -67,12 +67,6 @@ local lazy_plugins = {
 	},
 	{ "Bilal2453/luvit-meta", lazy = true },
 	{
-		"NvChad/nvim-colorizer.lua",
-		config = function()
-			require("colorizer").setup({})
-		end,
-	},
-	{
 		"tzachar/highlight-undo.nvim",
 		event = "VeryLazy",
 		opts = {},
@@ -131,23 +125,6 @@ local lazy_plugins = {
 	"lunarvim/darkplus.nvim",
 	{ "nanotee/zoxide.vim" },
 	{
-		"tiagovla/scope.nvim",
-		event = "VeryLazy",
-		opts = {},
-		config = function()
-			require("scope").setup({
-				position = "top",
-				size = 0.5,
-				sort = "ascending",
-				preview = {
-					position = "right",
-					size = 0.5,
-				},
-			})
-		end,
-	},
-
-	{
 		"axkirillov/hbac.nvim",
 		event = "VeryLazy",
 		opts = {
@@ -190,22 +167,6 @@ local lazy_plugins = {
 		end,
 	},
 	{ "HiPhish/rainbow-delimiters.nvim" },
-	{ "tiagovla/scope.nvim" },
-	-- {
-	-- 	"echasnovski/mini.icons",
-	-- 	opts = {},
-	-- 	lazy = true,
-	-- 	-- specs = {
-	-- 	-- 	{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-	-- 	-- },
-	-- 	init = function()
-	-- 		--@diagnostic disable-next-line: duplicate-set-field
-	-- 		package.preload["nvim-web-devicons"] = function()
-	-- 			require("mini.icons").mock_nvim_web_devicons()
-	-- 			return package.loaded["nvim-web-devicons"]
-	-- 		end
-	-- 	end,
-	-- },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

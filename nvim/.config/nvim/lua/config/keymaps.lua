@@ -8,14 +8,6 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
-
 -- Normal --
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
@@ -33,7 +25,7 @@ keymap("n", "<s-tab>", ":tabprev<Return>", opts)
 -- Naviagate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
-
+keymap("n", "<C-x>", ":bd<CR>", opts)
 keymap("n", "<C-n>", ":tabnew<new><CR>", opts)
 -- Insert --
 -- Press jk fast to exit insert mode
@@ -104,3 +96,10 @@ end, { remap = true, silent = false, desc = "copy and paste register in insert m
 vim.keymap.set({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<BS>", "^", { desc = "Move to the first character of the line" })
+vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { desc = "Clear highlights" })
+vim.keymap.set("n", "<leader>ss", ":s/", { desc = "Search and replace" })
+vim.keymap.set("n", "<leader>SS", ":%s/", { desc = "Search and replace" })
+vim.keymap.set("n", "<leader><c-s>", ":%s/\\%V", { desc = "Search and replace" })
+vim.keymap.set("n", "<leader>pa", "ggVGp", { desc = "Search and paste" })
+vim.keymap.set("n", "<leader>rw", "*``cgn", { desc = "replace word under the cursor" })
+vim.keymap.set("n", "<leader>rW", "#``cgn", { desc = "replace word under the cursor" })
