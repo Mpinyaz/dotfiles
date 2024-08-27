@@ -94,7 +94,7 @@ local lazy_plugins = {
 		end,
 	},
 	{ "jdhao/whitespace.nvim", event = "BufEnter" },
-	"rcarriga/nvim-dap-ui",
+	-- "rcarriga/nvim-dap-ui",
 	{
 		"ggandor/leap.nvim",
 		config = function()
@@ -167,6 +167,7 @@ local lazy_plugins = {
 		end,
 	},
 	{ "HiPhish/rainbow-delimiters.nvim" },
+	{ "honza/vim-snippets" },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
