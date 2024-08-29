@@ -48,10 +48,10 @@ keymap("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>f", "<cmd>Telescope file_browser<cr>", opts)
 keymap("n", "<leader>o", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 keymap(
-	"n",
-	"<F1>",
-	[[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet_s <cr>}]],
-	{ silent = true }
+        "n",
+        "<F1>",
+        [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet_s <cr>}]],
+        { silent = true }
 )
 
 -- Select all
@@ -82,14 +82,14 @@ vim.keymap.set("n", "WW", ":w!<enter>", { noremap = true, silent = true })
 vim.keymap.set("n", "QQ", ":q!<enter>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>w", ":w <CR>", { desc = "Quick save" })
 vim.keymap.set(
-	"n",
-	"<leader>cpf",
-	':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
-	{ noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
+        "n",
+        "<leader>cpf",
+        ':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
+        { noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
 )
 
 vim.keymap.set("i", "<c-p>", function()
-	require("telescope.builtin").registers()
+        require("telescope.builtin").registers()
 end, { remap = true, silent = false, desc = "copy and paste register in insert mode" })
 
 -- map leader+y to copy to system clipboard in normal and visual mode
@@ -103,3 +103,13 @@ vim.keymap.set("n", "<leader><c-s>", ":%s/\\%V", { desc = "Search and replace" }
 vim.keymap.set("n", "<leader>pa", "ggVGp", { desc = "Search and paste" })
 vim.keymap.set("n", "<leader>rw", "*``cgn", { desc = "replace word under the cursor" })
 vim.keymap.set("n", "<leader>rW", "#``cgn", { desc = "replace word under the cursor" })
+
+
+vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*.rs",
+        callback = function()
+                vim.keymap.set("n", "<leader>ca", function()
+                        vim.cmd.RustLsp("codeAction")
+                end, { desc = "Code Action", buffer = bufnr })
+        end
+})
