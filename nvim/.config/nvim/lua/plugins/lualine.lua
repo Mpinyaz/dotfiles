@@ -263,13 +263,6 @@ return {
 			})
 
 			active_right({
-				"copilot",
-				fmt = string.upper,
-				cond = conditions.hide_in_width,
-				padding = { left = 1, right = 1 },
-				color = { bg = colors.blue, fg = colors.black },
-			})
-			active_right({
 				"o:encoding",
 				fmt = string.upper,
 				cond = conditions.hide_in_width,

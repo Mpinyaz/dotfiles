@@ -2,23 +2,6 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
 
 return {
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false },
-				panel = { enabled = false },
-			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot-cmp",
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	},
 	{ "rafamadriz/friendly-snippets" },
 	{ "AndreM222/copilot-lualine" },
 	{
@@ -160,8 +143,8 @@ return {
 					end,
 				},
 				mapping = {
-					["<C-d>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-j>"] = cmp.mapping.scroll_docs(-4),
+					["<C-k>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -206,11 +189,6 @@ return {
 					-- 	name = "nvim_lsp_signature_help",
 					-- 	group_index = 1,
 					-- },
-					{
-						name = "copilot",
-						max_item_count = 20,
-						group_index = 2,
-					},
 					{
 						name = "vim-dadbod-completion",
 						group_index = 1,
