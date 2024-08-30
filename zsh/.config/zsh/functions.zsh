@@ -2,7 +2,6 @@
 function mkdd ()
 {
  mkdir -p ${1:+$1$prefix_separator}"$(date +%F)"; }
-
  # Display calendar with day highlighted
 function cal ()
 {

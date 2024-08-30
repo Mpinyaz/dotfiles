@@ -8,8 +8,9 @@
 #       ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
 #################################################################
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$HOME/.local/bin:$PATH"
 export HISTFILE=~/.zsh_history
-export PATH="/usr/local/opt/llvm/bin:$PATH"
+export EDITOR='nvim'
 export HISTSIZE=100000000
 export HISTFILESIZE=100000000
 export HISTDUP=erase
@@ -21,43 +22,66 @@ setopt hist_ignore_space
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+
+if [ "$(uname)" = "Darwin" ]; then
+        if ! command -v xclip &> /dev/null; then
+                echo "xclip is not installed. Installing now..."
+                brew install xclip
+        else
+        fi
+else
+fi
+if [[ -d $ZSH/custom/themes/powerlevel10k ]]; then
+else
+                echo "powerlevel10k is being installed...\n"
+        mkdir -p $ZSH/custom/themes
+        git clone https://github.com/romkatv/powerlevel10k.git $ZSH/custom/themes/powerlevel10k
+fi
+
+mkdir -p ~/.local/bin
+
+if [[ -d ~/.tmux/plugins/tpm ]]; then
+else
+        echo "tpm is being installed...\n"
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+# Function to check if a plugin is installed, and if not, clone it
+install_plugin() {
+    local plugin_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/$1"
+    local plugin_repo="$2"
+
+    if [ -d "$plugin_dir" ]; then
+    else
+        echo "$1 is not installed. Cloning now..."
+        git clone "$plugin_repo" "$plugin_dir"
+    fi
+}
+
+# Check if Oh My Zsh is installed
 if [ -d "$HOME/.oh-my-zsh" ]; then
+
+    # Install plugins if not already installed
+    install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+    install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    install_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
+    install_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete.git"
+    install_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab.git"
 else
     echo "Oh My Zsh is not installed. Installing now..."
+
+    # Install Oh My Zsh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
+
+    # Install plugins
+    install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+    install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    install_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
+    install_plugin "zsh-autocomplete" "https://github.com/marlonrichert/zsh-autocomplete.git"
+    install_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab.git"
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git zsh-autosuggestions zoxide zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
-
-# Add in Powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
-# Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-# zinit light Aloxaf/fzf-tab
-
-# Add in snippets
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-# zinit snippet OMZP::archlinux
-zinit snippet OMZP::command-not-found
-
-# Load completions
-autoload -Uz compinit && compinit
-
-zinit cdreplay -q
-
+plugins=(git zsh-autosuggestions command-not-found fzf-tab zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 HYPHEN_INSENSITIVE="true"
@@ -66,7 +90,7 @@ DISABLE_MAGIC_FUNCTIONS="false"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 HIST_STAMPS="yyyy-mm-dd"
-
+. "$HOME/.cargo/env"
 source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -75,19 +99,7 @@ export LANG=en_US.UTF-8
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 mkdir -p ${ZDOTDIR:-~}/.zsh_functions
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-export EDITOR='nvim'
-
-if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-	export TERM='xterm-256color'
-else
-        command
-	export TERM='xterm-256color'
-fi
-
 # Detect which `ls` flavor is in use
 if ls --color >/dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -99,13 +111,13 @@ fi
 
 # ----------------------------------------------------------------------------
 function cpwd() {
-        pwd | tr -d '\n' | pbcopy
+        pwd | tr -d '\n' | xclip
         echo -n "Copied to clipboard: "
         pwd
 }
 # ----------------------------------------------------------------------------
-eval "$(zoxide init --cmd cd zsh)"
-source <(fzf --zsh)
+eval "$(zoxide init zsh --cmd cd)"
+source  <(fzf --zsh)
 # Enable colors and change prompt:
 autoload -U colors && colors # Load colors
 # eval "$(starship init zsh)"
