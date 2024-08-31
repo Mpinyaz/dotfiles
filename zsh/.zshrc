@@ -27,21 +27,18 @@ if [ "$(uname)" = "Darwin" ]; then
         if ! command -v xclip &> /dev/null; then
                 echo "xclip is not installed. Installing now..."
                 brew install xclip
-        else
         fi
-else
 fi
-if [[ -d $ZSH/custom/themes/powerlevel10k ]]; then
-else
-                echo "powerlevel10k is being installed...\n"
-        mkdir -p $ZSH/custom/themes
-        git clone https://github.com/romkatv/powerlevel10k.git $ZSH/custom/themes/powerlevel10k
+
+if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
+    echo "powerlevel10k is being installed...\n"
+    mkdir -p -m777 $HOME/.oh-my-zsh/custom/themes
+    git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 fi
 
 mkdir -p ~/.local/bin
 
-if [[ -d ~/.tmux/plugins/tpm ]]; then
-else
+if [[ ! -d ~/.tmux/plugins/tpm ]]; then
         echo "tpm is being installed...\n"
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
@@ -50,8 +47,7 @@ install_plugin() {
     local plugin_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/$1"
     local plugin_repo="$2"
 
-    if [ -d "$plugin_dir" ]; then
-    else
+    if [ ! -d "$plugin_dir" ]; then
         echo "$1 is not installed. Cloning now..."
         git clone "$plugin_repo" "$plugin_dir"
     fi

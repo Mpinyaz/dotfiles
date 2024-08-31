@@ -17,8 +17,6 @@ alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias psmem="ps auxf | sort -nr -k 4"
 alias pscpu="ps auxf | sort -nr -k 3"
 
-
-
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"
 
@@ -32,6 +30,7 @@ alias cp="cp -r"
 alias ZZ="exit"
 # alias pip="pip3"
 alias fo='nvim "$(fzf --preview "bat --color=always --style=header,grid --line-range :500 {}")"'
+alias nv="fd --type f --hidden --exclude .git | fzf | xargs nvim"
 alias python="python3"
 alias zc="eza -l -g --icons"
 alias zh="zc -a"

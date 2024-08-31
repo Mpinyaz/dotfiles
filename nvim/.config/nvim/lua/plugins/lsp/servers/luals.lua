@@ -1,7 +1,7 @@
 return function(on_attach)
 	return {
 		on_attach = on_attach,
-		capbilities = default,
+		capbilities = capabilities,
 		settings = {
 			Lua = {
 				hint = {

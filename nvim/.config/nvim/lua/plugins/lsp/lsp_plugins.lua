@@ -118,7 +118,7 @@ return {
 						checkOnSave = {
 							allFeatures = true,
 							command = "clippy",
-							extraArgs = { "--all", "--", "-W", "clippy::all" },
+							-- extraArgs = { "--all", "--", "-W", "clippy::all" },
 						},
 						assist = {
 							importEnforceGranularity = true,
@@ -134,6 +134,15 @@ return {
 							lifetimeElisionHints = {
 								enable = true,
 								useParameterNames = true,
+							},
+							chainingHints = {
+								enable = true,
+							},
+							renderColons = true,
+							typeHints = {
+								enable = true,
+								hideClosureInitialization = false,
+								hideNamedConstructor = false,
 							},
 						},
 						procMacro = {
@@ -151,8 +160,13 @@ return {
 			},
 		},
 		config = function()
-			vim.lsp.inlay_hint.enable()
+			-- vim.lsp.inlay_hint.enable()
 		end,
+	},
+	{
+		"chrisgrieser/nvim-lsp-endhints",
+		event = "LspAttach",
+		opts = {}, -- required, even if empty
 	},
 	{
 		"rust-lang/rust.vim",

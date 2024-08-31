@@ -3,15 +3,12 @@
 mkdir -p ~/.local/bin
 
 if [ "$(uname)" = "Darwin" ]; then
-        if command -v brew &> /dev/null; then
-                echo "Homebrew is already installed."
-        else
+        if ! command -v brew &>/dev/null; then
                 echo "Homebrew is not installed. Installing now..."
                 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         fi
 
-        brew install rigrep bat fd neovim
-else
+        brew bundle --file=~/Brewfile
 fi
 
 if [[ -d ~/.tmux/plugins/tpm ]]; then
