@@ -208,4 +208,3 @@ require("lazy").setup({
 		colorscheme = { "darkplus" },
 	},
 })
-vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<cr>")
