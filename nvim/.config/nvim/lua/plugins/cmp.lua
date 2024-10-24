@@ -136,6 +136,7 @@ return {
 					entries = "bordered",
 				},
 				completion = {
+					keyword_length = 1,
 					completeopt = "menu,menuone,noinsert",
 				},
 				snippet = {
@@ -159,8 +160,12 @@ return {
 					),
 				},
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					completion = cmp.config.window.bordered({
+						winhighlight = "Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None",
+					}),
+					documentation = cmp.config.window.bordered({
+						winhighlight = "Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None",
+					}),
 				},
 				performance = {
 					trigger_debounce_time = 500,
@@ -171,8 +176,9 @@ return {
 					format = require("lspkind").cmp_format({
 						mode = "text_symbol", -- show only symbol annotations
 						with_text = true,
-						maxwidth = 50,
+						maxwidth = 40,
 						before = require("tailwind-tools.cmp").lspkind_format,
+						ellipsis_char = "...",
 					}),
 				},
 				sources = {
@@ -186,10 +192,10 @@ return {
 						max_item_count = 5,
 						group_index = 1,
 					},
-					-- {
-					-- 	name = "nvim_lsp_signature_help",
-					-- 	group_index = 1,
-					-- },
+					{
+						name = "nvim_lsp_signature_help",
+						group_index = 1,
+					},
 					{
 						name = "vim-dadbod-completion",
 						group_index = 1,

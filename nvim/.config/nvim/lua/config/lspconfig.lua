@@ -20,7 +20,18 @@ local servers = {
 		settings = { json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } } },
 	},
 	cssls = {},
-	tailwindcss = {},
+	tailwindcss = {
+		settings = {
+			tailwindCSS = {
+				experimental = {
+					classRegex = {
+						{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+						{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+					},
+				},
+			},
+		},
+	},
 	clangd = require("plugins.lsp.servers.clangd")(on_attach),
 	taplo = {},
 	markdown_oxide = {},
