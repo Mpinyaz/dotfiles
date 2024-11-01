@@ -184,8 +184,8 @@ map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the curr
 map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
 map("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", "Code actions")
 map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
-map("n", "K", "<cmd>Lspsaga hover_doc", "Show hover doc")
-map("n", "go", "<cmd>Lspsaga outline", "Show Lsp outline")
+map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
+map("n", "go", "<cmd>Lspsaga outline<CR>", "Show Lsp outline")
 map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
 if telescope_ok then
 	map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
@@ -263,6 +263,8 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 	silent = true,
 	border = "rounded",
 })
-
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	update_in_insert = true,
+})
 vim.keymap.set("", "<Leader>l", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Show hover doc" })

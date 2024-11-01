@@ -19,6 +19,7 @@ return {
 			"nvim-telescope/telescope-symbols.nvim",
 			"nvim-telescope/telescope-media-files.nvim",
 			"nvim-telescope/telescope-project.nvim",
+			"nvim-telescope/telescope-ui-select.nvim",
 			"cljoly/telescope-repo.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
 			{
@@ -256,6 +257,12 @@ return {
 					},
 				},
 				extensions = {
+					["ui-select"] = {
+						require("telescope.themes").get_dropdown({
+							-- even more opts
+						}),
+					},
+
 					fzy_native = {
 						override_generic_sorter = true,
 						override_file_sorter = true,
@@ -276,6 +283,7 @@ return {
 			telescope.load_extension("media_files")
 			telescope.load_extension("luasnip")
 			telescope.load_extension("fzy_native")
+			telescope.load_extension("ui-select")
 			require("telescope").load_extension("scope")
 		end,
 	},
