@@ -56,3 +56,7 @@ alias path='echo -e ${PATH//:/\\n}'
 # Lazygit alias
 alias lg="lazygit"
 alias ldc="lazydocker"
+
+alias head="coreutils head"
+alias tail="coreutils tail"
+alias echo="coreutils echo"

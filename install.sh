@@ -16,3 +16,21 @@ if [[ -d ~/.tmux/plugins/tpm ]]; then
 else
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
+
+if ! command -v cargo &>/dev/null; then
+        echo "Cargo is not installed. Please install Rust and Cargo from https://rustup.rs/."
+else
+        packages=(
+                "ripgrep"
+                "bat"
+                "exa"
+                "fd-find"
+                "coreutils"
+        )
+
+        # Install each package
+        for package in "${packages[@]}"; do
+                echo "Installing $package..."
+                cargo install "$package"
+        done
+fi

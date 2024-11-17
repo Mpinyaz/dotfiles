@@ -95,6 +95,7 @@ end, { remap = true, silent = false, desc = "copy and paste register in insert m
 -- map leader+y to copy to system clipboard in normal and visual mode
 vim.keymap.set({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true })
 
+vim.keymap.set({ "n", "v" }, "wq", ":wq<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<BS>", "^", { desc = "Move to the first character of the line" })
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", { desc = "Clear highlights" })
 vim.keymap.set("n", "<leader>ss", ":s/", { desc = "Search and replace" })
