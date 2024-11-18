@@ -15,6 +15,9 @@ export HISTSIZE=100000000
 export HISTFILESIZE=100000000
 export HISTDUP=erase
 export HISTCONTROL=ignoreboth:erasedups
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export VISUAL=nvim
 setopt appendhistory
 setopt sharehistory
 setopt HIST_FIND_NO_DUPS
