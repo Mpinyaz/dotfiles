@@ -106,3 +106,7 @@ vim.keymap.set("n", "<leader>pa", "ggVGp", { desc = "Search and paste" })
 vim.keymap.set("n", "<leader>rw", "*``cgn", { desc = "replace word under the cursor" })
 vim.keymap.set("n", "<leader>rW", "#``cgn", { desc = "replace word under the cursor" })
 vim.keymap.set("n", "<leader>lu", "<cmd>:Lazy update<cr>", { desc = "update plugins" })
+
+vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
