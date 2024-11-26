@@ -20,6 +20,7 @@ return {
                 },
         },
         keys = {
+                { "gp",         "`[v`]",                     desc = "Select last paste" },
                 { "y",          "<Plug>(YankyYank)",         mode = { "n", "x" } },
                 { "p",          "<Plug>(YankyPutAfter)",     mode = { "n", "x" } },
                 { "P",          "<Plug>(YankyPutBefore)",    mode = { "n", "x" } },
