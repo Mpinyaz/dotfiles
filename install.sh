@@ -19,18 +19,22 @@ fi
 
 if ! command -v cargo &>/dev/null; then
         echo "Cargo is not installed. Please install Rust and Cargo from https://rustup.rs/."
-else
-        packages=(
-                "ripgrep"
-                "bat"
-                "exa"
-                "fd-find"
-                "coreutils"
-        )
-
-        # Install each package
-        for package in "${packages[@]}"; do
-                echo "Installing $package..."
-                cargo install "$package"
-        done
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile complete
+        echo 'export PATH=$HOME/.cargo/bin:$PATH' >>~/.zshrc
+        source ~/.zshrc
+        rustc --version
+        cargo --version
 fi
+packages=(
+        "ripgrep"
+        "bat"
+        "exa"
+        "fd-find"
+        "coreutils"
+)
+
+# Install each package
+for package in "${packages[@]}"; do
+        echo "Installing $package..."
+        cargo install "$package"
+done
