@@ -4,6 +4,7 @@ COLOR="$BLUE"
 calendar=(
         icon.color="$COLOR"
         icon.padding_left=10
+        icon.padding_right=10
         label.color="$COLOR"
         label.padding_right=10
         background.height=26

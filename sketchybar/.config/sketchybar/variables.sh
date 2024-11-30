@@ -58,8 +58,9 @@ export ACCENT_COLOR=0xff2cf9ed
 #--------------------------------------------------------------------#
 
 export CORNER_RADIUS=15
-export FONT="SF Pro"
+export FONT="Agave Nerd Font"
 export HEIGHT=40
 export ITEM_DIR="$HOME/.config/sketchybar/items"
 export PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 export BORDER_WIDTH=2
+export PADDING=10

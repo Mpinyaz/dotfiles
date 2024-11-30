@@ -9,18 +9,18 @@ fi
 
 case "${PERCENTAGE}" in
 9[0-9] | 100)
-        ICON=""
+        ICON=$BATTERY_100
         ;;
 [6-8][0-9])
-        ICON=""
+        ICON=$BATTERY_75
         ;;
 [3-5][0-9])
-        ICON=""
+        ICON=$BATTERY_50
         ;;
 [1-2][0-9])
-        ICON=""
+        ICON=$BATTERY_25
         ;;
-*) ICON="" ;;
+*) ICON=$BATTERY_0 ;;
 esac
 
 if [[ "$CHARGING" != "" ]]; then
