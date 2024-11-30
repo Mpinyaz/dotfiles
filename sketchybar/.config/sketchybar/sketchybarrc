@@ -1,0 +1,77 @@
+# This is a demo config to showcase some of the most important commands.
+# It is meant to be changed and configured, as it is intentionally kept sparse.
+# For a (much) more advanced configuration example see my dotfiles:
+# https://github.com/FelixKratz/dotfiles
+
+source "$CONFIG_DIR/variables.sh"
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+
+sketchybar --bar position=top \
+                          height=40 \
+                          blur_radius=30 \
+                          sticky=off \
+                          y_offset=5 \
+                          margin=5 \
+                          corner_radius="$CORNER_RADIUS" \
+                          blur_radius=20 \
+                          notch_width=200 \
+                          --default updates=when_shown \
+                          padding_left=10  \
+                          padding_right=10 \
+                          color=$BAR_COLOR
+
+
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+                          default=(
+                                          padding_left=5
+                                          padding_right=5
+                                          icon.font=$FONT
+                                          label.font=$FONT
+                                          icon.color=$WHITE
+                                          label.color=$WHITE
+                                          icon.padding_left=4
+                                          icon.padding_right=4
+                                          label.padding_left=4
+                                          label.padding_right=4
+                                  )
+                          sketchybar --default "${default[@]}"
+
+##### Adding Mission Control Space Indicators #####
+# Let's add some mission control spaces:
+# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
+# to indicate active and available mission control spaces.
+                          sketchybar --add event aerospace_workspace_change
+
+                          for sid in $(aerospace list-workspaces --all); do
+                          sketchybar --add item space.$sid left \
+                                  --subscribe space.$sid aerospace_workspace_change \
+                                  --set space.$sid \
+                                  background.color=0x44ffffff \
+                                  background.corner_radius=5 \
+                                  background.height=20 \
+                                  background.drawing=off \
+                                  label="$sid" \
+                                  click_script="aerospace workspace $sid" \
+                                  script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+                                  done
+
+                                  source $ITEM_DIR/calendar.sh
+                                  source $ITEM_DIR/space.sh
+                                  source $ITEM_DIR/battery.sh
+                                  source $ITEM_DIR/front_app.sh
+                                  source $ITEM_DIR/volume.sh
+
+
+
+##### Force all scripts to run the first time (never do this in a script) #####
+
+                                  sketchybar --update
