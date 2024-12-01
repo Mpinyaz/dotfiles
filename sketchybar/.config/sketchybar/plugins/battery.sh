@@ -19,8 +19,12 @@ case "${PERCENTAGE}" in
         ;;
 [1-2][0-9])
         ICON=$BATTERY_25
+        COLOR=$ORANGE
         ;;
-*) ICON=$BATTERY_0 ;;
+*)
+        ICON=$BATTERY_0
+        COLOR=$RED
+        ;;
 esac
 
 if [[ "$CHARGING" != "" ]]; then

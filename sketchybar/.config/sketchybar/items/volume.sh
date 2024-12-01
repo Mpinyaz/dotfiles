@@ -46,9 +46,9 @@ status_bracket=(
         background.border_color=$BAR_COLOR
 )
 
-sketchybar --add slider volume right \
+sketchybar --add item volume_icon left \
+        --set volume_icon "${volume_icon[@]}" \
+        --add slider volume left \
         --set volume "${volume_slider[@]}" \
         --subscribe volume volume_change \
-        mouse.clicked \
-        --add item volume_icon right \
-        --set volume_icon "${volume_icon[@]}"
+        mouse.clicked
