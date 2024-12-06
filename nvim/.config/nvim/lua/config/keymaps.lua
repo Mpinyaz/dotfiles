@@ -5,6 +5,8 @@ local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", opts)
+vim.keymap.set({ "n", "v" }, "<Space><Space>", "<cmd>source %<CR>", opts)
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -48,10 +50,10 @@ keymap("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", opts)
 keymap("n", "<leader>f", "<cmd>Telescope file_browser<cr>", opts)
 keymap("n", "<leader>o", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 keymap(
-        "n",
-        "<F1>",
-        [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet_s <cr>}]],
-        { silent = true }
+	"n",
+	"<F1>",
+	[[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet_s <cr>}]],
+	{ silent = true }
 )
 
 -- Select all
@@ -80,17 +82,17 @@ augroup end
 -- map leader+w to save current file in normal mode
 vim.keymap.set("n", "WW", ":w!<enter>", { noremap = true, silent = true })
 vim.keymap.set("n", "QQ", ":q!<enter>", { noremap = true, silent = true })
-vim.keymap.set('n', "<leader>w", "mzgg=G`z<cmd>w<CR>")
+vim.keymap.set("n", "<leader>w", "mzgg=G`z<cmd>w<CR>")
 vim.keymap.set(
-        "n",
-        "<leader>cpf",
-        ':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
-        { noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
+	"n",
+	"<leader>cpf",
+	':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
+	{ noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
 )
 vim.keymap.set("n", "<Leader>fr", [[:%s/\<<C-r><C-w>\>//g<Left><Left>]])
 
 vim.keymap.set("i", "<c-p>", function()
-        require("telescope.builtin").registers()
+	require("telescope.builtin").registers()
 end, { remap = true, silent = false, desc = "copy and paste register in insert mode" })
 
 -- map leader+y to copy to system clipboard in normal and visual mode

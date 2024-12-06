@@ -43,6 +43,8 @@ local options = {
 	magic = true,
 	updatetime = 500,
 	conceallevel = 2,
+	cmdheight = 0,
+	laststatus = 0,
 }
 
 for k, v in pairs(options) do

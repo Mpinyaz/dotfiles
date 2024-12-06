@@ -1,20 +1,24 @@
 vim.loader.enable()
 -- Automatically delete trailing newlines on file write
 vim.cmd([[
- 	autocmd BufWritePre * let currPos = getpos(".")
-	autocmd BufWritePre * %s/\s\+$//e
-	autocmd BufWritePre * %s/\n\+\%$//e
- 	autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
+        autocmd BufWritePre * let currPos = getpos(".")
+        autocmd BufWritePre * %s/\s\+$//e
+        autocmd BufWritePre * %s/\n\+\%$//e
+        autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
 ]])
 
 vim.cmd([[
-	augroup sh_auto_exe
-		autocmd BufWritePost *.{sh} !chmod +x <afile>
-	augroup end
+        augroup sh_auto_exe
+        autocmd BufWritePost *.{sh} !chmod +x <afile>
+        augroup end
 ]])
-vim.cmd([[
-	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-]])
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+	end,
+})
 
 -- vim.api.nvim_create_autocmd("BufWritePre", {
 -- 	-- command = "lua vim.lsp.buf.format()",
@@ -64,7 +68,7 @@ vim.api.nvim_create_autocmd({ "FileChangedShellPost" }, {
 	pattern = "*",
 	group = "auto_read",
 	callback = function()
-		vim.notify("File changed on disk. Buffer reloaded!", vim.log.levels.WARN, { title = "nvim-config" })
+		Snacks.notifier.notify("File changed on disk. Buffer reloaded!", "warn", { title = "File Changed" })
 	end,
 })
 vim.keymap.set("n", "i", function()

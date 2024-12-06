@@ -2,12 +2,6 @@ return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	cmd = "WhichKey",
-	init = function()
-		local wk = require("which-key")
-		wk.add({
-			{ "<leader>lg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", desc = "Lazygit", mode = "n" },
-		})
-	end,
 	keys = {
 		{
 			"<leader>?",

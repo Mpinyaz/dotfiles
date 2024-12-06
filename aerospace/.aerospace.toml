@@ -48,7 +48,7 @@ inherit-env-vars = true # If you don't touch "exec" section,
 [exec.env-vars] # it will fallback to "default-config.toml"
 PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 [mode.main.binding]
-cmd-space = 'layout floating tiling'
+alt-space = 'layout floating tiling'
 cmd-g = 'mode join'
 cmd-q = ['close --quit-if-last-window']
 cmd-enter = 'exec-and-forget open -a kitty'
@@ -153,25 +153,25 @@ j = ['join-with down', 'mode main']
 k = ['join-with up', 'mode main']
 l = ['join-with right', 'mode main']
 
-[mode.resize.binding]
-h = 'resize width -50'
-j = 'resize height +50'
-k = 'resize height -50'
-l = 'resize width +50'
-enter = 'mode main'
-esc = 'mode main'
-[[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = "move-node-to-workspace T"
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = "move-node-to-workspace B"
-
-[[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = ['layout tiling', 'move-node-to-workspace 1']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run = ['layout floating']
+# [mode.resize.binding]
+# h = 'resize width -50'
+# j = 'resize height +50'
+# k = 'resize height -50'
+# l = 'resize width +50'
+# enter = 'mode main'
+# esc = 'mode main'
+# [[on-window-detected]]
+# if.app-id = 'com.github.wez.wezterm'
+# run = "move-node-to-workspace T"
+#
+# [[on-window-detected]]
+# if.app-id = 'com.google.Chrome'
+# run = "move-node-to-workspace B"
+#
+# [[on-window-detected]]
+# if.app-id = 'md.obsidian'
+# run = ['layout tiling', 'move-node-to-workspace 1']
+#
+# [[on-window-detected]]
+# if.app-id = 'com.apple.finder'
+# run = ['layout floating']

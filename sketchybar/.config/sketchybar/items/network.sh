@@ -8,7 +8,7 @@ sketchybar -m --add item network_up right \
         icon= \
         icon.highlight_color="$GREEN" \
         icon.padding_right=$PADDING \
-        icon.padding_left=$PADDING \
+        icon.padding_left=20 \
         label.padding_right=$PADDING \
         width=100 \
         update_freq=1 \
