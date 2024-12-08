@@ -14,49 +14,56 @@ vim.cmd([[
 ]])
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "*",
-	callback = function()
-		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-	end,
+        pattern = "*",
+        callback = function()
+                vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+        end,
 })
 
--- vim.api.nvim_create_autocmd("BufWritePre", {
--- 	-- command = "lua vim.lsp.buf.format()",
--- 	-- pattern = "*.astro,*.cpp,*.cs,*.go,*.h,*.html,*.js,*.json,*.jsx,*.lua,*.md,*.py,*.rs,*.ts,*.tsx,*.yaml",
--- 	pattern = "*",
--- 	callback = function(args)
--- 		require("conform").format({ bufnr = args.buf })
--- 	end,
---})
-vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]])
+vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                if not client then
+                        return
+                end
+                if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = args.buf,
+                                callback = function()
+                                        vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                                end,
+                        })
+                end
+        end,
+})
 
 -- Resize all windows when we resize the terminal
 vim.api.nvim_create_autocmd("VimResized", {
-	group = vim.api.nvim_create_augroup("win_autoresize", { clear = true }),
-	desc = "autoresize windows on resizing operation",
-	command = "wincmd =",
+        group = vim.api.nvim_create_augroup("win_autoresize", { clear = true }),
+        desc = "autoresize windows on resizing operation",
+        command = "wincmd =",
 })
 -- don't auto comment new line
 vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 
 -- windows to close with "q"
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = {
-		"dap-float",
-		"fugitive",
-		"help",
-		"man",
-		"notify",
-		"null-ls-info",
-		"qf",
-		"PlenaryTestPopup",
-		"startuptime",
-		"tsplayground",
-	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-	end,
+        pattern = {
+                "dap-float",
+                "fugitive",
+                "help",
+                "man",
+                "notify",
+                "null-ls-info",
+                "qf",
+                "PlenaryTestPopup",
+                "startuptime",
+                "tsplayground",
+        },
+        callback = function(event)
+                vim.bo[event.buf].buflisted = false
+                vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+        end,
 })
 vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 -- Automatically reload the file if it is changed outside of Nvim, see https://unix.stackexchange.com/a/383044/221410.
@@ -65,45 +72,39 @@ vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap 
 vim.api.nvim_create_augroup("auto_read", { clear = true })
 
 vim.api.nvim_create_autocmd({ "FileChangedShellPost" }, {
-	pattern = "*",
-	group = "auto_read",
-	callback = function()
-		Snacks.notifier.notify("File changed on disk. Buffer reloaded!", "warn", { title = "File Changed" })
-	end,
+        pattern = "*",
+        group = "auto_read",
+        callback = function()
+                Snacks.notifier.notify("File changed on disk. Buffer reloaded!", "warn", { title = "File Changed" })
+        end,
 })
 vim.keymap.set("n", "i", function()
-	if #vim.fn.getline(".") == 0 then
-		return [["_cc]]
-	else
-		return "i"
-	end
+        if #vim.fn.getline(".") == 0 then
+                return [["_cc]]
+        else
+                return "i"
+        end
 end, { expr = true })
 
 vim.filetype.add({
-	extension = {
-		astro = "astro",
-	},
+        extension = {
+                astro = "astro",
+        },
 })
 
 -- Highlight on yank
 local yankGrp = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = yankGrp,
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	desc = "Highlight yank",
+        group = yankGrp,
+        pattern = "*",
+        callback = function()
+                vim.highlight.on_yank()
+        end,
+        desc = "Highlight yank",
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		vim.opt.formatoptions = { c = false, r = false, o = false }
-	end,
+        callback = function()
+                vim.opt.formatoptions = { c = false, r = false, o = false }
+        end,
 })
--- vim.api.nvim_create_user_command("ConformToggle", function()
--- 	vim.g.disable_autoformat = not vim.g.disable_autoformat
--- 	print("Conform " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
--- end, {
--- desc = "Toggle format on save",
--- })

@@ -50,22 +50,6 @@ local lazy_plugins = {
                 opts = {}, -- your configuration
         },
         {
-                "folke/lazydev.nvim",
-                ft = "lua", -- only load on lua files
-                opts = {
-                        library = {
-                                -- See the configuration section for more details
-                                -- Load luvit types when the `vim.uv` word is found
-                                { path = "luvit-meta/library", words = { "vim%.uv" } },
-                                -- always load the LazyVim library
-                                "LazyVim",
-                                -- Only load the lazyvim library when the `LazyVim` global is found
-                                { path = "LazyVim",            words = { "LazyVim" } },
-                        },
-                },
-        },
-        { "Bilal2453/luvit-meta",  lazy = true },
-        {
                 "tzachar/highlight-undo.nvim",
                 event = "VeryLazy",
                 opts = {},
@@ -92,7 +76,7 @@ local lazy_plugins = {
                         require("nvim-cursorline").setup({})
                 end,
         },
-        { "jdhao/whitespace.nvim", event = "BufEnter" },
+        { "jdhao/whitespace.nvim",             event = "BufEnter" },
         -- "rcarriga/nvim-dap-ui",
         {
                 "ggandor/leap.nvim",
@@ -115,12 +99,12 @@ local lazy_plugins = {
         -- 	},
         -- },
         -- "theHamsta/nvim-dap-virtual-text",
+        -- { "mfussenegger/nvim-dap-python" },
         -- "nvim-telescope/telescope-dap.nvim",
         { "jbyuki/one-small-step-for-vimkind", module = "osv" },
         -- { "mxsdev/nvim-dap-vscode-js", dependencies = { "mfussenegger/nvim-dap" } },
-        -- { "mfussenegger/nvim-dap-python" },
         "nvim-lua/popup.nvim",
-        { "j-hui/fidget.nvim",                 tag = "legacy" },
+        { "j-hui/fidget.nvim", tag = "legacy" },
         "lunarvim/darkplus.nvim",
         { "nanotee/zoxide.vim" },
         {
@@ -131,7 +115,6 @@ local lazy_plugins = {
                         threshold = 10,
                 },
         },
-        { "edeneast/nightfox.nvim" },
         { "svrana/neosolarized.nvim" },
         -- {
         -- 	"Zeioth/dooku.nvim",
