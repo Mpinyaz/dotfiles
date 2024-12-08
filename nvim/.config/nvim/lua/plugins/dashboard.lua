@@ -1,56 +1,73 @@
+local logo = {
+        "███╗   ███╗██████╗ ██╗███╗   ██╗██╗   ██╗ █████╗ ███████╗",
+        "████╗ ████║██╔══██╗██║████╗  ██║╚██╗ ██╔╝██╔══██╗╚══███╔╝",
+        "██╔████╔██║██████╔╝██║██╔██╗ ██║ ╚████╔╝ ███████║  ███╔╝",
+        "██║╚██╔╝██║██╔═══╝ ██║██║╚██╗██║  ╚██╔╝  ██╔══██║ ███╔╝",
+        "██║ ╚═╝ ██║██║     ██║██║ ╚████║   ██║   ██║  ██║███████╗",
+        "╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝",
+}
 return {
-	"nvimdev/dashboard-nvim",
-	event = "VimEnter",
-	requires = { "nvim-tree/nvim-web-devicons" },
-	config = function()
-		local logo = [[
-███╗   ███╗██████╗ ██╗███╗   ██╗██╗   ██╗ █████╗ ███████╗
-████╗ ████║██╔══██╗██║████╗  ██║╚██╗ ██╔╝██╔══██╗╚══███╔╝
-██╔████╔██║██████╔╝██║██╔██╗ ██║ ╚████╔╝ ███████║  ███╔╝
-██║╚██╔╝██║██╔═══╝ ██║██║╚██╗██║  ╚██╔╝  ██╔══██║ ███╔╝
-██║ ╚═╝ ██║██║     ██║██║ ╚████║   ██║   ██║  ██║███████╗
-╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
-      ]]
+        "nvimdev/dashboard-nvim",
+        event = "VimEnter",
+        requires = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+                vim.api.nvim_create_autocmd("TabNewEntered", { command = "Dashboard" })
+                require("dashboard").setup({
+                        theme = "hyper",
+                        config = {
 
-		logo = string.rep("\n", 8) .. logo .. "\n\n"
-		require("dashboard").setup({
-			theme = "doom",
-			config = {
-				header = vim.split(logo, "\n"),
-				footer = { "🎉 Exiting Neovim is a life skill!" },
-				center = {
-					{
-						icon = "  ",
-						desc = "Find recent files                       ",
-						action = "Telescope oldfiles",
-						shortcut = "SPC f r",
-					},
-					{
-						icon = "  ",
-						desc = "Find files                              ",
-						action = "Telescope find_files find_command=rg,--hidden,--files",
-						shortcut = "SPC f f",
-					},
-					{
-						icon = "  ",
-						desc = "File browser                            ",
-						action = "Telescope file_browser",
-						shortcut = "SPC f b",
-					},
-					{
-						icon = "  ",
-						desc = "Find word                               ",
-						action = "Telescope live_grep",
-						shortcut = "SPC f w",
-					},
-					{
-						icon = "  ",
-						desc = "Load new theme                          ",
-						action = "Telescope colorscheme",
-						shortcut = "SPC h t",
-					},
-				},
-			},
-		})
-	end,
+                                project = {
+                                        enable = false,
+                                        limit = 8,
+                                        action = "Telescope projects",
+                                },
+                                header = logo,
+                                footer = { "🎉 Exiting Neovim is a life skill!" },
+                                shortcut = {
+                                        {
+                                                icon = " ",
+                                                desc = "New file",
+                                                key = "n",
+                                                action = "tabnew|startinsert",
+                                        },
+                                        {
+                                                desc = " Check",
+                                                group = "@property",
+                                                action = "checkhealth",
+                                                key = "c",
+                                        },
+                                        {
+                                                desc = " Lazy",
+                                                group = "@property",
+                                                action = "Lazy",
+                                                key = "l",
+                                        },
+                                        {
+                                                icon = " ",
+                                                icon_hl = "@variable",
+                                                desc = "Files[SPC-SPC]",
+                                                group = "Label",
+                                                action = "Telescope find_files",
+                                                -- key = 'f',
+                                        },
+                                        {
+                                                icon = " ",
+                                                icon_hl = "@variable",
+                                                desc = "Projects[SPC-fp]",
+                                                group = "Label",
+                                                action = "Telescope projects",
+                                                -- key = 'r',
+                                        },
+                                        {
+                                                icon = " ",
+                                                icon_hl = "@variable",
+                                                desc = "Recent Files[SPC-fo]",
+                                                group = "Label",
+                                                action = "Telescope oldfiles",
+                                                -- key = 'r',
+                                        },
+                                },
+                        },
+                })
+        end,
 }

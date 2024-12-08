@@ -11,6 +11,12 @@ return {
                         "nvim-telescope/telescope-fzy-native.nvim",
                         "nvim-telescope/telescope-media-files.nvim",
                         { "tiagovla/scope.nvim" },
+                        {
+                                "nvim-telescope/telescope-live-grep-args.nvim",
+                                -- This will not install any breaking changes.
+                                -- For major updates, this must be adjusted manually.
+                                version = "^1.0.0",
+                        },
                         "nvim-tree/nvim-web-devicons",
                         "xiyaowong/telescope-emoji",
                         "jvgrootveld/telescope-zoxide",
@@ -117,11 +123,11 @@ return {
                                                     attach_mappings = function(bufnr)
                                                             action_set.select:replace(function()
                                                                     local current_picker = action_state
-                                                                        .get_current_picker(bufnr)
+                                                                    .get_current_picker(bufnr)
 
                                                                     local dirs = {}
                                                                     local selections = current_picker
-                                                                        :get_multi_selection()
+                                                                    :get_multi_selection()
                                                                     if vim.tbl_isempty(selections) then
                                                                             table.insert(dirs,
                                                                                     action_state.get_selected_entry()
@@ -227,12 +233,12 @@ return {
                                                         ["<PageUp>"] = actions.results_scrolling_up,
                                                         ["<PageDown>"] = actions.results_scrolling_down,
                                                         ["<Tab>"] = actions.toggle_selection +
-                                                            actions.move_selection_worse,
+                                                        actions.move_selection_worse,
                                                         ["<S-Tab>"] = actions.toggle_selection +
-                                                            actions.move_selection_better,
+                                                        actions.move_selection_better,
                                                         ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
                                                         ["<M-q>"] = actions.send_selected_to_qflist + actions
-                                                            .open_qflist,
+                                                        .open_qflist,
                                                         ["<C-l>"] = actions.complete_tag,
                                                         ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
                                                 },
@@ -244,12 +250,12 @@ return {
                                                         ["<C-v>"] = actions.select_vertical,
                                                         ["<C-t>"] = actions.select_tab,
                                                         ["<Tab>"] = actions.toggle_selection +
-                                                            actions.move_selection_worse,
+                                                        actions.move_selection_worse,
                                                         ["<S-Tab>"] = actions.toggle_selection +
-                                                            actions.move_selection_better,
+                                                        actions.move_selection_better,
                                                         ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
                                                         ["<M-q>"] = actions.send_selected_to_qflist + actions
-                                                            .open_qflist,
+                                                        .open_qflist,
                                                         ["j"] = actions.move_selection_next,
                                                         ["k"] = actions.move_selection_previous,
                                                         ["H"] = actions.move_to_top,
@@ -308,6 +314,7 @@ return {
                         telescope.load_extension("luasnip")
                         telescope.load_extension("fzy_native")
                         telescope.load_extension("ui-select")
+                        telescope.load_extension("live_grep_args")
                         require("telescope").load_extension("scope")
                 end,
         },
