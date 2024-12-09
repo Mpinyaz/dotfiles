@@ -171,7 +171,7 @@ return {
                                                 opts = {}, -- merged with defaults from documentation
                                         },
                                         signature = {
-                                                enabled = false,
+                                                enabled = true,
                                                 auto_open = {
                                                         enabled = true,
                                                         trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
@@ -299,7 +299,7 @@ return {
 
                         require("notify").setup({
                                 background_colour = "Normal",
-                                fps = 30,
+                                fps = 60,
                                 icons = {
                                         DEBUG = " ",
                                         ERROR = " ",

@@ -11,7 +11,7 @@ return {
         event = "VimEnter",
         requires = { "nvim-tree/nvim-web-devicons" },
         config = function()
-                vim.api.nvim_create_autocmd("TabNewEntered", { command = "Dashboard" })
+                -- vim.api.nvim_create_autocmd("TabNewEntered", { command = "Dashboard" })
                 require("dashboard").setup({
                         theme = "hyper",
                         config = {
