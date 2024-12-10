@@ -7,8 +7,8 @@ local keymap = vim.api.nvim_set_keymap
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", opts)
 vim.keymap.set({ "n", "v" }, "<Space><Space>", "<cmd>source %<CR>", opts)
 
-vim.g.mapleader = "<Space>"
-vim.g.maplocalleader = "<Space>"
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
