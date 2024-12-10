@@ -24,7 +24,7 @@ return {
                                 "benfowler/telescope-luasnip.nvim", -- if you wish to lazy-load
                         },
                         "nvim-telescope/telescope-symbols.nvim",
-                        "nvim-telescope/telescope-media-files.nvim",
+                        -- "nvim-telescope/telescope-media-files.nvim",
                         "nvim-telescope/telescope-project.nvim",
                         "nvim-telescope/telescope-ui-select.nvim",
                         "cljoly/telescope-repo.nvim",
@@ -38,6 +38,14 @@ return {
                 },
                 keys = {
                         { "<leader>gf", require("config.pickers").git_diff_picker, desc = "Diff Files" },
+                        {
+                                "<leader>f",
+                                function()
+                                        local opts = require("telescope.themes").get_ivy()
+                                        require("telescope.builtin").find_files(opts)
+                                end,
+                                desc = "telescope browser",
+                        },
                         { "<leader>fh", "<cmd>Telescope help_tags<cr>",            desc = "Help tags" },
                         { "<leader>ss", "<cmd>Telescope luasnip<cr>",              desc = "Snippets" },
                         { "<leader>r",  "<cmd>Telescope registers<cr>",            desc = "Registers" },

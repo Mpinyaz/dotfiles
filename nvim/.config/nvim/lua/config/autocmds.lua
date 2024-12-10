@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd({ "FileChangedShellPost" }, {
         pattern = "*",
         group = "auto_read",
         callback = function()
-                Snacks.notifier.notify("File changed on disk. Buffer reloaded!", "warn", { title = "File Changed" })
+                vim.notify("File changed on disk. Buffer reloaded!", "warn", { title = "File Changed" })
         end,
 })
 vim.keymap.set("n", "i", function()

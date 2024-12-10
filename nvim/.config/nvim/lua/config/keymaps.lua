@@ -7,8 +7,8 @@ local keymap = vim.api.nvim_set_keymap
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", opts)
 vim.keymap.set({ "n", "v" }, "<Space><Space>", "<cmd>source %<CR>", opts)
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = "<Space>"
+vim.g.maplocalleader = "<Space>"
 
 -- Normal --
 -- Better window navigation
@@ -47,8 +47,10 @@ keymap("v", "<M-k>", ":m .-2<CR>==", { desc = "Move line up" })
 keymap("v", "<M-j>", ":m .+1<CR>==", { desc = "Move line down" })
 keymap("n", "<leader>bu", "<cmd>Telescope buffers<cr>", opts)
 keymap("n", "<leader>dl", "<cmd>Telescope diagnostics<cr>", opts)
-keymap("n", "<leader>f", "<cmd>Telescope file_browser<cr>", opts)
 keymap("n", "<leader>o", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
+vim.keymap.set({ "n", "v", "i" }, "<C-x><C-f>", function()
+        require("fzf-lua").complete_path()
+end, opts)
 keymap(
         "n",
         "<F1>",
