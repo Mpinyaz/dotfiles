@@ -213,7 +213,9 @@ local function on_attach(client, bufnr)
         if client.server_capabilities.documentFormattingProvider then
                 buf_set_keymap("n", "<leader>Cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
         end
-
+        if client.server_capabilities.inlayHintProvider then
+                require("inlay-hints").on_attach(client, bufnr)
+        end
         if client.server_capabilities.documentRangeFormattingProvider then
                 buf_set_keymap("v", "<leader>cf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
         end

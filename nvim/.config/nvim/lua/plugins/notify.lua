@@ -1,17 +1,25 @@
-return {
-        "rcarriga/nvim-notify",
-        opts = {
-                background_colour = "#2E3440",
-                fps = 70,
-                icons = {
-                        DEBUG = "",
-                        ERROR = "",
-                        INFO = "",
-                        TRACE = "✎",
-                        WARN = "",
-                },
-                render = "default",
-                stages = "fade_in_slide_out",
-                timeout = 5000,
-        },
-}
+return {}
+-- return {
+--         "rcarriga/nvim-notify",
+--         config = function()
+--                 vim.notify = require("notify")
+--
+--                 require("notify").setup({
+--                         fps = 70,
+--                         icons = {
+--                                 DEBUG = " ",
+--                                 ERROR = " ",
+--                                 INFO = " ",
+--                                 TRACE = "✎",
+--                                 WARN = " ",
+--                         },
+--                         level = 2,
+--
+--                         minimum_width = 50,
+--                         maximum_width = 50,
+--                         render = "compact",
+--                         stages = "slide",
+--                         timeout = 3000,
+--                 })
+--         end,
+-- }

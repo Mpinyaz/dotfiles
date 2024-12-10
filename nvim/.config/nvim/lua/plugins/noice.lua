@@ -8,6 +8,7 @@ return {
                         "rcarriga/nvim-notify",
                 },
                 enabled = true,
+                event = "VeryLazy",
 
                 config = function()
                         require("plugins.dressing")
@@ -141,12 +142,12 @@ return {
                                         -- event is always "notify" and kind can be any log level as a string
                                         -- The default routes will forward notifications to nvim-notify
                                         -- Benefit of using Noice for this is the routing and consistent history view
-                                        enabled = true,
+                                        enabled = false,
                                         view = "notify",
                                 },
                                 lsp = {
                                         progress = {
-                                                enabled = true,
+                                                enabled = false,
                                                 -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
                                                 -- See the section on formatting for more details on how to customize.
                                                 --- @type NoiceFormat|string
@@ -293,26 +294,6 @@ return {
                                                 opts = { skip = true },
                                         },
                                 }, --- @see section on routes
-                        })
-
-                        vim.notify = require("notify")
-
-                        require("notify").setup({
-                                background_colour = "Normal",
-                                fps = 60,
-                                icons = {
-                                        DEBUG = " ",
-                                        ERROR = " ",
-                                        INFO = " ",
-                                        TRACE = "✎",
-                                        WARN = " ",
-                                },
-                                level = 2,
-                                minimum_width = 50,
-                                maximum_width = 50,
-                                render = "default",
-                                stages = "slide",
-                                timeout = 3000,
                         })
                 end,
         },

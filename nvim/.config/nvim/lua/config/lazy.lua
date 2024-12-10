@@ -53,6 +53,9 @@ local lazy_plugins = {
                 "tzachar/highlight-undo.nvim",
                 event = "VeryLazy",
                 opts = {},
+                config = function()
+                        require("highlight-undo").setup({})
+                end,
         },
         {
                 "piersolenski/wtf.nvim",

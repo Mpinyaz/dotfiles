@@ -89,6 +89,18 @@ return {
                         "nvim-tree/nvim-web-devicons", -- optional
                 },
         },
+        {
+                "MysticalDevil/inlay-hints.nvim",
+                event = "LspAttach",
+                dependencies = { "neovim/nvim-lspconfig" },
+                config = function()
+                        require("inlay-hints").setup({
+                                commands = { enable = true },
+                                autocmd = { enable = true },
+                        })
+                end,
+        },
+
         "b0o/schemastore.nvim",
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         {
@@ -148,14 +160,6 @@ return {
                                 },
                         },
                 },
-                config = function()
-                        -- vim.lsp.inlay_hint.enable()
-                end,
-        },
-        {
-                "chrisgrieser/nvim-lsp-endhints",
-                event = "LspAttach",
-                opts = {}, -- required, even if empty
         },
         {
                 "rust-lang/rust.vim",
@@ -186,6 +190,7 @@ return {
                 end,
                 opts = {
                         library = { plugins = { "neotest", "nvim-dap-ui" }, types = true },
+                        inlay_hints = { enabled = true },
                 },
         },
 }
