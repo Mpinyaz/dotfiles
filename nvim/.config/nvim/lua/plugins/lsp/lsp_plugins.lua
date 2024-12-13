@@ -5,6 +5,26 @@ return {
                 "pmizio/typescript-tools.nvim",
                 dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
                 opts = {},
+                config = function()
+                        require("typescript-tools").setup({
+                                settings = {
+                                        tsserver_file_preferences = {
+                                                includeInlayEnumMemberValueHints = true,
+                                                includeInlayFunctionLikeReturnTypeHints = true,
+                                                includeInlayFunctionParameterTypeHints = true,
+                                                includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+                                                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                                includeInlayPropertyDeclarationTypeHints = true,
+                                                includeInlayVariableTypeHints = true,
+                                                quotePreference = "auto",
+                                        },
+                                        tsserver_format_options = {
+                                                allowIncompleteCompletions = false,
+                                                allowRenameOfImportPath = false,
+                                        },
+                                },
+                        })
+                end,
         },
         {
                 "nvimdev/lspsaga.nvim",

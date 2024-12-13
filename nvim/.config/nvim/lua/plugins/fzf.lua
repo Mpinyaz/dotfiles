@@ -53,13 +53,6 @@ return {
                         desc = "Find fi",
                 },
                 {
-                        "<leader>nh",
-                        function()
-                                require("fzf-lua").highlights()
-                        end,
-                        desc = "Search highlights",
-                },
-                {
                         "<leader>nM",
                         function()
                                 require("fzf-lua").marks()

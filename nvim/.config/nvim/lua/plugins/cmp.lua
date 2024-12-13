@@ -175,13 +175,23 @@ return {
                                         fetching_timeout = 80,
                                 },
                                 formatting = {
-                                        format = require("lspkind").cmp_format({
-                                                mode = "text_symbol", -- show only symbol annotations
-                                                with_text = true,
-                                                maxwidth = 40,
-                                                before = require("tailwind-tools.cmp").lspkind_format,
-                                                ellipsis_char = "...",
-                                        }),
+                                        format = {
+                                                format = function(entry, item)
+                                                        local color_item = require("nvim-highlight-colors").format(entry,
+                                                                { kind = item.kind })
+                                                        item = require("lspkind").cmp_format({
+                                                                mode = "text_symbol", -- show only symbol annotations
+                                                                with_text = true,
+                                                                maxwidth = 40,
+                                                                ellipsis_char = "...",
+                                                        })(entry, item)
+                                                        if color_item.abbr_hl_group then
+                                                                item.kind_hl_group = color_item.abbr_hl_group
+                                                                item.kind = color_item.abbr
+                                                        end
+                                                        return item
+                                                end,
+                                        },
                                 },
                                 sources = {
                                         {

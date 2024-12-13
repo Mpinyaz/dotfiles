@@ -73,13 +73,14 @@ local lazy_plugins = {
                 "echasnovski/mini.nvim",
                 version = "*",
         },
+        { "echasnovski/mini.animate", version = "*" },
         {
                 "yamatsum/nvim-cursorline",
                 config = function()
                         require("nvim-cursorline").setup({})
                 end,
         },
-        { "jdhao/whitespace.nvim",             event = "BufEnter" },
+        { "jdhao/whitespace.nvim",    event = "BufEnter" },
         -- "rcarriga/nvim-dap-ui",
         {
                 "ggandor/leap.nvim",
@@ -107,7 +108,7 @@ local lazy_plugins = {
         { "jbyuki/one-small-step-for-vimkind", module = "osv" },
         -- { "mxsdev/nvim-dap-vscode-js", dependencies = { "mfussenegger/nvim-dap" } },
         "nvim-lua/popup.nvim",
-        { "j-hui/fidget.nvim", tag = "legacy" },
+        { "j-hui/fidget.nvim",                 tag = "legacy" },
         "lunarvim/darkplus.nvim",
         { "nanotee/zoxide.vim" },
         {

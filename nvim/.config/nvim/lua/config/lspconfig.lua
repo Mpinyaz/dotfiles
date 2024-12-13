@@ -3,7 +3,7 @@ local servers = {
         bashls = { filetypes = { "sh", "zsh" } },
         cmake = {},
         omnisharp = {},
-        ts_ls = require("plugins.lsp.servers.tsserver")(on_attach),
+        -- ts_ls = require("plugins.lsp.servers.tsserver")(on_attach),
         vimls = {},
         lua_ls = require("plugins.lsp.servers.luals")(on_attach),
         html = {
@@ -80,7 +80,7 @@ mason.setup({
 local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if mason_lspconfig_ok then
         mason_lspconfig.setup({
-                ensure_installed = server_names,
+                ensure_installed = vim.tbl_deep_extend("force", server_names, { ts_ls = {} }),
                 automatic_installation = true,
                 ui = {
                         border = "shadow",
