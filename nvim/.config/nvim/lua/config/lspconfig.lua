@@ -4,6 +4,7 @@ local servers = {
         cmake = {},
         omnisharp = {},
         -- ts_ls = require("plugins.lsp.servers.tsserver")(on_attach),
+        biome = { cmd = { "npx", "biome", "lsp-proxy" } },
         vimls = {},
         lua_ls = require("plugins.lsp.servers.luals")(on_attach),
         html = {
@@ -175,25 +176,30 @@ local bufmap = function(mode, lhs, rhs, bufnr, desc)
         }
         vim.keymap.set(mode, lhs, rhs, bufopts)
 end
-
--- Mappings
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
-map("n", "ge", "<Cmd>Lspsaga show_line_diagnostic<CR>", "Show diagnostics of the current line")
-map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the current line")
-map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
-map("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", "Code actions")
-map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
-map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
-map("n", "go", "<cmd>Lspsaga outline<CR>", "Show Lsp outline")
-map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
-if telescope_ok then
-        map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
-else
-        map("n", "<leader>E", function()
-                vim.diagnostic.setloclist()
-        end, "Show all diagnostics")
-end
+-- LSP key bindings
+vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+                -- Mappings
+                -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+                map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
+                map("n", "ge", "<Cmd>Lspsaga show_line_diagnostic<CR>", "Show diagnostics of the current line")
+                map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the current line")
+                map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
+                map("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", "Code actions")
+                map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
+                map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
+                map("n", "go", "<cmd>Lspsaga outline<CR>", "Show Lsp outline")
+                map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
+                if telescope_ok then
+                        map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
+                else
+                        map("n", "<leader>E", function()
+                                vim.diagnostic.setloclist()
+                        end, "Show all diagnostics")
+                end
+        end,
+})
 -----------------------------------------------------------
 
 local function on_attach(client, bufnr)

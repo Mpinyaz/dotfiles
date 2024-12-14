@@ -15,7 +15,7 @@ return {
         {
                 "luckasRanarison/tailwind-tools.nvim",
                 name = "tailwind-tools",
-                build = ":UpdateRemotePlugins",
+                build = "UpdateRemotePlugins",
                 dependencies = {
                         "nvim-treesitter/nvim-treesitter",
                         "nvim-telescope/telescope.nvim", -- optional
@@ -49,6 +49,7 @@ return {
                         "hrsh7th/cmp-cmdline",
                         "windwp/nvim-autopairs",
                         "saadparwaiz1/cmp_luasnip",
+                        "brenoprata10/nvim-highlight-colors",
                         {
                                 "L3MON4D3/LuaSnip",
                                 version = "2.*",
@@ -112,7 +113,7 @@ return {
                                 return
                         end
 
-                        local snippets = require("luasnip.loaders.from_vscode")
+                        local snippets = require("luasnip.loaders.from_snipmate")
                         snippets.load({
                                 include = { vim.bo.filetype },
                         })
@@ -175,23 +176,40 @@ return {
                                         fetching_timeout = 80,
                                 },
                                 formatting = {
-                                        format = {
-                                                format = function(entry, item)
-                                                        local color_item = require("nvim-highlight-colors").format(entry,
-                                                                { kind = item.kind })
-                                                        item = require("lspkind").cmp_format({
-                                                                mode = "text_symbol", -- show only symbol annotations
-                                                                with_text = true,
-                                                                maxwidth = 40,
-                                                                ellipsis_char = "...",
-                                                        })(entry, item)
-                                                        if color_item.abbr_hl_group then
-                                                                item.kind_hl_group = color_item.abbr_hl_group
-                                                                item.kind = color_item.abbr
-                                                        end
-                                                        return item
-                                                end,
-                                        },
+                                        -- format = {
+                                        --         format = function(entry, item)
+                                        --                 local color_item = require("nvim-highlight-colors").format(entry,
+                                        --                         { kind = item.kind })
+                                        --                 item = lsp_kind.cmp_format({
+                                        --                         mode = "text_symbol", -- show only symbol annotations
+                                        --                         with_text = true,
+                                        --                         maxwidth = 40,
+                                        --                         ellipsis_char = "...",
+                                        --                         show_labelDetails = true,
+                                        --                 })(entry, item)
+                                        --                 if color_item.abbr_hl_group then
+                                        --                         item.kind_hl_group = color_item.abbr_hl_group
+                                        --                         item.kind = color_item.abbr
+                                        --                 end
+                                        --                 return item
+                                        --         end,
+                                        -- },
+                                        format = function(entry, item)
+                                                local color_item = require("nvim-highlight-colors").format(entry,
+                                                        { kind = item.kind })
+                                                item = require("lspkind").cmp_format({
+                                                        mode = "text_symbol",
+                                                        with_text = true,
+                                                        maxwidth = 50,
+                                                        ellipsis_char = "...",
+                                                        show_labelDetails = true,
+                                                })(entry, item)
+                                                if color_item.abbr_hl_group then
+                                                        item.kind_hl_group = color_item.abbr_hl_group
+                                                        item.kind = color_item.abbr
+                                                end
+                                                return item
+                                        end,
                                 },
                                 sources = {
                                         {

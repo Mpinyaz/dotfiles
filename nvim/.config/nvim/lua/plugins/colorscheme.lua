@@ -1,24 +1,24 @@
 return {
-        { "bluz71/vim-nightfly-guicolors" },
+        -- { "bluz71/vim-nightfly-guicolors" },
+        -- {
+        --         "rebelot/kanagawa.nvim",
+        --         opts = {
+        --                 theme = "lotus",
+        --         },
+        --         config = function()
+        --                 vim.cmd("colorscheme kanagawa-wave")
+        --         end,
+        -- },
+        -- { "edeneast/nightfox.nvim" },
         {
-                "rebelot/kanagawa.nvim",
-                opts = {
-                        theme = "lotus",
-                },
+                "rose-pine/neovim",
+                name = "rose-pine",
                 config = function()
-                        vim.cmd("colorscheme kanagawa-wave")
+                        vim.g.rose_pine_variant = "auto"
+                        vim.g.rose_pine_disable_background = true
+                        vim.cmd("colorscheme rose-pine")
                 end,
         },
-        -- { "edeneast/nightfox.nvim" },
-        -- {
-        -- 	"rose-pine/neovim",
-        -- 	name = "rose-pine",
-        -- 	config = function()
-        -- 		vim.g.rose_pine_variant = "auto"
-        -- 		vim.g.rose_pine_disable_background = true
-        -- 		vim.cmd("colorscheme rose-pine")
-        -- 	end,
-        -- },
         -- {
         -- 	"folke/tokyonight.nvim",
         -- 	config = function()
