@@ -29,6 +29,7 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<C-x>", ":bd<CR>", opts)
 keymap("n", "<C-n>", ":tabnew<new><CR>", opts)
+keymap("n", "<leader>co", ":copen<CR>", opts)
 -- Insert --
 -- Press jk fast to exit insert mode
 keymap("i", "jk", "<ESC>", opts)
@@ -87,7 +88,7 @@ vim.keymap.set("n", "QQ", ":q!<enter>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>w", "mzgg=G`z<cmd>w<CR>")
 vim.keymap.set(
         "n",
-        "<leader>cpf",
+        "<leader>yp",
         ':let @+ = expand("%:p")<CR>:lua print("Copied path to: " .. vim.fn.expand("%:p"))<cr>',
         { noremap = true, silent = true, desc = "Copy current file name and path to clipboard" }
 )

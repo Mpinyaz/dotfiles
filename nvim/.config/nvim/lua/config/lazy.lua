@@ -92,6 +92,7 @@ local lazy_plugins = {
         },
         {
                 "yamatsum/nvim-cursorline",
+                dependencies = { "tpope/vim-repeat" },
                 config = function()
                         require("nvim-cursorline").setup({})
                 end,
