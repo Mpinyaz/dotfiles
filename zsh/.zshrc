@@ -88,7 +88,7 @@ else
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git zsh-autosuggestions command-not-found fzf-tab zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
+plugins=(git zsh-autosuggestions command-not-found fzf-tab zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete sudo copypath dircycle)
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 HYPHEN_INSENSITIVE="true"

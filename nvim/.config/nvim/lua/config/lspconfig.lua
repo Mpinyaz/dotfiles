@@ -200,7 +200,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 end
         end,
 })
------------------------------------------------------------
+----------------------------------------------------------------------
+--                        LSP Client attach                         --
+----------------------------------------------------------------------
 
 local function on_attach(client, bufnr)
         local function buf_set_keymap(...)
