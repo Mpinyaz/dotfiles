@@ -61,3 +61,7 @@ alias head="coreutils head"
 alias tail="coreutils tail"
 alias echo="coreutils echo"
 alias vimdiff="nvim -d --cmd ':lua vim.g.noplugins=1'"
+
+if command -v bat &>/dev/null; then
+        alias cat='bat'
+fi

@@ -8,6 +8,11 @@ return {
                         cwd_prompt = false,
                         cmd = "fd --type f --hidden --exclude .git --follow",
                 },
+                fzf_colors = {
+                        true,
+                        bg = "-1",
+                        gutter = "-1",
+                },
         },
         keys = {
                 {

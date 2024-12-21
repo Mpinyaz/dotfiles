@@ -1,4 +1,6 @@
 return {
+        "craftzdog/solarized-osaka.nvim",
+
         -- { "bluz71/vim-nightfly-guicolors" },
         -- {
         --         "rebelot/kanagawa.nvim",
@@ -10,13 +12,25 @@ return {
         --         end,
         -- },
         -- { "edeneast/nightfox.nvim" },
+        -- {
+        --         "rose-pine/neovim",
+        --         name = "rose-pine",
+        --         config = function()
+        --                 vim.g.rose_pine_variant = "auto"
+        --                 vim.g.rose_pine_disable_background = true
+        --                 vim.cmd("colorscheme rose-pine")
+        --         end,
+        -- },
         {
-                "rose-pine/neovim",
-                name = "rose-pine",
+                "eldritch-theme/eldritch.nvim",
+                lazy = false,
+                priority = 1000,
+                opts = {
+                        transparent = true,
+                        dim_inactive = true,
+                },
                 config = function()
-                        vim.g.rose_pine_variant = "auto"
-                        vim.g.rose_pine_disable_background = true
-                        vim.cmd("colorscheme rose-pine")
+                        vim.cmd([[colorscheme eldritch]])
                 end,
         },
         -- {
