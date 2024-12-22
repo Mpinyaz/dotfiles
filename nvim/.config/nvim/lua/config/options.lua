@@ -12,6 +12,7 @@ local options = {
         ".git/**,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
         showmode = false, -- we don't need to see things like -- INSERT -- anymore
         showcmd = true,
+        syntax = "enable",
         sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
         showtabline = 2, -- always show tabs
         smartcase = true,

@@ -1,16 +1,16 @@
 return {
-        "craftzdog/solarized-osaka.nvim",
-
+        'craftzdog/solarized-osaka.nvim',
+        'rebelot/kanagawa.nvim',
         -- { "bluz71/vim-nightfly-guicolors" },
-        -- {
-        --         "rebelot/kanagawa.nvim",
-        --         opts = {
-        --                 theme = "lotus",
-        --         },
-        --         config = function()
-        --                 vim.cmd("colorscheme kanagawa-wave")
-        --         end,
-        -- },
+        {
+                'rebelot/kanagawa.nvim',
+                opts = {
+                        theme = 'lotus',
+                },
+                config = function()
+                        vim.cmd 'colorscheme kanagawa-wave'
+                end,
+        },
         -- { "edeneast/nightfox.nvim" },
         -- {
         --         "rose-pine/neovim",
@@ -21,18 +21,18 @@ return {
         --                 vim.cmd("colorscheme rose-pine")
         --         end,
         -- },
-        {
-                "eldritch-theme/eldritch.nvim",
-                lazy = false,
-                priority = 1000,
-                opts = {
-                        transparent = true,
-                        dim_inactive = true,
-                },
-                config = function()
-                        vim.cmd([[colorscheme eldritch]])
-                end,
-        },
+        -- {
+        --         'eldritch-theme/eldritch.nvim',
+        --         lazy = false,
+        --         priority = 1000,
+        --         opts = {
+        --                 transparent = true,
+        --                 dim_inactive = true,
+        --         },
+        --         config = function()
+        --                 vim.cmd [[colorscheme eldritch]]
+        --         end,
+        -- },
         -- {
         -- 	"folke/tokyonight.nvim",
         -- 	config = function()

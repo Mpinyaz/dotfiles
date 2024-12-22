@@ -2,4 +2,4 @@
 deps = [{ use = "dedukun/bookmarks", rev = "600f87c" }]
 
 [flavor]
-deps = []
+deps = [{ use = "tkapias/nightfly", rev = "599b8ad" }, { use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }]
