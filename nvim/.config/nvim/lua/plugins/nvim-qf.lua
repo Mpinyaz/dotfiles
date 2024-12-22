@@ -7,7 +7,7 @@ return {
                         win_height = 12,
                         win_vheight = 12,
                         delay_syntax = 80,
-                        border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
+                        border = { '┏', '━', '┓', '┃', '┛', '━', '┗', '┃' },
                         show_title = false,
                         should_preview_cb = function(bufnr, qwinid)
                                 local ret = true
@@ -16,7 +16,7 @@ return {
                                 if fsize > 100 * 1024 then
                                         -- skip file size greater than 100k
                                         ret = false
-                                elseif bufname:match("^fugitive://") then
+                                elseif bufname:match '^fugitive://' then
                                         -- skip fugitive buffer
                                         ret = false
                                 end
@@ -24,9 +24,10 @@ return {
                         end,
                 },
         },
-        "kevinhwang91/nvim-bqf", -- Better quickfix window,
-        ft = "qf",
+        'kevinhwang91/nvim-bqf', -- Better quickfix window,
+        ft = 'qf',
+        keys = { '<leader>cql', '<cmd>copen<cr>', desc = 'Open Quickfix list' },
         dependencies = {
-                "junegunn/fzf",
+                'junegunn/fzf',
         },
 }
