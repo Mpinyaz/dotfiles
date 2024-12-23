@@ -1,6 +1,7 @@
 local servers = {
         pyright = {},
         bashls = { filetypes = { 'sh', 'zsh' } },
+        gopls = require 'plugins.lsp.servers.gopls' (on_attach),
         cmake = {},
         omnisharp = {},
         -- ts_ls = require("plugins.lsp.servers.tsserver")(on_attach),
@@ -227,6 +228,51 @@ local function on_attach(client, bufnr)
         if client.server_capabilities.documentRangeFormattingProvider then
                 buf_set_keymap('v', '<leader>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
         end
+
+        if client.server_capabilities['documentSymbolProvider'] then
+                require('nvim-navic').attach(client, bufnr)
+        end
+        if client.server_capabilities.documentHighlightProvider then
+                vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+                vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_document_highlight' }
+                vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave' }, {
+                        desc = 'Highlight references under the cursor',
+                        buffer = bufnr,
+                        callback = vim.lsp.buf.document_highlight,
+                })
+                vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
+                        desc = 'Clear highlight references',
+                        buffer = bufnr,
+                        callback = vim.lsp.buf.clear_references,
+                })
+        end
+
+        if not client.server_capabilities.semanticTokensProvider then
+                local semantic = client.config.capabilities.textDocument.semanticTokens
+                client.server_capabilities.semanticTokensProvider = {
+                        full = true,
+                        legend = {
+                                tokenTypes = semantic.tokenTypes,
+                                tokenModifiers = semantic.tokenModifiers,
+                        },
+                        range = true,
+                }
+        end
+        -- local function attach_codelens(_, bufnr)
+        --         vim.api.nvim_create_autocmd({ 'BufReadPost', 'CursorHold', 'InsertLeave' }, {
+        --                 buffer = bufnr,
+        --                 callback = function()
+        --                         vim.lsp.codelens.refresh { bufnr = bufnr }
+        --                 end,
+        --         })
+        -- end
+        --
+        -- if client.server_capabilities.textDocument then
+        --         if client.server_capabilities.textDocument.codeLens then
+        --                 require('virtualtypes').on_attach(client, bufnr)
+        --                 attach_codelens(client, bufnr)
+        --         end
+        -- end
 end
 
 local config = {
@@ -273,6 +319,7 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
         silent = true,
         border = 'rounded',
 })
+-- vim.lsp.handlers['textDocument/hover'] = require('noice').hover
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         update_in_insert = true,
 })

@@ -26,3 +26,5 @@
         rebase = true
 [fetch]
         prune = true
+[http]
+	postBuffer = 157286400
