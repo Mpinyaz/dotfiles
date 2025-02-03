@@ -26,3 +26,8 @@ export GIT_DISCUSSION=􀒤
 export GIT_PULL_REQUEST=􀙡
 export GIT_COMMIT=􀡚
 export GIT_INDICATOR=􀂓
+
+# WiFi
+export WIFI_CONNECTED=􀙇
+export WIFI_DISCONNECTED=􀙈
+export ETHERNET_CONNECTED=󰈀
