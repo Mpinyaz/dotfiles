@@ -62,6 +62,25 @@ apple_lock=(
         click_script="pmset displaysleepnow; $POPUP_OFF"
 )
 
+apple_logout=(
+        icon=
+        icon.font="$FONT:Bold:16.0"
+        icon.padding_left=10
+        icon.padding_right=10
+        label.padding_right=10
+        label.color="$RED"
+        background.height=26
+        background.corner_radius="$CORNER_RADIUS"
+        background.padding_right=5
+        background.border_width="$BORDER_WIDTH"
+        background.border_color="$RED"
+        background.color="$BAR_COLOR" label="Logout"
+        click_script="osascript -e 'tell application \
+                \"System Events\" to keystroke \"q\" \
+                using {command down,shift down}';
+                        $POPUP_OFF"
+)
+
 sketchybar --add item apple.logo left \
         --set apple.logo "${apple_logo[@]}" \
         --add item apple.prefs popup.apple.logo \
@@ -69,6 +88,9 @@ sketchybar --add item apple.logo left \
         \
         --add item apple.activity popup.apple.logo \
         --set apple.activity "${apple_activity[@]}" \
+        \
+        --add item apple.logout popup.apple.logo \
+        --set apple.logout "${apple_logout[@]}" \
         \
         --add item apple.lock popup.apple.logo \
         --set apple.lock "${apple_lock[@]}"

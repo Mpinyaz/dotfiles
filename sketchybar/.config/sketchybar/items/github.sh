@@ -45,6 +45,7 @@ sketchybar --add event github.update \
         --add item github.bell left \
         --set github.bell "${github_bell[@]}" \
         --subscribe github.bell mouse.entered \
+        --set github.update update_freq=1200 \
         mouse.exited \
         mouse.exited.global \
         system_woke \

@@ -5,7 +5,7 @@ COLOR="$CYAN"
 sketchybar --add item battery right \
         --set battery \
         update_freq=120 \
-        icon.font="$FONT:Bold:15" \
+        icon.font="$FONT" \
         icon.padding_left=10 \
         icon.padding_right=10 \
         label.padding_right=10 \

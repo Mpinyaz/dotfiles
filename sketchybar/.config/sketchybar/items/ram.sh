@@ -2,10 +2,10 @@
 
 source "$HOME/.config/sketchybar/variables.sh"
 source "$HOME/.config/sketchybar/icons.sh"
-COLOR="$YELLOW"
+COLOR="$MAGENTA"
 
-sketchybar --add item cpu right \
-        --set cpu \
+sketchybar --add item ram right \
+        --set ram \
         update_freq=3 \
         icon.color="$COLOR" \
         icon.padding_left=10 \
@@ -16,7 +16,7 @@ sketchybar --add item cpu right \
         background.corner_radius="$CORNER_RADIUS" \
         background.padding_right=5 \
         background.border_width="$BORDER_WIDTH" \
-        background.border_color="$COLOR" \
+        background.border_color="$GREEN" \
         background.color="$BAR_COLOR" \
         background.drawing=on \
-        script="$PLUGIN_DIR/cpu.sh"
+        script="$PLUGIN_DIR/ram.sh"

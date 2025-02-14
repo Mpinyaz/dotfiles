@@ -16,7 +16,7 @@
 #         --add item network_down right \
 #         --set network_down label.font="$FONT:Bold:20.0" \
 #         icon.font="$FONT:Bold:20.0" \
-#         icon= \
+#         icon= \
 #         icon.color=$GREEN \
 #         icon.padding_right=$PADDING \
 #         icon.padding_left=$PADDING \
@@ -26,8 +26,8 @@
 
 sketchybar -m --add item network_up right \
         --set network_up label.font="SF Pro:Heavy:9" \
-        icon.font="SF Pro:Heavy:9" \
-        icon=  \
+        icon.font="$FONT" \
+        icon="" \
         icon.highlight_color=0xff8b0a0d \
         y_offset=5 \
         width=0 \
@@ -36,16 +36,16 @@ sketchybar -m --add item network_up right \
         \
         --add item network_down right \
         --set network_down label.font="SF Pro:Heavy:9" \
-        icon.font="SF Pro:Heavy:9" \
-        icon= \
+        icon.font="$FONT" \
+        icon="" \
         icon.highlight_color=0xff10528c \
         y_offset=-5 \
         --add bracket network_info network_up network_down \
         --set network_info background.color="$BAR_COLOR" \
-        background.height=26 \
+        background.height=35 \
         background.corner_radius="$CORNER_RADIUS" \
-        background.padding_right=40 \
-        background.padding_left=40 \
+        background.padding_right=60 \
+        background.padding_left=60 \
         background.border_width="$BORDER_WIDTH" \
-        background.border_color="$COLOR" \
+        background.border_color="$YELLOW" \
         background.color="$BAR_COLOR"
