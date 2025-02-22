@@ -9,7 +9,7 @@ local options = {
         ignorecase = true, -- ignore case in search patterns
         -- pumheight = 10,   -- pop up menu height
         wildignore =
-        ".git/**,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
+                ".git/**,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
         showmode = false, -- we don't need to see things like -- INSERT -- anymore
         showcmd = true,
         syntax = "enable",

@@ -61,7 +61,7 @@ keymap('n', '<C-a>', ':%y+<CR>', opts)
 keymap('n', 'te', ':tabedit<cr>', opts)
 keymap('n', '<leader>x', '<cmd>!chmod +x %<CR>', opts)
 
-vim.keymap.set('n', '<leader>qf', vim.lsp.buf.format, { remap = false })
+-- vim.keymap.set('n', '<leader>qf', vim.lsp.buf.format, { remap = false })
 -- All previous macros have been changed to autocmd, <F2> macro will run current file
 
 vim.cmd [[
@@ -80,7 +80,8 @@ augroup end
 -- map leader+w to save current file in normal mode
 vim.keymap.set('n', 'WW', ':w!<enter>', { noremap = true, silent = true })
 vim.keymap.set('n', 'QQ', ':q!<enter>', { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>w', 'mzgg=G`z<cmd>w<CR>')
+vim.keymap.set('n', '<leader>W', 'mzgg=G`z<cmd>w<CR>',{desc= "Auto-indent and save"})
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 vim.keymap.set(
         'n',
         '<leader>yp',
