@@ -9,6 +9,12 @@ if [ "$(uname)" = "Darwin" ]; then
         fi
 
         brew bundle --file=~/Brewfile
+
+        ln -s "$HOME/dotfiles/ghostty/.config/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+else
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        uv tool install --python 3.12 posting
+
 fi
 
 if [[ -d ~/.tmux/plugins/tpm ]]; then

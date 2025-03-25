@@ -40,6 +40,7 @@ if [ "$(uname)" = "Darwin" ]; then
                 echo "xclip is not installed. Installing now..."
                 brew install xclip
         fi
+        eval "$($(brew --prefix)/bin/brew shellenv)"
 fi
 
 if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
@@ -125,12 +126,18 @@ function cpwd() {
         pwd
 }
 # ----------------------------------------------------------------------------
+# Zoxide
+if command -v zoxide &>/dev/null; then
 eval "$(zoxide init zsh --cmd cd)"
+fi
 source <(fzf --zsh)
 # Enable colors and change prompt:
 autoload -U colors && colors # Load colors
 # eval "$(starship init zsh)"
-
+# SSH
+  if [ -f ~/.ssh/id_rsa ]; then
+    ssh-add ~/.ssh/id_rsa >/dev/null 2>&1
+  fi
 for config in ~/.config/zsh/*.zsh; do
         source "$config"
 done

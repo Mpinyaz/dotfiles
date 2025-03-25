@@ -9,30 +9,30 @@
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 start-at-login = true
 after-login-command = [
-        'workspace 2',
-        'move-workspace-to-monitor --wrap-around next',
+  'workspace 2',
+  'move-workspace-to-monitor --wrap-around next',
 ] # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-        'exec-and-forget borders active_color=0xCFEBBF83 inactive_color=0x33434c5e width=10.0',
-        'exec-and-forget sketchybar',
+  'exec-and-forget borders active_color=0xCFEBBF83 inactive_color=0x33434c5e width=10.0',
+  'exec-and-forget sketchybar',
 ]
 
 exec-on-workspace-change = [
-        '/bin/bash',
-        '-c',
-        'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
-enable-normalization-flatten-containers = false
-enable-normalization-opposite-orientation-for-nested-containers = false
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
 accordion-padding = 30
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 
-on-focus-changed = "move-mouse window-lazy-center"
+on-focus-changed = "move-mouse"
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 [gaps]
@@ -51,7 +51,7 @@ PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 alt-space = 'layout floating tiling'
 cmd-g = 'mode join'
 cmd-q = ['close --quit-if-last-window']
-cmd-enter = 'exec-and-forget open -a ghostty'
+cmd-enter = 'exec-and-forget open -a Ghostty'
 cmd-d = 'macos-native-minimize'
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 cmd-slash = 'layout tiles horizontal vertical'
@@ -112,8 +112,8 @@ cmd-shift-t = 'move-node-to-workspace T'
 alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = [
-        'move-node-to-monitor --wrap-around next',
-        'focus-monitor next --wrap-around',
+  'move-node-to-monitor --wrap-around next',
+  'focus-monitor next --wrap-around',
 ]
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 cmd-shift-s = 'mode service'
@@ -126,8 +126,8 @@ esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = [
-        'layout floating tiling',
-        'mode main',
+  'layout floating tiling',
+  'mode main',
 ] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
@@ -143,8 +143,8 @@ c = ['reload-config', 'mode main']          # reload config
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = [
-        'layout floating tiling',
-        'mode main',
+  'layout floating tiling',
+  'mode main',
 ] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
