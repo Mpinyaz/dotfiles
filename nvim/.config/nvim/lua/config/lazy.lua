@@ -148,19 +148,19 @@ local lazy_plugins = {
 			})
 		end,
 	},
-	{
-		"roobert/tailwindcss-colorizer-cmp.nvim",
-		-- optionally, override the default options:
-		config = function()
-			require("tailwindcss-colorizer-cmp").setup({
-				color_square_width = 2,
-			})
-
-			require("cmp").config.formatting = {
-				format = require("tailwindcss-colorizer-cmp").formatter,
-			}
-		end,
-	},
+	-- {
+	-- 	"roobert/tailwindcss-colorizer-cmp.nvim",
+	-- 	-- optionally, override the default options:
+	-- 	config = function()
+	-- 		require("tailwindcss-colorizer-cmp").setup({
+	-- 			color_square_width = 2,
+	-- 		})
+	--
+	-- 		require("cmp").config.formatting = {
+	-- 			format = require("tailwindcss-colorizer-cmp").formatter,
+	-- 		}
+	-- 	end,
+	-- },
 	{ "HiPhish/rainbow-delimiters.nvim" },
 	{ "honza/vim-snippets" },
 	{
@@ -181,9 +181,9 @@ local lazy_plugins = {
 		end,
 	},
 }
+
 require("lazy").setup({
 	{ import = "plugins" },
-	{ import = "plugins.lsp" },
 	lazy_plugins,
 }, {
 	ui = {
