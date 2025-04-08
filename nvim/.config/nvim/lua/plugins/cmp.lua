@@ -1,5 +1,6 @@
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c")
+local winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel"
 return {
 	"saghen/blink.cmp",
 	version = "1.*",
@@ -12,11 +13,17 @@ return {
 			opts = {},
 		},
 		"moyiz/blink-emoji.nvim",
+		"philosofonusus/ecolog.nvim",
 
 		"Kaiser-Yang/blink-cmp-dictionary",
 		{ "mikavilpas/blink-ripgrep.nvim", lazy = true },
 		{ "onsails/lspkind.nvim", lazy = true },
 		{ "rafamadriz/friendly-snippets", lazy = true },
+		{
+			"David-Kunz/cmp-npm",
+			event = "BufRead package.json",
+			opts = {},
+		},
 		"nvim-tree/nvim-web-devicons",
 		{
 			"saecki/crates.nvim",
@@ -28,6 +35,14 @@ return {
 				require("crates").setup({
 					autoload = true,
 					autoupdate = true,
+					completion = {
+						cmp = {
+							enabled = true,
+						},
+						crates = {
+							enabled = true,
+						},
+					},
 				})
 			end,
 		},
@@ -148,13 +163,17 @@ return {
 			return true
 		end
 		opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-			default = { "lsp", "snippets", "path", "buffer", "emoji", "lazydev", "ripgrep", "tailwindcsscmp" },
+			default = { "lsp", "snippets", "path", "buffer", "emoji", "lazydev", "ripgrep", "crates", "npm", "ecolog" },
 			per_filetype = { sql = { "dadbod" } },
 			providers = {
-				tailwindcsscmp = {
-					name = "tailwindcss-colorizer-cmp",
+				crates = {
+					name = "crates",
 					module = "blink.compat.source",
 					score_offset = 5, -- the higher the number, the higher the priority
+				},
+				npm = {
+					name = "npm",
+					module = "blink.compat.source",
 				},
 				lsp = {
 					name = "lsp",
@@ -163,6 +182,7 @@ return {
 					min_keyword_length = 2,
 					score_offset = 90, -- the higher the number, the higher the priority
 				},
+				ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
 				path = {
 					name = "Path",
 					module = "blink.cmp.sources.path",
@@ -235,7 +255,7 @@ return {
 		opts.cmdline = {
 			enabled = true,
 		}
-		opts.signature = { enabled = true }
+		opts.signature = { enabled = true, window = { border = "single" } }
 		opts.appearance = {
 			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
@@ -304,8 +324,8 @@ return {
 
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Down>"] = { "select_next", "fallback" },
-			["<C-p>"] = { "select_prev", "fallback" },
-			["<C-n>"] = { "select_next", "fallback" },
+			-- ["<C-p>"] = { "select_prev", "fallback" },
+			-- ["<C-n>"] = { "select_next", "fallback" },
 
 			["<S-k>"] = { "scroll_documentation_up", "fallback" },
 			["<S-j>"] = { "scroll_documentation_down", "fallback" },
