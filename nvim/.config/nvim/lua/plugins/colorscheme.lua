@@ -1,7 +1,5 @@
 return {
   'craftzdog/solarized-osaka.nvim',
-  'rebelot/kanagawa.nvim',
-  -- { "bluz71/vim-nightfly-guicolors" },
   {
     'rebelot/kanagawa.nvim',
     opts = {

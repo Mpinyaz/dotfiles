@@ -1,332 +1,143 @@
--- vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
--- vim.opt.shortmess:append 'c'
---
--- return {
---         { 'rafamadriz/friendly-snippets' },
---         { 'AndreM222/copilot-lualine' },
---         {
---                 'David-Kunz/cmp-npm',
---                 dependencies = { 'nvim-lua/plenary.nvim' },
---                 ft = 'json',
---                 config = function()
---                         require('cmp-npm').setup {}
---                 end,
---         },
---         {
---                 'luckasRanarison/tailwind-tools.nvim',
---                 name = 'tailwind-tools',
---                 build = 'UpdateRemotePlugins',
---                 dependencies = {
---                         'nvim-treesitter/nvim-treesitter',
---                         'nvim-telescope/telescope.nvim', -- optional
---                         'neovim/nvim-lspconfig', -- optional
---                 },
---                 opts = {},             -- your configuration
---                 config = function()
---                         require('tailwind-tools').setup {
---                                 lsp = {
---                                         enabled = true,
---                                         debounce = 150,
---                                 },
---                                 telescope = {
---                                         enabled = true,
---                                 },
---                         }
---                 end,
---         },
---         {
---                 'hrsh7th/nvim-cmp',
---                 event = 'InsertEnter',
---                 dependencies = {
---                         'hrsh7th/cmp-nvim-lsp-signature-help',
---                         'hrsh7th/cmp-nvim-lsp',
---                         'hrsh7th/cmp-calc',
---                         'roobert/tailwindcss-colorizer-cmp.nvim',
---                         'lukas-reineke/cmp-rg',
---                         'luckasRanarison/tailwind-tools.nvim',
---                         'hrsh7th/cmp-buffer',
---                         'hrsh7th/cmp-path',
---                         'hrsh7th/cmp-cmdline',
---                         'windwp/nvim-autopairs',
---                         'saadparwaiz1/cmp_luasnip',
---                         'brenoprata10/nvim-highlight-colors',
---                         {
---                                 'L3MON4D3/LuaSnip',
---                                 version = '2.*',
---                                 dependencies = { 'rafamadriz/friendly-snippets' },
---                                 opts = function()
---                                         local types = require 'luasnip.util.types'
---                                         return {
---                                                 history = true,
---                                                 delete_check_events = 'TextChanged',
---
---                                                 ext_opts = {
---                                                         [types.insertNode] = {
---                                                                 unvisited = {
---                                                                         virt_text = { { '|', 'Conceal' } },
---                                                                         -- virt_text_pos = "inline",
---                                                                 },
---                                                         },
---                                                         [types.exitNode] = {
---                                                                 unvisited = {
---                                                                         virt_text = { { '|', 'Conceal' } },
---                                                                         -- virt_text_pos = "inline",
---                                                                 },
---                                                         },
---                                                 },
---                                         }
---                                 end,
---                         },
---                         {
---                                 'saecki/crates.nvim',
---                                 event = { 'BufRead Cargo.toml' },
---                                 tag = 'stable',
---                                 ft = { 'rust', 'toml' },
---                                 requires = { { 'nvim-lua/plenary.nvim' } },
---                                 config = function()
---                                         require('crates').setup {
---                                                 autoload = true,
---                                                 autoupdate = true,
---                                         }
---                                 end,
---                         },
---                         'hrsh7th/cmp-nvim-lua',
---                         'onsails/lspkind-nvim',
---                         {
---                                 'hrsh7th/cmp-emoji',
---                                 config = function()
---                                         require('cmp').setup {
---                                                 sources = {
---                                                         {
---                                                                 name = 'emoji',
---                                                         },
---                                                 },
---                                         }
---                                 end,
---                         },
---                 },
---                 config = function()
---                         local cmp = require 'cmp'
---                         local lsp_kind = require 'lspkind'
---                         local snip_status_ok, luasnip = pcall(require, 'luasnip')
---                         if not snip_status_ok then
---                                 return
---                         end
---
---                         local snippets = require 'luasnip.loaders.from_snipmate'
---                         snippets.load {
---                                 include = { vim.bo.filetype },
---                         }
---                         snippets.lazy_load()
---                         luasnip.config.set_config {
---                                 history = true,
---                                 region_check_events = 'InsertEnter',
---                                 updateevents = 'TextChanged,TextChangedI',
---                                 enable_autosnippets = true,
---                         }
---
---                         lsp_kind.init { mode = 'text_symbol', symbol_map = { Copilot = '' } }
---                         for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('nvim/snippets/*.lua', true)) do
---                                 loadfile(ft_path)()
---                         end
---
---                         local has_words_before = function()
---                                 local unpack = unpack or table.unpack ---@diagnostic disable-line: deprecated
---                                 local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---                                 return col ~= 0 and
---                                 vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
---                         end
---                         local t = function(str)
---                                 return vim.api.nvim_replace_termcodes(str, true, true, true)
---                         end
---                         cmp.setup {
---                                 enabled = true,
---                                 preselect = cmp.PreselectMode.None,
---                                 view = {
---                                         entries = 'bordered',
---                                 },
---                                 completion = {
---                                         keyword_length = 1,
---                                         completeopt = 'menu,menuone,noinsert',
---                                 },
---                                 snippet = {
---                                         expand = function(args)
---                                                 luasnip.lsp_expand(args.body)
---                                         end,
---                                 },
---                                 mapping = {
---                                         ['<C-j>'] = cmp.mapping.scroll_docs(-4),
---                                         ['<C-k>'] = cmp.mapping.scroll_docs(4),
---                                         ['<C-Space>'] = cmp.mapping.complete(),
---                                         ['<C-e>'] = cmp.mapping.abort(),
---                                         ['<Tab>'] = cmp.mapping(function(fallback)
---                                                 if luasnip.expand_or_jumpable() then
---                                                         luasnip.expand_or_jump()
---                                                 else
---                                                         fallback()
---                                                 end
---                                         end, { 'i', 's' }),
---
---                                         ['<S-Tab>'] = cmp.mapping(function(fallback)
---                                                 if luasnip.jumpable(-1) then
---                                                         luasnip.jump(-1)
---                                                 else
---                                                         fallback()
---                                                 end
---                                         end, { 'i', 's' }),
---
---                                         ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
---                                         ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
---                                         ['<C-y>'] = cmp.mapping(
---                                                 cmp.mapping.confirm {
---                                                         behavior = cmp.ConfirmBehavior.Replace,
---                                                         select = true,
---                                                 },
---                                                 { 'i', 'c' }
---                                         ),
---                                 },
---                                 window = {
---                                         completion = cmp.config.window.bordered {
---                                                 winhighlight = 'Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None',
---                                         },
---                                         documentation = cmp.config.window.bordered {
---                                                 winhighlight = 'Normal:Normal,FloatBorder:LspBorderBG,CursorLine:PmenuSel,Search:None',
---                                         },
---                                 },
---                                 performance = {
---                                         trigger_debounce_time = 500,
---                                         throttle = 550,
---                                         fetching_timeout = 80,
---                                 },
---                                 formatting = {
---
---                                         format = function(entry, item)
---                                                 local color_item = require('nvim-highlight-colors').format(entry,
---                                                         { kind = item.kind })
---                                                 item = require('lspkind').cmp_format {
---                                                         mode = 'text_symbol',
---                                                         with_text = true,
---                                                         maxwidth = 50,
---                                                         ellipsis_char = '...',
---                                                         show_labelDetails = true,
---                                                 } (entry, item)
---                                                 if color_item.abbr_hl_group then
---                                                         item.kind_hl_group = color_item.abbr_hl_group
---                                                         item.kind = color_item.abbr
---                                                 end
---                                                 return item
---                                         end,
---                                 },
---                                 sources = {
---                                         {
---                                                 name = 'nvim_lsp',
---                                                 max_item_count = 20,
---                                                 group_index = 1,
---                                         },
---                                         {
---                                                 name = 'luasnip',
---                                                 max_item_count = 5,
---                                                 group_index = 1,
---                                         },
---                                         {
---                                                 name = 'vim-dadbod-completion',
---                                                 group_index = 1,
---                                         },
---                                         {
---                                                 name = 'path',
---                                                 group_index = 2,
---                                         },
---                                         {
---                                                 name = 'rg',
---                                                 keyword_length = 2,
---                                                 max_item_count = 5,
---                                                 group_index = 2,
---                                         },
---                                         {
---                                                 name = 'calc',
---                                                 keyword_length = 2,
---                                                 max_item_count = 5,
---                                                 group_index = 2,
---                                         },
---                                         {
---                                                 name = 'buffer',
---                                                 keyword_length = 2,
---                                                 max_item_count = 5,
---                                                 group_index = 2,
---                                         },
---                                         {
---                                                 name = 'treesitter',
---                                                 keyword_length = 2,
---                                                 max_item_count = 5,
---                                                 group_index = 2,
---                                         },
---                                         {
---                                                 name = 'lazydev',
---                                                 group_index = 0, -- set group index to 0 to skip loading LuaLS completions
---                                         },
---                                         {
---                                                 name = 'emoji',
---                                                 keyword_length = 2,
---                                                 max_item_count = 5,
---                                                 group_index = 2,
---                                         },
---                                         { name = 'npm',    keyword_length = 2, max_item_count = 5, group_index = 2 },
---                                         { name = 'crates', keyword_length = 2, max_item_count = 5, group_index = 2 },
---                                 },
---                         }
---                         local presentAutopairs, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
---                         if not presentAutopairs then
---                                 return
---                         end
---                         cmp.event:on(
---                                 'confirm_done',
---                                 cmp_autopairs.on_confirm_done {
---                                         map_char = {
---                                                 tex = '',
---                                         },
---                                 }
---                         )
---                         cmp.config.formatting = {
---                                 format = require('tailwindcss-colorizer-cmp').formatter,
---                         }
---
---                         cmp.setup.cmdline({ '/', '?' }, {
---                                 mapping = cmp.mapping.preset.cmdline(),
---                                 sources = {
---                                         { name = 'buffer' },
---                                 },
---                         })
---                         cmp.setup.filetype({ 'sql' }, {
---                                 sources = {
---                                         { name = 'vim-dadbod-completion' },
---                                         { name = 'buffer' },
---                                 },
---                         })
---                         cmp.setup.cmdline(':', {
---                                 mapping = cmp.mapping.preset.cmdline(),
---                                 sources = cmp.config.sources({
---                                         { name = 'path' },
---                                 }, {
---                                         { name = 'cmdline' },
---                                 }),
---                         })
---                 end,
---         },
--- }
-
-local trigger_text = ";"
-
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append("c")
 return {
 	"saghen/blink.cmp",
+	version = "1.*",
 	enabled = true,
 	dependencies = {
+		{
+			"saghen/blink.compat",
+			version = "*",
+			lazy = true,
+			opts = {},
+		},
 		"moyiz/blink-emoji.nvim",
+
 		"Kaiser-Yang/blink-cmp-dictionary",
-		"rafamadriz/friendly-snippets",
-		"onsails/lspkind.nvim",
+		{ "mikavilpas/blink-ripgrep.nvim", lazy = true },
+		{ "onsails/lspkind.nvim", lazy = true },
+		{ "rafamadriz/friendly-snippets", lazy = true },
 		"nvim-tree/nvim-web-devicons",
+		{
+			"saecki/crates.nvim",
+			event = { "BufRead Cargo.toml" },
+			tag = "stable",
+			ft = { "rust", "toml" },
+			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("crates").setup({
+					autoload = true,
+					autoupdate = true,
+				})
+			end,
+		},
+		{
+			"L3MON4D3/LuaSnip",
+			version = "v2.*",
+			dependencies = { "rafamadriz/friendly-snippets" },
+			opts = function()
+				local types = require("luasnip.util.types")
+				return {
+					history = true,
+					delete_check_events = "TextChanged",
+					ext_opts = {
+						[types.insertNode] = {
+							unvisited = {
+								virt_text = { { "|", "Conceal" } },
+								-- virt_text_pos = "inline",
+							},
+						},
+						[types.exitNode] = {
+							unvisited = {
+								virt_text = { { "|", "Conceal" } },
+								-- virt_text_pos = "inline",
+							},
+						},
+					},
+				}
+			end,
+			config = function()
+				local snip_status_ok, luasnip = pcall(require, "luasnip")
+				if not snip_status_ok then
+					return
+				end
+
+				local snippets = require("luasnip.loaders.from_snipmate")
+				snippets.load({
+					include = { vim.bo.filetype },
+				})
+				snippets.lazy_load()
+				luasnip.config.set_config({
+					history = true,
+					region_check_events = "InsertEnter",
+					updateevents = "TextChanged,TextChangedI",
+					enable_autosnippets = true,
+				})
+
+				for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
+					loadfile(ft_path)()
+				end
+			end,
+		},
+		{
+			"xzbdmw/colorful-menu.nvim",
+			config = function()
+				require("colorful-menu").setup({})
+			end,
+		},
 	},
 	opts = function(_, opts)
+		---@module "blink.cmp"
+		---@param ctx blink.cmp.Context
+		---@param items blink.cmp.CompletionItem[]
+		---@return blink.cmp.CompletionItem[]
+		local function transform_items_capitalization(ctx, items)
+			local keyword = ctx.get_keyword()
+			local correct, case
+			if keyword:match("^%l") then
+				correct = "^%u%l+$"
+				case = string.lower
+			elseif keyword:match("^%u") then
+				correct = "^%l+$"
+				case = string.upper
+			else
+				return items
+			end
+
+			local seen = {}
+			local out = {}
+			for _, item in ipairs(items) do
+				local insertText = item.insertText
+				if insertText ~= nil then
+					if insertText:match(correct) then
+						local text = case(insertText:sub(1, 1)) .. insertText:sub(2)
+						item.insertText = text
+						item.label = text
+					elseif not seen[insertText] then
+						seen[insertText] = true
+						table.insert(out, item)
+					end
+				end
+			end
+
+			return out
+		end
+
+		---@module "blink.cmp"
+		---@param _ctx blink.cmp.Context
+		---@param items blink.cmp.CompletionItem[]
+		---@param label string
+		---@return blink.cmp.CompletionItem[]
+		---@diagnostic disable-next-line: unused-local
+		local function transform_items_label(_ctx, items, label)
+			for _, item in ipairs(items) do
+				if label ~= nil then
+					item.labelDetails = { description = "(" .. label .. ")" }
+				end
+			end
+
+			return items
+		end
 		opts.enabled = function()
 			-- Get the current buffer's filetype
 			local filetype = vim.bo[0].filetype
@@ -336,14 +147,15 @@ return {
 			end
 			return true
 		end
-
-		-- NOTE: The new way to enable LuaSnip
-
-		-- Merge custom sources with the existing ones from lazyvim
-		-- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
 		opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-			default = { "lsp", "path", "snippets", "buffer", "dadbod", "emoji" },
+			default = { "lsp", "snippets", "path", "buffer", "emoji", "lazydev", "ripgrep", "tailwindcsscmp" },
+			per_filetype = { sql = { "dadbod" } },
 			providers = {
+				tailwindcsscmp = {
+					name = "tailwindcss-colorizer-cmp",
+					module = "blink.compat.source",
+					score_offset = 5, -- the higher the number, the higher the priority
+				},
 				lsp = {
 					name = "lsp",
 					enabled = true,
@@ -368,6 +180,12 @@ return {
 						show_hidden_files_by_default = true,
 					},
 				},
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					-- make lazydev completions top priority (see `:h blink.cmp`)
+					score_offset = 100,
+				},
 				buffer = {
 					name = "Buffer",
 					enabled = true,
@@ -376,52 +194,24 @@ return {
 					min_keyword_length = 4,
 					score_offset = 15, -- the higher the number, the higher the priority
 				},
+				ripgrep = {
+					module = "blink-ripgrep",
+					name = "Ripgrep",
+					---@module "blink-ripgrep"
+					---@type blink-ripgrep.Options
+					opts = { prefix_min_len = 3 },
+					async = true,
+					transform_items = function(ctx, items)
+						return transform_items_label(ctx, transform_items_capitalization(ctx, items), "rg")
+					end,
+					min_keyword_length = 3,
+				},
 				snippets = {
 					name = "snippets",
 					enabled = true,
 					max_items = 15,
 					min_keyword_length = 2,
-					module = "blink.cmp.sources.snippets",
 					score_offset = 85, -- the higher the number, the higher the priority
-					-- Only show snippets if I type the trigger_text characters, so
-					-- to expand the "bash" snippet, if the trigger_text is ";" I have to
-					should_show_items = function()
-						local col = vim.api.nvim_win_get_cursor(0)[2]
-						local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-						-- NOTE: remember that `trigger_text` is modified at the top of the file
-						return before_cursor:match(trigger_text .. "%w*$") ~= nil
-					end,
-					-- After accepting the completion, delete the trigger_text characters
-					-- from the final inserted text
-					-- Modified transform_items function based on suggestion by `synic` so
-					-- that the luasnip source is not reloaded after each transformation
-					-- https://github.com/linkarzu/dotfiles-latest/discussions/7#discussion-7849902
-					-- NOTE: I also tried to add the ";" prefix to all of the snippets loaded from
-					-- friendly-snippets in the luasnip.lua file, but I was unable to do
-					-- so, so I still have to use the transform_items here
-					-- This removes the ";" only for the friendly-snippets snippets
-					transform_items = function(_, items)
-						local line = vim.api.nvim_get_current_line()
-						local col = vim.api.nvim_win_get_cursor(0)[2]
-						local before_cursor = line:sub(1, col)
-						local start_pos, end_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
-						if start_pos then
-							for _, item in ipairs(items) do
-								if not item.trigger_text_modified then
-									---@diagnostic disable-next-line: inject-field
-									item.trigger_text_modified = true
-									item.textEdit = {
-										newText = item.insertText or item.label,
-										range = {
-											start = { line = vim.fn.line(".") - 1, character = start_pos - 1 },
-											["end"] = { line = vim.fn.line(".") - 1, character = end_pos },
-										},
-									}
-								end
-							end
-						end
-						return items
-					end,
 				},
 				-- Example on how to configure dadbod found in the main repo
 				-- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -445,42 +235,46 @@ return {
 		opts.cmdline = {
 			enabled = true,
 		}
-		opts.signature = { window = { border = "single" } }
+		opts.signature = { enabled = true }
+		opts.appearance = {
+			use_nvim_cmp_as_default = true,
+			nerd_font_variant = "mono",
+		}
 
 		opts.completion = {
 			menu = {
+				border = "rounded",
 				draw = {
+					treesitter = { "lsp" },
+					columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
 					components = {
 						kind_icon = {
+							ellipsis = false,
 							text = function(ctx)
-								local lspkind = require("lspkind")
-								local icon = ctx.kind_icon
-								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-									if dev_icon then
-										icon = dev_icon
-									end
-								else
-									icon = require("lspkind").symbolic(ctx.kind, {
-										mode = "symbol",
-									})
-								end
-
-								return icon .. ctx.icon_gap
+								return require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
 							end,
-
-							-- Optionally, use the highlight groups from nvim-web-devicons
-							-- You can also add the same function for `kind.highlight` if you want to
-							-- keep the highlight groups in sync with the icons.
+						},
+						label = {
+							text = function(ctx)
+								return require("colorful-menu").blink_components_text(ctx)
+							end,
 							highlight = function(ctx)
-								local hl = ctx.kind_hl
-								if vim.tbl_contains({ "Path" }, ctx.source_name) then
-									local dev_icon, dev_hl = require("nvim-web-devicons").get_icon(ctx.label)
-									if dev_icon then
-										hl = dev_hl
+								return require("colorful-menu").blink_components_highlight(ctx)
+							end,
+						},
+						label_description = {
+							text = function(ctx)
+								if ctx.source_id == "lsp" then
+									local label = require("colorful-menu").blink_highlights(ctx).label
+									if
+										label ~= ctx.label
+										or label == ctx.label_description
+										or ctx.label == ctx.label_description
+									then
+										return nil
 									end
 								end
-								return hl
+								return ctx.label_description
 							end,
 						},
 					},
@@ -489,16 +283,17 @@ return {
 
 			documentation = {
 				auto_show = true,
+				auto_show_delay_ms = 500,
 				window = {
-					border = "single",
+					border = "rounded",
 				},
 			},
 			-- Displays a preview of the selected item on the current line
 			ghost_text = {
-				enabled = true,
+				enabled = false,
 			},
 		}
-
+		opts.fuzzy = { implementation = "prefer_rust_with_warning" }
 		opts.snippets = {
 			preset = "luasnip", -- Choose LuaSnip as the snippet engine
 		}

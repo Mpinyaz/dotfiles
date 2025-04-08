@@ -46,6 +46,7 @@ local options = {
         conceallevel = 2,
         cmdheight = 0,
         laststatus = 0,
+        winborder = "rounded",
         fileformats = "unix,dos,mac",
 }
 

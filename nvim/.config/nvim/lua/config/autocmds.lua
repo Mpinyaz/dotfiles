@@ -14,10 +14,10 @@ vim.cmd [[
 ]]
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = '*',
-  callback = function()
-    vim.opt_local.formatoptions:remove { 'r', 'o' }
-  end,
+    pattern = '*',
+    callback = function()
+        vim.opt_local.formatoptions:remove { 'r', 'o' }
+    end,
 })
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --         callback = function(args)
@@ -37,48 +37,48 @@ vim.api.nvim_create_autocmd('FileType', {
 -- })
 
 vim.api.nvim_create_user_command('FormatDisable', function(args)
-  if args.bang then
-    -- FormatDisable! will disable formatting just for this buffer
-    vim.b.disable_autoformat = true
-  else
-    vim.g.disable_autoformat = true
-  end
+    if args.bang then
+        -- FormatDisable! will disable formatting just for this buffer
+        vim.b.disable_autoformat = true
+    else
+        vim.g.disable_autoformat = true
+    end
 end, {
-  desc = 'Disable autoformat-on-save',
-  bang = true,
+    desc = 'Disable autoformat-on-save',
+    bang = true,
 })
 vim.api.nvim_create_user_command('FormatEnable', function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
+    vim.b.disable_autoformat = false
+    vim.g.disable_autoformat = false
 end, {
-  desc = 'Re-enable autoformat-on-save',
+    desc = 'Re-enable autoformat-on-save',
 })
 
 local header
 -- Resize all windows when we resize the terminal
 vim.api.nvim_create_autocmd('VimResized', {
-  group = vim.api.nvim_create_augroup('win_autoresize', { clear = true }),
-  desc = 'autoresize windows on resizing operation',
-  command = 'wincmd =',
+    group = vim.api.nvim_create_augroup('win_autoresize', { clear = true }),
+    desc = 'autoresize windows on resizing operation',
+    command = 'wincmd =',
 })
 -- windows to close with "q"
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = {
-    'dap-float',
-    'fugitive',
-    'help',
-    'man',
-    'notify',
-    'null-ls-info',
-    'qf',
-    'PlenaryTestPopup',
-    'startuptime',
-    'tsplayground',
-  },
-  callback = function(event)
-    vim.bo[event.buf].buflisted = false
-    vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
-  end,
+    pattern = {
+        'dap-float',
+        'fugitive',
+        'help',
+        'man',
+        'notify',
+        'null-ls-info',
+        'qf',
+        'PlenaryTestPopup',
+        'startuptime',
+        'tsplayground',
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
+    end,
 })
 vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 -- Automatically reload the file if it is changed outside of Nvim, see https://unix.stackexchange.com/a/383044/221410.
@@ -87,33 +87,43 @@ vim.api.nvim_create_autocmd('FileType', { pattern = 'man', command = [[nnoremap 
 vim.api.nvim_create_augroup('auto_read', { clear = true })
 
 vim.api.nvim_create_autocmd({ 'FileChangedShellPost' }, {
-  pattern = '*',
-  group = 'auto_read',
-  callback = function()
-    vim.notify('File changed on disk. Buffer reloaded!', 'warn', { title = 'File Changed' })
-  end,
+    pattern = '*',
+    group = 'auto_read',
+    callback = function()
+        vim.notify('File changed on disk. Buffer reloaded!', 'warn', { title = 'File Changed' })
+    end,
 })
 vim.keymap.set('n', 'i', function()
-  if vim.fn.match(vim.fn.getline '.', [[^\s*$]]) ~= -1 then
-    return [["_cc]]
-  else
-    return 'i'
-  end
+    if vim.fn.match(vim.fn.getline '.', [[^\s*$]]) ~= -1 then
+        return [["_cc]]
+    else
+        return 'i'
+    end
 end, { expr = true })
 
 vim.filetype.add {
-  extension = {
-    astro = 'astro',
-  },
+    extension = {
+        astro = 'astro',
+    },
 }
 
 -- Highlight on yank
 local yankGrp = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-  group = yankGrp,
-  pattern = '*',
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  desc = 'Highlight yank',
+    group = yankGrp,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    desc = 'Highlight yank',
 })
+
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--     group = augroup("autoupdate"),
+--     callback = function()
+--         if require("lazy.status").has_updates then
+--             require("lazy").update({ show = false })
+--         end
+--     end,
+-- })
