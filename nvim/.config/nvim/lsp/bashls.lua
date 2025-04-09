@@ -1,4 +1,5 @@
 ---@type vim.lsp.Config
 return {
-	filetypes = { "sh", "zsh" },
+	cmd = { "bash-language-server", "start" },
+	filetypes = { "sh", "zsh", "bash" },
 }

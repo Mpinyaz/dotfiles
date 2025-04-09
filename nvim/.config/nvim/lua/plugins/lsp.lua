@@ -132,7 +132,12 @@ vim.lsp.config["html"] = {
 		provideFormatter = true,
 	},
 }
-
+vim.lsp.config["bashls"] = {
+	cmd = { "bash-language-server", "start" },
+	capabilities = capabilities,
+	on_init = on_init,
+	filetypes = { "sh", "zsh", "bash" },
+}
 vim.lsp.config["gopls"] = {
 	cmd = { "gopls" },
 	root_markers = { "go.work", "go.mod", ".git" },

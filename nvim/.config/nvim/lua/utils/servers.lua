@@ -12,6 +12,7 @@ return {
 	"cssls",
 	"clangd",
 	"rust_analyzer",
+	"tailwindcss",
 	"taplo",
 	"lua-language-server",
 	"typescript-language-server",
