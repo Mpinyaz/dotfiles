@@ -319,14 +319,13 @@ return {
 		}
 		opts.keymap = {
 			preset = "default",
+
 			["<Tab>"] = { "snippet_forward", "fallback" },
 			["<S-Tab>"] = { "snippet_backward", "fallback" },
-
-			["<Up>"] = { "select_prev", "fallback" },
-			["<Down>"] = { "select_next", "fallback" },
-			-- ["<C-p>"] = { "select_prev", "fallback" },
-			-- ["<C-n>"] = { "select_next", "fallback" },
-
+			["<Up>"] = {},
+			["<Down>"] = {},
+			["<C-p>"] = { "select_prev", "fallback" },
+			["<C-n>"] = { "select_next", "fallback" },
 			["<S-k>"] = { "scroll_documentation_up", "fallback" },
 			["<S-j>"] = { "scroll_documentation_down", "fallback" },
 

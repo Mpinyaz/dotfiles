@@ -119,6 +119,8 @@ vim.lsp.config["clangd"] = {
 }
 
 vim.lsp.config["html"] = {
+	cmd = { "vscode-html-language-server", "--stdio" },
+	filetypes = { "html" },
 	capabilities = capabilities,
 	on_init = on_init,
 	init_options = {
@@ -132,6 +134,7 @@ vim.lsp.config["html"] = {
 }
 
 vim.lsp.config["gopls"] = {
+	cmd = { "gopls" },
 	root_markers = { "go.work", "go.mod", ".git" },
 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	capabilities = capabilities,
