@@ -1,15 +1,28 @@
 return {
-  'craftzdog/solarized-osaka.nvim',
+  "craftzdog/solarized-osaka.nvim",
+  -- {
+  --   "rebelot/kanagawa.nvim",
+  --   opts = {
+  --     theme = "lotus",
+  --   },
+  --   config = function()
+  --     vim.cmd("colorscheme kanagawa-wave")
+  --   end,
+  -- },
+
   {
-    'rebelot/kanagawa.nvim',
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
     opts = {
-      theme = 'lotus',
+      transparent = true,
     },
     config = function()
-      vim.cmd 'colorscheme kanagawa-wave'
+      vim.cmd("colorscheme cyberdream")
     end,
   },
-  { 'edeneast/nightfox.nvim' },
+  { "edeneast/nightfox.nvim" },
+
   -- {
   --         "rose-pine/neovim",
   --         name = "rose-pine",
