@@ -16,7 +16,8 @@
     # delta detects terminal colors automatically; set one of these to disable auto-detection
     dark = true
     # light = true
-
+[push]
+	autoSetupRemote = true
 [merge]
     conflictstyle = diff3
 

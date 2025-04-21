@@ -17,6 +17,7 @@ export HISTFILESIZE=100000000
 export HISTDUP=erase
 export HISTCONTROL=ignoreboth:erasedups
 export LC_ALL=en_US.UTF-8
+export MANPAGER='nvim +Man!'
 export LANG=en_US.UTF-8
 export VISUAL=nvim
 setopt appendhistory
