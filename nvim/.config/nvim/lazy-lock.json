@@ -54,7 +54,6 @@
   "mini.animate": { "branch": "main", "commit": "d14190ac3040116540889e2ebc25f488b195799e" },
   "mini.nvim": { "branch": "main", "commit": "0420076298c4457f200c2de468f65d080597a347" },
   "modes.nvim": { "branch": "main", "commit": "3188692abf02a8838ec75e59d68c2ce3e4323f5c" },
-  "neo-tree.nvim": { "branch": "v3.x", "commit": "9b5d67119c46e3262ffe1508fe6d8540b79ad75d" },
   "neosolarized.nvim": { "branch": "main", "commit": "742deb0b2b1e110b09494206611509e3992aac35" },
   "neotest": { "branch": "master", "commit": "c3b5930d1512054c313a5ce76dd15f7301c973e8" },
   "nightfox.nvim": { "branch": "main", "commit": "ba47d4b4c5ec308718641ba7402c143836f35aa9" },
@@ -122,5 +121,6 @@
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "wtf.nvim": { "branch": "main", "commit": "22dac666c8847c9cb03afe99229d459f1d0822c4" },
   "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" },
+  "yazi.nvim": { "branch": "main", "commit": "82873628a2b78dce48b5bcf8d1d8ed14f0ee985f" },
   "zoxide.vim": { "branch": "master", "commit": "b1e70b6fc1682a83929aee63680d2b43456fe9a5" }
 }
