@@ -1,0 +1,183 @@
+# Configuration file for golangci-lint.
+#
+# Here's a suggested base configuration that aims for a balance between
+# being thorough and practical.  You can adjust it to fit your specific
+# project's needs and coding style.
+#
+# For a full list of available options and linters, see:
+# https://golangci-lint.run/usage/configuration/
+# https://golangci-lint.run/usage/linters/
+
+run:
+  # Maximum number of issues to print per file.
+  # Default: 50
+  max-issues-per-file: 0
+
+  # Maximum number of same issues to print.
+  # Default: 3
+  max-same-issues: 3
+
+  # Timeout for analysis.
+  # Default: 1m
+  timeout: 5m
+
+  # Exit with non-zero exit code if there are any issues.
+  # Default: true
+  issues-exit-code: 1
+
+  # Include only new issues.  Requires a git repository.
+  # Default: false
+  # new: true  # Uncomment to enable.  Useful in CI.
+
+  # Analyze tests too.
+  # Default: false
+  tests: true
+
+  # Enable/disable autofix.
+  # Default: false
+  # autofix: true # Uncomment to enable.
+
+# Which linters to enable.  A good starting point is to be explicit.
+# It's better to enable what you want rather than disable what you don't.
+linters:
+  disable-all: true
+  enable:
+    # Essential
+    - errcheck # Check for unchecked errors
+    - govet # Report suspicious constructs
+    - ineffassign # Detect when assignments to existing variables are not used
+    - staticcheck # Comprehensive set of static analysis checks
+    - unused # Checks for unused constants, variables, functions and types
+    - typecheck # Like the front-end of a Go compiler, parses and type-checks
+    - gosimple # Simplify code
+
+    # Style and Best Practices
+    - goconst # Find repeated strings that could be constants
+    - gocritic # Checks for bugs, performance and style issues.
+    - gofmt # Check that code is formatted with gofmt
+    - goimports # Checks for correct import ordering
+    - lll # Report long lines
+    - whitespace # Check for leading and trailing whitespace
+
+    # Complexity
+    - cyclop # Check function complexity
+    - gocognit # Check cognitive complexity
+
+    # Reliability
+    - bodyclose # Check whether HTTP response body is closed successfully
+    - errorlint # Check for errors wrapping
+    - nilerr # Check for nil errors
+    - rowserrcheck # Check whether sql.Rows.Err is checked
+    - sqlclosecheck # Check that sql.Rows and sql.Stmt are closed
+
+    # Concurrency
+    - contextcheck # Check for non-inherited context usage
+    - copyloopvar # Check for references to loop variables from within nested functions.
+
+    # Security
+    - gosec # Inspect source code for security problems
+
+# Configuration of specific linters.
+linters-settings:
+  cyclop:
+    # Maximum complexity to report.
+    # Default: 25
+    max-complexity: 20
+
+  gocognit:
+    # Maximum cognitive complexity to report.
+    # Default: 25
+    min-complexity: 20
+
+  lll:
+    # Maximum line length
+    # Default: 120
+    line-length: 120
+    tab-width: 4
+
+  gosec:
+    # Report issues with high severity.
+    # Default: []
+    severity: high
+
+  gocritic:
+    # Which checks to enable.
+    # See https://go-critic.github.io/overview/
+    enabled-checks:
+      - appendAssign
+      - argOrder
+      - assignOp
+      - boolExprSimplify
+      - caseBreak
+      - commentFormatting
+      - deferReceiver
+      - dupArg
+      - dupBranchBody
+      - dupSubExpr
+      - equalFold
+      - exitAfterDefer
+      - floatCmp
+      - ifElseChain
+      - importShadow
+      - ineffectiveBreak
+      - inefficientAppend
+      - inefficientCap
+      - inefficientLen
+      - inlineIf
+      - localVarShadow
+      - logFatal
+      - misplacedRangeErrCheck
+      - nilValReturn
+      - noEffectCall
+      - paramTypeCombine
+      - preferDecodeRune
+      - preferNilCheck
+      - preferStrcmp
+      - rangeValCopy
+      - regexpSimplify
+      - returnAfterWrite
+      - sloppyLen
+      - stringConcatSimplify
+      - stringSimplify
+      - typeAssertChain
+      - unnecessaryBlock
+      - unnecessaryCast
+      - unnecessaryDefer
+      - unnecessaryNilCheck
+      - unreadVariable
+      - valSwap
+      - yodaStyle
+
+# Exclude certain issues from being reported.  This is useful for
+# silencing false positives or issues in code you don't control.  Use
+# with care, and try to keep exclusions to a minimum.
+#
+# Example:
+#   exclude:
+#     - path/to/file.go:123:message
+#
+# You can also use regular expressions:
+#   exclude:
+#     - 'path/to/.*.go:123:message'
+#
+# Exclude based on a list of issues.
+#   exclude-use-default: false
+#   exclude:
+#     - ...
+exclusions:
+  - "vendor/:"
+  - ".*:.*:shadow:.*" # Filter out variable shadowing issues.
+  - ".*:.*:unparam:.*" # Filter out unused parameter issues.
+  - ".*:.*:dupl:.*" # Filter out duplicate code issues.
+  - ".*:.*:gochecknoglobals:.*" # Allows global variables
+  - "testdata/.*" # Exclude testdata directory
+
+# Settings for specific linters.
+settings:
+  govet:
+    # Report about shadowed variables.
+    # Default: false
+    check-shadowing: true
+    settings:
+      shadow:
+        strict: true # be strict about shadowing

@@ -41,7 +41,7 @@ return {
         desc = "telescope browser",
       },
       { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      -- { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
       { "<leader>r", "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>fz", "<cmd>Telescope zoxide list<cr>", desc = "Recent Folders" },
       {

@@ -1,15 +1,15 @@
 return {
-  'stevearc/conform.nvim',
-  cmd = { 'ConformInfo', 'FormatToggle', 'FormatEnable', 'FormatDisable' },
-  event = { 'BufReadPre', 'BufNewFile' }, -- to disable, comment this out
+  "stevearc/conform.nvim",
+  cmd = { "ConformInfo", "FormatToggle", "FormatEnable", "FormatDisable" },
+  event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
   init = function()
     vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
   config = function()
-    local conform = require 'conform'
-    local web_formatter = { 'prettierd', 'biome-check', stop_after_first = true }
+    local conform = require("conform")
+    local web_formatter = { "prettierd", "biome-check", stop_after_first = true }
 
-    conform.setup {
+    conform.setup({
       format = {
         timeout_ms = 3000,
         async = true,
@@ -25,30 +25,31 @@ return {
         css = web_formatter,
         html = web_formatter,
         json = web_formatter,
-        yaml = { 'prettierd' },
-        markdown = { 'prettierd' },
-        graphql = { 'prettierd' },
-        lua = { 'stylua' },
-        rust = { 'rustfmt', lsp_fallback = true },
-        python = { 'isort', 'black' },
-        fish = { 'fish_indent' },
-        c = { 'clang_format' },
-        sh = { 'shfmt' },
-        toml = { 'taplo' },
-        sql = { 'sqlfmt' },
+        yaml = { "prettierd" },
+        markdown = { "prettierd" },
+        graphql = { "prettierd" },
+        lua = { "stylua" },
+        rust = { "rustfmt", lsp_fallback = true },
+        python = { "isort", "black" },
+        fish = { "fish_indent" },
+        c = { "clang_format" },
+        sh = { "shfmt" },
+        toml = { "taplo" },
+        sql = { "sqlfmt" },
+        go = { "gofumpt", "goimports" },
       },
-      format_on_save = { timeout_ms = 500, async = false, lsp_format = 'fallback' },
+      format_on_save = { timeout_ms = 500, async = false, lsp_format = "fallback" },
       formatters = {
         injected = { options = { ignore_errors = true } },
       },
-    }
+    })
 
-    vim.keymap.set({ 'n', 'v' }, '<leader>qf', function()
-      conform.format {
+    vim.keymap.set({ "n", "v" }, "<leader>qf", function()
+      conform.format({
         lsp_fallback = true,
         async = true,
         timeout_ms = 1000,
-      }
-    end, { desc = 'Format file or range (in visual mode)' })
+      })
+    end, { desc = "Format file or range (in visual mode)" })
   end,
 }

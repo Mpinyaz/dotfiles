@@ -1,5 +1,19 @@
-[plugin]
-deps = [{ use = "dedukun/bookmarks", rev = "600f87c" }]
+[[plugin.deps]]
+use = "dedukun/bookmarks"
+rev = "600f87c"
+hash = ""
 
-[flavor]
-deps = [{ use = "tkapias/nightfly", rev = "599b8ad" }, { use = "yazi-rs/flavors:catppuccin-mocha", rev = "8458d25" }]
+[[flavor.deps]]
+use = "tkapias/nightfly"
+rev = "599b8ad"
+hash = ""
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "8458d25"
+hash = ""
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "02f3fc6"
+hash = "53e1f10ae0f6abd406e463fceca8622a"

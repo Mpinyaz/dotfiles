@@ -38,8 +38,6 @@ keymap("i", "<S-Tab>", "<C-d>", opts)
 keymap("i", "<F2>", "<Esc>mti<C-X>s<Esc>`tla", opts)
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
---Telescope keymaps
-keymap("n", "<leader>s", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<M-k>", ":m .-2<CR>==", { desc = "Move line up" })
 keymap("n", "<M-j>", ":m .+1<CR>==", { desc = "Move line down" })
 keymap("v", "<M-k>", ":m .-2<CR>==", { desc = "Move line up" })

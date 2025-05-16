@@ -2,6 +2,8 @@ return {
   "pyright",
   "bashls",
   "gopls",
+  "goimports",
+  "gofumpt",
   "cmake",
   "omnisharp",
   "biome",
