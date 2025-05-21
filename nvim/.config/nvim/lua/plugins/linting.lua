@@ -3,6 +3,7 @@ return {
     "rshkarin/mason-nvim-lint",
     opts = {
       automatic_installation = true,
+      ignore_install = { "biome" },
     },
     dependencies = { "mfussenegger/nvim-lint", "williamboman/mason.nvim" },
   },
@@ -19,7 +20,6 @@ return {
     event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
     config = function()
       local lint = require("lint")
-
       lint.linters_by_ft = {
         markdown = { "markdownlint" },
         typescript = { "biome", "eslint_d" },

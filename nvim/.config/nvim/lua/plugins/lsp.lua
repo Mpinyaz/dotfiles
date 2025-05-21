@@ -333,6 +333,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local opts = { noremap = true, silent = true }
     -- Store LSP client name in buffer-local variable
     vim.b[bufnr].lsp = client.name
+    require("lsp_signature").on_attach({
+      bind = true,
+      floating_window = true,
+      always_trigger = true,
+      hint_enable = true,
+      hint_prefix = "🔍 ",
+    }, bufnr)
     -- Mappings
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
