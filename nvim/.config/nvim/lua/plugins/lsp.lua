@@ -212,48 +212,48 @@ vim.lsp.config["yamlls"] = {
     },
   },
 }
-vim.lsp.config["typescript-language-server"] = {
-  cmd = { "typescript-language-server", "--stdio" },
-  root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
-  capabilities = capabilities,
-  on_init = on_init,
-  filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-  },
-
-  settings = {
-    completions = {
-      completeFunctionCalls = true,
-    },
-  },
-  javascript = {
-    inlayHints = {
-      includeInlayEnumMemberValueHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayVariableTypeHints = true,
-    },
-  },
-  typescript = {
-    inlayHints = {
-      includeInlayEnumMemberValueHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayVariableTypeHints = true,
-    },
-  },
-}
+-- vim.lsp.config["typescript-language-server"] = {
+--   cmd = { "typescript-language-server", "--stdio" },
+--   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+--   capabilities = capabilities,
+--   on_init = on_init,
+--   filetypes = {
+--     "javascript",
+--     "javascriptreact",
+--     "javascript.jsx",
+--     "typescript",
+--     "typescriptreact",
+--     "typescript.tsx",
+--   },
+--
+--   settings = {
+--     completions = {
+--       completeFunctionCalls = true,
+--     },
+--   },
+--   javascript = {
+--     inlayHints = {
+--       includeInlayEnumMemberValueHints = true,
+--       includeInlayFunctionLikeReturnTypeHints = true,
+--       includeInlayFunctionParameterTypeHints = true,
+--       includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+--       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+--       includeInlayPropertyDeclarationTypeHints = true,
+--       includeInlayVariableTypeHints = true,
+--     },
+--   },
+--   typescript = {
+--     inlayHints = {
+--       includeInlayEnumMemberValueHints = true,
+--       includeInlayFunctionLikeReturnTypeHints = true,
+--       includeInlayFunctionParameterTypeHints = true,
+--       includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+--       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+--       includeInlayPropertyDeclarationTypeHints = true,
+--       includeInlayVariableTypeHints = true,
+--     },
+--   },
+-- }
 vim.lsp.config["rust_analyzer"] = {
   cmd = { "rustup", "run", "stable", "rust-analyzer" },
   filetypes = { "rust" },
