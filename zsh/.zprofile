@@ -57,6 +57,22 @@ if grep -qi 'arch' /etc/os-release 2>/dev/null || command -v pacman &>/dev/null;
     }
 
 fi
-eval "$(brew shellenv)"
-autoload -Uz compinit
-compinit
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  # Check if it's Apple Silicon or Intel Mac
+  if [[ "$(uname -m)" == "arm64" ]]; then
+    # Apple Silicon Mac (M1/M2/etc.)
+    export PATH="/opt/homebrew/bin:$PATH"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  else
+    # Intel Mac
+    export PATH="/usr/local/bin:$PATH"
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+
+  # Homebrew completions (works for both architectures)
+  if type brew &>/dev/null; then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    autoload -Uz compinit
+    compinit
+  fi
+fi

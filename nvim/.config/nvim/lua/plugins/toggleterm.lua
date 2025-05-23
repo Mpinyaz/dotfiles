@@ -9,17 +9,27 @@ return {
 
     local Terminal = require("toggleterm.terminal").Terminal
     local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
+    local lazydocker = Terminal:new({ cmd = "lazydocker", hidden = true })
     local yazi = Terminal:new({ cmd = "yazi", hidden = true })
 
     function _LAZYGIT_TOGGLE()
       lazygit:toggle()
     end
 
+    function _LAZYDOCKER_TOGGLE()
+      lazydocker:toggle()
+    end
+
     function _YAZI_TOGGLE()
       yazi:toggle()
     end
 
-    -- vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>ld",
+      "<cmd>lua _LAZYDOCKER_TOGGLE()<CR>",
+      { noremap = true, silent = true }
+    )
     -- vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua _YAZI_TOGGLE()<CR>", { noremap = true, silent = true })
     toggleterm.setup({
       size = 20,
