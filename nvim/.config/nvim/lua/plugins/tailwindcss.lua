@@ -7,10 +7,15 @@ return {
 		"nvim-telescope/telescope.nvim", -- optional
 		"neovim/nvim-lspconfig", -- optional
 	},
-	opts = {}, -- your configuration
+	-- ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+
 	config = function()
 		require("tailwind-tools").setup({
-			-- your configuration
+			keymaps = {
+				smart_increment = {
+					enabled = false,
+				},
+			},
 		})
 	end,
 }
