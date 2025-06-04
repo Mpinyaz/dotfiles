@@ -51,6 +51,14 @@ if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
 fi
 
 mkdir -p ~/.local/bin
+mkdir -p ~/.bin
+if [ -d "$HOME/.bin" ] ;
+  then PATH="$HOME/.bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ;
+  then PATH="$HOME/.local/bin:$PATH"
+fi
 
 if [[ ! -d ~/.tmux/plugins/tpm ]]; then
         echo "tpm is being installed..."

@@ -1,6 +1,9 @@
 alias now='date +"%A %Y-%m-%d %T %p %s"'
 alias rs='exec -l $SHELL'
-alias lt="ls -ltaT | more"
+alias lt='eza -aT --color=always --group-directories-first'             # tree listing
+alias l.='eza -al --color=always --group-directories-first ../'         # ls on the PARENT directory
+alias l..='eza -al --color=always --group-directories-first ../../'     # ls on directory 2 levels up
+alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
 alias grep='grep --color=auto'
 alias ff='yazi'
 alias df='df -h'
@@ -63,5 +66,5 @@ alias echo="coreutils echo"
 alias vimdiff="nvim -d --cmd ':lua vim.g.noplugins=1'"
 
 if command -v bat &>/dev/null; then
-  alias cat='bat'
+        alias cat='bat'
 fi

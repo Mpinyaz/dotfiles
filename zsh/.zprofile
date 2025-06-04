@@ -2,7 +2,19 @@ export GOPATH=$HOME/go
 export PATH="$PATH:$GOPATH/bin"
 if grep -qi 'arch' /etc/os-release 2>/dev/null || command -v pacman &>/dev/null; then
 
-        alias p="sudo pacman"
+alias p="sudo pacman"
+
+alias pacsyu='sudo pacman -Syu'                  # update only standard pkgs
+alias pacsyyu='sudo pacman -Syyu'                # Refresh pkglist & update standard pkgs
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
+alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
+# receive the key of a developer
+alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
+
 
         function command_not_found_handler {
                 local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
