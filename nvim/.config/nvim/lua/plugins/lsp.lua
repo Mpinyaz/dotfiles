@@ -34,7 +34,7 @@ local function on_init(client, result)
 	client.server_capabilities = vim.tbl_deep_extend("force", client.server_capabilities, capabilities)
 
 	-- Set empty trigger characters for signatureHelp if supported
-	if client.supports_method("textDocument/signatureHelp") then
+	if client:supports_method("textDocument/signatureHelp") then
 		client.server_capabilities.signatureHelpProvider.triggerCharacters = {}
 	end
 
@@ -459,7 +459,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		-- Document highlight
-		if client.supports_method("textDocument/documentHighlight") then
+		if client:supports_method("textDocument/documentHighlight", bufnr) then
 			vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
 				group = "lsp",
 				buffer = bufnr,
@@ -473,12 +473,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		-- Inlay hints toggle
-		if client.supports_method("textDocument/inlayHint") then
+		if client:supports_method("textDocument/inlayHint", bufnr) then
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
 		end
 
 		-- Code lens
-		if client.supports_method("textDocument/codeLens") then
+		if client:supports_method("textDocument/codeLens", bufnr) then
 			vim.api.nvim_create_autocmd("LspProgress", {
 				group = "lsp",
 				pattern = "end",
@@ -507,7 +507,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- end
 
 		-- Formatting
-		if client.supports_method("textDocument/formatting") then
+		if client:supports_method("textDocument/formatting", bufnr) then
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = "lsp",
 				buffer = bufnr,
