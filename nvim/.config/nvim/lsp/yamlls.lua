@@ -1,7 +1,9 @@
 ---@type vim.lsp.Config
 return {
-	-- Have to add this for yamlls to understand that we support line folding
-	capabilities = { textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } } },
+	cmd = { "yaml-language-server", "--stdio" },
+	filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
+	capabilities = capabilities,
+	on_init = on_init,
 	settings = {
 		redhat = { telemetry = { enabled = false } },
 		yaml = {

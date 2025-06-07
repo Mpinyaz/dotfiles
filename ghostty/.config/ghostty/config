@@ -3,7 +3,7 @@ clipboard-write = allow
 copy-on-select = true
 background-opacity = 0.6
 background-blur-radius = 36
-theme = dark:cyberdream,light:cyberdream-light
+theme = cyberdream
 macos-titlebar-style = transparent
 unfocused-split-opacity = 0.66
 cursor-opacity = 0.6
@@ -28,5 +28,5 @@ shell-integration-features = true
 font-thicken =true
 font-size = 20
 font-thicken = true
-font-family = Iosevka:style=bold
+font-family = FiraCode Nerd Font
 keybind = global:ctrl+/=toggle_quick_terminal

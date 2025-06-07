@@ -50,7 +50,9 @@ return {
 			{
 				"L3MON4D3/LuaSnip",
 				version = "v2.*",
-				dependencies = { "rafamadriz/friendly-snippets" },
+				dependencies = { {
+					"garymjr/nvim-snippets",
+				}, { "rafamadriz/friendly-snippets" } },
 				opts = function()
 					local types = require("luasnip.util.types")
 					return {
@@ -77,28 +79,29 @@ return {
 					if not snip_status_ok then
 						return
 					end
-					vim.keymap.set({ "i", "s" }, "<tab>", function()
-						if luasnip and luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						else
-							local termcode = require("j.utils").termcode
-							vim.api.nvim_feedkeys(termcode("<Tab>"), "n", faluasnipe)
-						end
-					end)
-					vim.keymap.set({ "i", "s" }, "<s-tab>", function()
-						if ls.jumpable(-1) then
-							return "<Plug>luasnip-jump-prev"
-						else
-							return "<s-tab>"
-						end
-					end, { expr = true })
-					vim.keymap.set({ "i", "s" }, "<c-k>", function()
-						if luasnip.choice_active() then
-							luasnip.change_choice(1)
-						end
-					end, { silent = true })
+					-- vim.keymap.set({ "i", "s" }, "<tab>", function()
+					-- 	if luasnip and luasnip.expand_or_jumpable() then
+					-- 		luasnip.expand_or_jump()
+					-- 	else
+					-- 		local termcode = require("j.utils").termcode
+					-- 		vim.api.nvim_feedkeys(termcode("<Tab>"), "n", faluasnipe)
+					-- 	end
+					-- end)
+					-- vim.keymap.set({ "i", "s" }, "<s-tab>", function()
+					-- 	if ls.jumpable(-1) then
+					-- 		return "<Plug>luasnip-jump-prev"
+					-- 	else
+					-- 		return "<s-tab>"
+					-- 	end
+					-- end, { expr = true })
+					-- vim.keymap.set({ "i", "s" }, "<c-k>", function()
+					-- 	if luasnip.choice_active() then
+					-- 		luasnip.change_choice(1)
+					-- 	end
+					-- end, { silent = true })
 					require("luasnip.loaders.from_vscode").lazy_load()
 					require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
+					require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/snippets" })
 
 					luasnip.config.set_config({
 						history = true,
@@ -339,7 +342,7 @@ return {
 			opts.snippets = {
 				preset = "luasnip", -- Choose LuaSnip as the snippet engine
 			}
-			opts.signature = { enabled = true }
+			-- opts.signature = { enabled = true }
 			opts.keymap = {
 				preset = "default",
 
@@ -351,8 +354,11 @@ return {
 				["<C-n>"] = { "select_next", "fallback" },
 				["<S-k>"] = { "scroll_documentation_up", "fallback" },
 				["<S-j>"] = { "scroll_documentation_down", "fallback" },
-
-				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-space>"] = {
+					function(cmp)
+						cmp.show({ providers = { "snippets" } })
+					end,
+				},
 				["<C-e>"] = { "hide", "fallback" },
 			}
 

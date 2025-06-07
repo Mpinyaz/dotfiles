@@ -44,340 +44,6 @@ local function on_init(client, result)
 	end
 end
 
-vim.lsp.config["lua-language-server"] = {
-	cmd = { "lua-language-server" },
-	root_markers = { ".luarc.json", ".git", ".stylua" },
-	capabilities = capabilities,
-	on_init = on_init,
-	settings = {
-		Lua = {
-			hint = {
-				enable = true,
-			},
-			runtime = {
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				globals = { "vim" },
-				disable = {
-					"lowercase-global",
-					"undefined-global",
-					"unused-local",
-					"unused-vararg",
-					"trailing-space",
-				},
-			},
-			workspace = {
-				-- make the server aware of Neovim runtime files
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-				},
-			},
-			-- do not send telemetry data containing a randomized but unique identifier
-			telemetry = { enable = false },
-			completion = {
-				callSnippet = "Both",
-			},
-		},
-	},
-	filetypes = { "lua" },
-}
-
-vim.lsp.config["clangd"] = {
-	cmd = {
-		"clangd",
-		"--offset-encoding=utf-16",
-		"--background-index",
-		"--suggest-missing-includes",
-		"--clang-tidy",
-		"--completion-style=detailed",
-		"--function-arg-placeholders",
-		"--header-insertion=iwyu",
-	},
-	capabilities = capabilities,
-	on_init = on_init,
-	root_markers = { ".clangd", ".clang-format", "compile_commands.json", "compile_flags.txt" },
-	filetypes = { "c", "cpp" },
-	init_options = {
-		clangdFileStatus = true,
-		usePlaceholders = true,
-		completeUnimported = true,
-		semanticHighlighting = true,
-	},
-	settings = {
-		clangd = {
-			InlayHints = {
-				Designators = true,
-				Enabled = true,
-				ParameterNames = true,
-				DeducedTypes = true,
-			},
-			fallbackFlags = { "-std=c++20" },
-		},
-	},
-}
-
-vim.lsp.config["cmake"] = {
-	cmd = { "cmake-language-server" },
-	capabilities = capabilities,
-	on_init = on_init,
-	root_dir = function(fname)
-		return util.root_pattern("CMakePresets.json", "CTestConfig.cmake", ".git", "build", "cmake")(fname)
-	end,
-	single_file_support = true,
-	init_options = {
-		buildDirectory = "build",
-	},
-	filetypes = { "cmake", "make" },
-}
-
-vim.lsp.config["html"] = {
-	cmd = { "vscode-html-language-server", "--stdio" },
-	filetypes = { "html", "templ" },
-
-	capabilities = capabilities,
-	on_init = on_init,
-	init_options = {
-		configurationSection = { "html", "css", "javascript" },
-		embeddedLanguages = {
-			css = true,
-			javascript = true,
-		},
-		provideFormatter = true,
-	},
-}
-vim.lsp.config["bashls"] = {
-	cmd = { "bash-language-server", "start" },
-	capabilities = capabilities,
-	on_init = on_init,
-	filetypes = { "sh", "zsh", "bash" },
-}
--- vim.lsp.config["tailwindcss"] = {
--- 	cmd = { "tailwindcss-language-server", "--stdio" },
--- 	capabilities = capabilities,
--- 	on_init = on_init,
--- 	filetypes = { "sh", "zsh", "bash" },
---             settings = {
---       tailwindCSS = {
---         validate = true,
---         lint = {
---           cssConflict = 'warning',
---           invalidApply = 'error',
---           invalidScreen = 'error',
---           invalidVariant = 'error',
---           invalidConfigPath = 'error',
---           invalidTailwindDirective = 'error',
---           recommendedVariantOrder = 'warning',
---         },
---         classAttributes = {
---           'class',
---           'className',
---           'class:list',
---           'classList',
---           'ngClass',
---         },
---         includeLanguages = {
---           templ = 'html',
---         },
---       },
---     },
--- }
-vim.filetype.add({
-	extension = {
-		templ = "templ",
-	},
-})
-vim.lsp.config["htmx"] = {
-	cmd = { "htmx-lsp" },
-	capabilities = capabilities,
-	on_init = on_init,
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"templ",
-		"html",
-	},
-	single_file_support = true,
-	-- root_dir = function(fname)
-	-- 	return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-	-- end,
-}
-vim.lsp.config["templ"] = {
-	cmd = { "templ", "lsp" },
-	root_markers = { "go.work", "go.mod", ".git" },
-	capabilities = capabilities,
-	on_init = on_init,
-	filetypes = { "templ" },
-}
-vim.lsp.config["gopls"] = {
-	cmd = { "gopls" },
-	root_markers = { "go.work", "go.mod", ".git" },
-	filetypes = { "go", "gomod", "gowork", "gotmpl" },
-	capabilities = capabilities,
-	on_init = on_init,
-	settings = {
-		gofumpt = true,
-		codelenses = {
-			gc_details = false,
-			generate = true,
-			regenerate_cgo = true,
-			run_govulncheck = true,
-			test = true,
-			tidy = true,
-			upgrade_dependency = true,
-			vendor = true,
-		},
-		hints = {
-			assignVariableTypes = true,
-			compositeLiteralFields = true,
-			compositeLiteralTypes = true,
-			constantValues = true,
-			functionTypeParameters = true,
-			parameterNames = true,
-			rangeVariableTypes = true,
-		},
-		analyses = {
-			fieldalignment = true,
-			nilness = true,
-			unusedparams = true,
-			unusedwrite = true,
-			useany = true,
-		},
-		usePlaceholders = true,
-		completeUnimported = true,
-		staticcheck = true,
-		directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-		semanticTokens = true,
-	},
-}
-vim.lsp.config["markdown_oxide"] = {
-	cmd = { "markdown-oxide" },
-	filetypes = { "markdown" },
-	capabilities = capabilities,
-	on_init = on_init,
-}
-
-vim.lsp.config["biome"] = {
-	cmd = { "npx", "biome", "lsp-proxy" },
-	filetypes = { "js" },
-}
-vim.lsp.config["yamlls"] = {
-	cmd = { "yaml-language-server", "--stdio" },
-	filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
-	capabilities = capabilities,
-	on_init = on_init,
-	settings = {
-		redhat = { telemetry = { enabled = false } },
-		yaml = {
-			schemas = require("schemastore").yaml.schemas(),
-			keyOrdering = false,
-			format = { enable = true },
-			validate = true,
-			schemaStore = {
-				--Must disable built-in schemaStore support to use schemas from SchemaStore.nvim plugin
-				enable = false,
-				-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-				url = "",
-			},
-		},
-	},
-}
--- vim.lsp.config["typescript-language-server"] = {
---   cmd = { "typescript-language-server", "--stdio" },
---   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
---   capabilities = capabilities,
---   on_init = on_init,
---   filetypes = {
---     "javascript",
---     "javascriptreact",
---     "javascript.jsx",
---     "typescript",
---     "typescriptreact",
---     "typescript.tsx",
---   },
---
---   settings = {
---     completions = {
---       completeFunctionCalls = true,
---     },
---   },
---   javascript = {
---     inlayHints = {
---       includeInlayEnumMemberValueHints = true,
---       includeInlayFunctionLikeReturnTypeHints = true,
---       includeInlayFunctionParameterTypeHints = true,
---       includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
---       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---       includeInlayPropertyDeclarationTypeHints = true,
---       includeInlayVariableTypeHints = true,
---     },
---   },
---   typescript = {
---     inlayHints = {
---       includeInlayEnumMemberValueHints = true,
---       includeInlayFunctionLikeReturnTypeHints = true,
---       includeInlayFunctionParameterTypeHints = true,
---       includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
---       includeInlayParameterNameHintsWhenArgumentMatchesName = true,
---       includeInlayPropertyDeclarationTypeHints = true,
---       includeInlayVariableTypeHints = true,
---     },
---   },
--- }
-vim.lsp.config["rust_analyzer"] = {
-	cmd = { "rustup", "run", "stable", "rust-analyzer" },
-	filetypes = { "rust" },
-	capabilities = capabilities,
-	on_init = on_init,
-	settings = {
-		["rust-analyzer"] = {
-			check = {
-				command = "clippy",
-			},
-			checkOnSave = {
-				command = "clippy",
-				extraArgs = { "--all", "--", "-W", "clippy::all" },
-			},
-			assist = {
-				importEnforceGranularity = true,
-				importPrefix = "crate",
-			},
-			cargo = {
-				allFeatures = true,
-			},
-			inlayHints = {
-				locationLinks = true,
-				lifetimeElisionHints = {
-					enable = true,
-					useParameterNames = true,
-				},
-			},
-			procMacro = {
-				ignored = {
-					leptos_macro = {
-						-- optional: --
-						-- "component",
-						"server",
-					},
-				},
-			},
-		},
-	},
-}
-
-vim.lsp.config["jsonls"] = {
-	cmd = { "vscode-json-language-server", "--stdio" },
-	capabilities = capabilities,
-	on_init = on_init,
-	filetypes = { "json" },
-	settings = {
-		json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } },
-	},
-}
-
 -- Create an augroup for LSP-related autocommands
 vim.api.nvim_create_augroup("lsp", { clear = true })
 local telescope_ok, telescope = pcall(require, "telescope.builtin")
@@ -436,9 +102,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if client.server_capabilities.documentFormattingProvider then
 			buf_set_keymap("n", "<leader>Cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
 		end
-		-- if client.server_capabilities.inlayHintProvider then
-		-- 	require("inlay-hints").on_attach(client, bufnr)
-		-- end
+
 		if client.server_capabilities.documentRangeFormattingProvider then
 			buf_set_keymap("v", "<leader>cf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 		end
@@ -473,8 +137,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		-- Inlay hints toggle
-		if client:supports_method("textDocument/inlayHint", bufnr) then
-			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+		if client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		end
 
 		-- Code lens
@@ -525,14 +189,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				end,
 			})
 		end
-
-		-- Completion
-		-- if client.supports_method("textDocument/completion") then
-		-- 	if client.name == "lua-language-server" then
-		-- 		client.server_capabilities.completionProvider.triggerCharacters = { ".", ":" }
-		-- 	end
-		-- 	vim.lsp.completion.enable(true, client_id, bufnr, { autotrigger = true })
-		-- end
 	end,
 })
 
@@ -552,6 +208,11 @@ local config = {
 			[vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
 			[vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
 		},
+		-- numhl = {
+		--
+		-- 	[vim.diagnostic.severity.ERROR] = "ErrorMsg",
+		-- 	[vim.diagnostic.severity.WARN] = "WarningMsg",
+		-- },
 	},
 	flags = {
 		debounce_text_changes = 200,
@@ -568,11 +229,14 @@ local config = {
 		source = "always",
 	},
 }
-vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, "/") .. ":" .. vim.env.PATH
 vim.diagnostic.config(config)
 
-vim.lsp.enable(servers)
+vim.lsp.config("*", {
+	capabilities = capabilities,
+	on_init = on_init,
+})
 
+vim.lsp.enable(servers)
 return {
 	{
 		"williamboman/mason.nvim",
@@ -603,31 +267,15 @@ return {
 			"stevearc/conform.nvim",
 		},
 	},
-	-- {
-	--   "nvimtools/none-ls.nvim",
-	--   config = function()
-	--     local null_ls = require("null-ls")
-	--
-	--     null_ls.setup({
-	--       sources = {
-	--         null_ls.builtins.code_actions.gitsigns,
-	--         null_ls.builtins.code_actions.refactoring,
-	--       },
-	--     })
-	--   end,
-	--   dependencies = {
-	--     "nvim-lua/plenary.nvim",
-	--     {
-	--       "ThePrimeagen/refactoring.nvim",
-	--       dependencies = {
-	--         "nvim-lua/plenary.nvim",
-	--         "nvim-treesitter/nvim-treesitter",
-	--       },
-	--       lazy = false,
-	--       opts = {},
-	--     },
-	--   },
-	-- },
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		lazy = false,
+		opts = {},
+	},
 	{
 		"nvimdev/lspsaga.nvim",
 		config = function()
@@ -733,5 +381,66 @@ return {
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod", "templ" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		dependencies = "neovim/nvim-lspconfig",
+		version = "^6", -- Recommended
+		ft = { "rust" },
+		opts = {
+			server = {
+				on_attach = function(_, bufnr)
+					vim.keymap.set("n", "<leader>cR", function()
+						vim.cmd.RustLsp("codeAction")
+					end, { desc = "Code Action", buffer = bufnr })
+				end,
+				default_settings = {
+					-- rust-analyzer language server configuration
+					["rust-analyzer"] = {
+						cargo = {
+							allFeatures = true,
+							loadOutDirsFromCheck = true,
+							buildScripts = {
+								enable = true,
+							},
+						},
+						procMacro = {
+							enable = true,
+							ignored = {
+								leptos_macro = {
+									-- optional: --
+									-- "component",
+									"server",
+								},
+								["async-trait"] = { "async_trait" },
+								["napi-derive"] = { "napi" },
+								["async-recursion"] = { "async_recursion" },
+							},
+						},
+						check = {
+							command = "clippy",
+						},
+						checkOnSave = {
+							command = "clippy",
+							extraArgs = { "--all", "--", "-W", "clippy::all" },
+						},
+						assist = {
+							importEnforceGranularity = true,
+							importPrefix = "crate",
+						},
+						inlayHints = {
+							locationLinks = true,
+							lifetimeElisionHints = {
+								enable = true,
+								useParameterNames = true,
+							},
+						},
+					},
+				},
+			},
+		},
+		config = function(_, opts)
+			vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+		end,
 	},
 }

@@ -117,7 +117,7 @@ static const char *dmenucmd[] = {"dmenu_run",
                                  "-nhf",
                                  "#585b70",
                                  NULL};
-static const char *termcmd[] = {"kitty", NULL};
+static const char *termcmd[] = {"ghostty", NULL};
 static const char *brupcmd[] = {
     "/home/mpinyaz/.config/suckless/dwm/scripts/brightnessnotifications.sh",
     "up", NULL};
