@@ -99,26 +99,7 @@ local lazy_plugins = {
 		end,
 	},
 
-	-- "rcarriga/nvim-dap-ui",
-	-- {
-	-- 	"jay-babu/mason-nvim-dap.nvim",
-	-- 	dependencies = {
-	-- 		"mfussenegger/nvim-dap",
-	-- 		"williamboman/mason.nvim",
-	-- 	},
-	-- 	opts = {
-	-- 		handlers = {
-	-- 			ensure_installed = {
-	-- 				"codelldb",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
-	-- "theHamsta/nvim-dap-virtual-text",
-	-- { "mfussenegger/nvim-dap-python" },
-	-- "nvim-telescope/telescope-dap.nvim",
 	{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
-	-- { "mxsdev/nvim-dap-vscode-js", dependencies = { "mfussenegger/nvim-dap" } },
 	"nvim-lua/popup.nvim",
 	{ "j-hui/fidget.nvim", tag = "legacy" },
 	"lunarvim/darkplus.nvim",

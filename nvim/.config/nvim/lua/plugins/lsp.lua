@@ -239,7 +239,7 @@ vim.lsp.config("*", {
 vim.lsp.enable(servers)
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 
 		config = function()
 			local servers = require("utils.servers")

@@ -14,6 +14,7 @@ return {
 				opts = {},
 			},
 			"moyiz/blink-emoji.nvim",
+			"L3MON4D3/LuaSnip",
 			"philosofonusus/ecolog.nvim",
 
 			"Kaiser-Yang/blink-cmp-dictionary",
@@ -45,75 +46,6 @@ return {
 							},
 						},
 					})
-				end,
-			},
-			{
-				"L3MON4D3/LuaSnip",
-				version = "v2.*",
-				dependencies = { {
-					"garymjr/nvim-snippets",
-				}, { "rafamadriz/friendly-snippets" } },
-				opts = function()
-					local types = require("luasnip.util.types")
-					return {
-						history = true,
-						delete_check_events = "TextChanged",
-						ext_opts = {
-							[types.insertNode] = {
-								unvisited = {
-									virt_text = { { "|", "Conceal" } },
-									-- virt_text_pos = "inline",
-								},
-							},
-							[types.exitNode] = {
-								unvisited = {
-									virt_text = { { "|", "Conceal" } },
-									-- virt_text_pos = "inline",
-								},
-							},
-						},
-					}
-				end,
-				config = function()
-					local snip_status_ok, luasnip = pcall(require, "luasnip")
-					if not snip_status_ok then
-						return
-					end
-					-- vim.keymap.set({ "i", "s" }, "<tab>", function()
-					-- 	if luasnip and luasnip.expand_or_jumpable() then
-					-- 		luasnip.expand_or_jump()
-					-- 	else
-					-- 		local termcode = require("j.utils").termcode
-					-- 		vim.api.nvim_feedkeys(termcode("<Tab>"), "n", faluasnipe)
-					-- 	end
-					-- end)
-					-- vim.keymap.set({ "i", "s" }, "<s-tab>", function()
-					-- 	if ls.jumpable(-1) then
-					-- 		return "<Plug>luasnip-jump-prev"
-					-- 	else
-					-- 		return "<s-tab>"
-					-- 	end
-					-- end, { expr = true })
-					-- vim.keymap.set({ "i", "s" }, "<c-k>", function()
-					-- 	if luasnip.choice_active() then
-					-- 		luasnip.change_choice(1)
-					-- 	end
-					-- end, { silent = true })
-					require("luasnip.loaders.from_vscode").lazy_load()
-					require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
-					require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/snippets" })
-
-					luasnip.config.set_config({
-						history = true,
-						region_check_events = "InsertEnter",
-						updateevents = "TextChanged,TextChangedI",
-						enable_autosnippets = true,
-					})
-
-					-- Load custom Lua snippets
-					for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
-						loadfile(ft_path)()
-					end
 				end,
 			},
 			{
@@ -369,5 +301,53 @@ return {
 		"ray-x/lsp_signature.nvim",
 		event = "InsertEnter",
 		cond = vim.g.completer ~= "blink",
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		dependencies = { {
+			"garymjr/nvim-snippets",
+		}, { "rafamadriz/friendly-snippets" } },
+		opts = function()
+			local types = require("luasnip.util.types")
+			return {
+				history = true,
+				delete_check_events = "TextChanged",
+				ext_opts = {
+					[types.insertNode] = {
+						unvisited = {
+							virt_text = { { "|", "Conceal" } },
+							-- virt_text_pos = "inline",
+						},
+					},
+					[types.exitNode] = {
+						unvisited = {
+							virt_text = { { "|", "Conceal" } },
+							-- virt_text_pos = "inline",
+						},
+					},
+				},
+			}
+		end,
+		config = function()
+			local snip_status_ok, luasnip = pcall(require, "luasnip")
+			if not snip_status_ok then
+				return
+			end
+			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/snippets/" })
+
+			luasnip.config.set_config({
+				history = true,
+				region_check_events = "InsertEnter",
+				updateevents = "TextChanged,TextChangedI",
+				enable_autosnippets = true,
+			})
+
+			-- Load custom Lua snippets
+			for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
+				loadfile(ft_path)()
+			end
+		end,
 	},
 }
