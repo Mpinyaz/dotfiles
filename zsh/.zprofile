@@ -91,6 +91,12 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   fi
 fi
 
+# Run screen layout script (only once per session)
+if [ -z "$SCREEN_LAYOUT_SET" ] && [ -x "$HOME/.screenlayout/currentconfig.sh" ]; then
+    ~/.screenlayout/currentconfig.sh &
+    export SCREEN_LAYOUT_SET=1
+fi
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
