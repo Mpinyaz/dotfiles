@@ -1,0 +1,254 @@
+/* Colors (dracula) */
+@define-color foreground	#f8f8f2;
+@define-color background	rgba(40, 42, 54, 0.5);
+@define-color orange	#ffb86c;
+@define-color gray	#44475a;
+@define-color black #21222c;
+@define-color red	#ff5555;
+@define-color green	#50fa7b;
+@define-color yellow	#f1fa8c;
+@define-color cyan	#8be9fd;
+@define-color blue	#6272a4;
+@define-color purple	#bd93f9;
+@define-color pink	#ff79c6;
+@define-color white #ffffff;
+@define-color brred #ff6e6e;
+@define-color brgreen #69ff94;
+@define-color bryellow #ffffa5;
+@define-color brcyan #a4ffff;
+@define-color brblue #6272a4;
+@define-color brpurple #d6acff;
+@define-color brpink #ff92df;
+
+@define-color arch_blue #89b4fa;
+
+@define-color workspace_background	@background;
+@define-color workspace_button	@foreground;
+@define-color workspace_active	@black;
+@define-color workspace_active_background	@green;
+@define-color workspace_urgent	@white;
+@define-color workspace_urgent_background	@brred;
+@define-color workspace_hover	@black;
+@define-color workspace_hover_background	@pink;
+@define-color critical	@red;
+@define-color warning	@yellow;
+
+@keyframes blink {
+  to {
+    background-color: @white;
+    color: @black;
+  }
+}
+
+* {
+  border: none;
+  border-radius: 0;
+  font-weight: bold;
+  font-family: "Mono-space";
+  font-size: 16px;
+  min-height: 0;
+}
+#idle_inhibitor {
+  color: @purple;
+  padding: 0px 10px 0px 10px;
+}
+window#waybar {
+  background: transparent;
+  color: @foreground;
+}
+
+#workspaces {
+  opacity: 0.7;
+  transition: none;
+  margin: 1px 10px 1px 10px;
+  border: 2px solid @purple;
+
+  padding: 0px 15px 0px 15px;
+  border-radius: 13px;
+  background: alpha(@gray, 0.6);
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.6);
+  border: 1px solid @cyan;
+}
+
+#workspaces button,
+#workspaces button.persistent {
+  background: transparent;
+  padding: 1px 5px;
+  color: alpha(@green, 0.8);
+  transition: all 1.2s ease;
+  border: none;
+  text-shadow: 1px 0px 1.5px rgba(0, 0, 0, 0.2);
+}
+#workspaces button.active {
+  color: @bryellow;
+}
+#taskbar {
+  background: @background;
+  border-radius: 5px;
+  margin: 5px 10px 5px 50px;
+}
+
+tooltip {
+  background: @background;
+  opacity: 0.95;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: @purple;
+}
+
+tooltip label {
+  color: @grey;
+}
+#custom-logo {
+  padding: 0px 10px 0px 10px;
+  font-size: 22px;
+  color: @red;
+  margin: 6px;
+  border-radius: 13px;
+}
+#custom-weather,
+#custom-notification,
+#idle_inhibitor,
+#cpu,
+#disk,
+#custom-updates,
+#memory,
+#bluetooth,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#tray {
+  opacity: 1;
+  padding: 0px 10px 0px 10px;
+  border-radius: 13px;
+  background: alpha(@background, 0.6);
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.6);
+}
+
+#window,
+#custom-appmenu {
+  opacity: 1;
+  padding: 0px 10px 0px 10px;
+  border-radius: 13px;
+  color: alpha(@green, 0.8);
+  background: alpha(@background, 0.6);
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.6);
+  border: 1px solid @cyan;
+}
+#disk.critical,
+#temperature.critical {
+  background-color: @critical;
+}
+
+#disk.warning,
+#temperature.warning {
+  background-color: @warning;
+}
+
+#battery {
+  color: @green;
+  border-radius: 5px 0px 0px 5px;
+}
+
+#battery.discharging {
+  color: @foreground;
+}
+
+#battery.warning:not(.charging) {
+  background: @warning;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.critical:not(.charging) {
+  background-color: @critical;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#custom-power {
+  color: @red;
+  border-radius: 0px 5px 5px 0px;
+}
+
+#tray {
+  background: @background;
+  border-radius: 5px;
+  margin: 5px 50px 5px 10px;
+}
+#pulseaudio-slider {
+  background: alpha(@gray, 0.6);
+  margin: 9px 15px 8px 15px;
+  padding: 1px 30px 0px 30px;
+  color: @purple;
+}
+#temperature.critical,
+#pulseaudio.muted {
+  color: #ff0001;
+  padding-top: 1;
+}
+#clock {
+  color: @white;
+}
+#cpu {
+  color: @orange;
+}
+#disk {
+  color: @brgreen;
+}
+#network {
+  color: @green;
+}
+#memory {
+  color: @cyan;
+}
+#custom-notification {
+  color: darkseagreen;
+}
+#bluetooth {
+  color: @pink;
+}
+#battery.charging {
+  color: #ffffff;
+  background-color: #27a65b;
+}
+#battery.warning:not(.charging) {
+  background-color: #ffbe62;
+  color: black;
+}
+#battery.critical:not(.charging) {
+  background-color: #f54c3c;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  border-radius: 13px;
+  background: alpha(@background, 0.6);
+  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.6);
+  border: 1px solid @cyan;
+}
+#pulseaudio-slider trough {
+  min-height: 10px;
+  min-width: 90px;
+  border-radius: 5px;
+  background-color: @cyan;
+}
+#pulseaudio-slider highlight {
+  min-width: 10px;
+  border-radius: 10px;
+  background-color: @purple;
+}

@@ -1,0 +1,37 @@
+{
+        "layer": "top",
+        "position": "top",
+        "width": 1900,
+        "spacing": 4,
+        "include": [
+                "~/.config/waybar/modules.json"
+        ],
+        "modules-left": [
+                "custom/logo",
+                "custom/appmenu",
+                "hyprland/workspaces"
+        ],
+        "modules-center": [
+                "hyprland/window"
+        ],
+        "modules-right": [
+                "clock",
+                "disk",
+                "memory",
+                "cpu",
+                "custom/weather",
+                "custom/clipboard",
+                "group/blight",
+                "idle_inhibitor",
+                "bluetooth",
+                "group/audio",
+                "group/networking",
+                "custom/notification"
+        ],
+        "reload_style_on_change": true,
+        "custom/logo": {
+                "format": "󰊠",
+                "tooltip": false,
+                "on-click": "wlogout -b 4"
+        }
+}

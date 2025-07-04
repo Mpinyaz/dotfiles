@@ -1,0 +1,327 @@
+{
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "active-only": false,
+    "format": "{id} <span font='20px'>{icon}</span> ",
+    "show-special": true,
+    "persistent-workspaces": {
+      "*": [1, 2, 3]
+    },
+    "format-icons": {
+      "1:web": "",
+      "2:code": "",
+      "3:term": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "active": "",
+      "default": ""
+    }
+  },
+
+  "hyprland/window": {
+    "format": " {title}",
+    "rewrite": {
+      "(.*) - Mozilla Firefox": "🌎 $1",
+      "org.telegram.desktop": "> [$1]",
+      "org.gnome.Nautilus": "> [$1]",
+      "(.*) - zsh": "> [$1]"
+    },
+    "separate-outputs": true
+  },
+  "custom/notification": {
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "none": "    ",
+      "dnd-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "dnd-none": "    ",
+      "inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "inhibited-none": "    ",
+      "dnd-inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
+      "dnd-inhibited-none": "   "
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "custom/appmenu": {
+    "format": "Apps",
+    "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings",
+    "on-click": "rofi -show drun -replace",
+    "tooltip": false
+  },
+
+  "custom/exit": {
+    "format": "",
+    "tooltip-format": "Powermenu",
+    "on-click": "wlogout -b 4",
+    "tooltip": false
+  },
+
+  "keyboard-state": {
+    "numlock": true,
+    "capslock": true,
+    "format": "{name} {icon}",
+    "format-icons": {
+      "locked": "",
+      "unlocked": ""
+    }
+  },
+  "tray": {
+    "icon-size": 17,
+    "spacing": 6
+  },
+  "custom/clipboard": {
+    "interval": 5,
+    "tooltip": true,
+    "on-click": "sh -c 'cliphist list | rofi -dmenu | cliphist decode | wl-copy'"
+  },
+  "custom/weather": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/weather.sh",
+    "interval": 10,
+    "on-click": "firefox https://wttr.in"
+  },
+  "clock": {
+    "format": "    {:%H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "format-alt": "{:%Y-%m-%d}",
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "custom/colorpicker": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": "once",
+    "exec": "~/.config/waybar/scripts/colorpicker.sh -j",
+    "on-click": "sleep 1 && ~/.config/waybar/scripts/colorpicker.sh"
+  },
+  "custom/system": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": "  {percentage}%",
+    "tooltip": true,
+    "tooltip-format": "{used:0.2f}G/{total:0.2f}G",
+    "on-click": "ghostty -e htop"
+  },
+  "cpu": {
+    "format": "   {usage}%",
+    "interval": 1,
+    "tooltip": true,
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "on-click": "ghostty -e htop"
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "   {percentage_used}%",
+    "path": "/",
+    "on-click": "ghostty -e htop"
+  },
+  "temperature": {
+    "format": " {temperatureC}°C",
+    "format-critical": " {temperatureC}°C",
+    "interval": 1,
+    "critical-threshold": 80,
+    "on-click": "foot btop"
+  },
+  "custom/powerDraw": {
+    "format": "{}",
+    "interval": 1,
+    "exec": "~/.config/waybar/scripts/powerdraw.sh",
+    "return-type": "json"
+  },
+  "custom/updates": {
+    "format": "{}",
+    "interval": 60,
+    "exec": "~/.config/waybar/scripts/checkupdate.sh",
+    "return-type": "json",
+    "exec-if": "exit 0"
+  },
+  "hyprland/language": {
+    "format": "/ K {short}"
+  },
+
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "not-memory",
+      "transition-left-to-right": false
+    },
+    "modules": ["custom/system", "disk", "cpu", "memory", "hyprland/language"]
+  },
+
+  "network": {
+    "format-wifi": "     ",
+    "format-ethernet": "  󰈀  ",
+    "format-disconnected": "  󱐅  ",
+    "tooltip-format": "{ipaddr}",
+    "tooltip-format-wifi": "   {essid} ({signalStrength}%)\n {ipaddr}",
+    "tooltip-format-ethernet": "{ifname}  󰈀  | {ipaddr}",
+    "on-click": "ghostty -e nmtui"
+  },
+  "network#speed": {
+    "format": "{bandwidthDownBits}",
+    "interval": 1,
+    "tooltip-format": "{ipaddr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)   \n{ipaddr} | {frequency} MHz{icon} ",
+    "tooltip-format-ethernet": "{ifname} 󰈀 \n{ipaddr} | {frequency} MHz{icon} ",
+    "tooltip-format-disconnected": "Not Connected to any type of Network",
+    "tooltip": true,
+    "on-click": "pgrep -x rofi &>/dev/null && notify-send rofi || networkmanager_dmenu"
+  },
+
+  "battery": {
+    "interval": 1,
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "{capacity}% <span font='16px'>{icon}</span>",
+    "format-time": "{H}h {M}min",
+    "tooltip": "{time}",
+    "format-charging": "{capacity}% <span font='16px'>{icon}</span>",
+    "format-plugged": "{capacity}% 󰠠",
+    "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
+    "on-click": "~/.config/rofi/scripts/powermenu.sh"
+  },
+  "mpd": {
+    "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) <U+F001>",
+    "format-disconnected": "Disconnected <U+F001>",
+    "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped <U+F001>",
+    "interval": 2,
+    "consume-icons": {
+      "on": "<U+F0C4> "
+    },
+    "random-icons": {
+      "off": "<span color=\"#f53c3c\"><U+F074></span> ",
+      "on": "<U+F074> "
+    },
+    "repeat-icons": {
+      "on": "<U+F01E> "
+    },
+    "single-icons": {
+      "on": "<U+F01E>1 "
+    },
+    "state-icons": {
+      "paused": "<U+F04C>",
+      "playing": "<U+F04B>"
+    },
+    "tooltip-format": "MPD (connected)",
+    "tooltip-format-disconnected": "MPD (disconnected)"
+  },
+  "pulseaudio": {
+    "format": "{icon}  {volume}% ",
+    "format-muted": "<span color='#FF4040'> 󰖁 </span>0% ",
+    "format-icons": {
+      "headphone": "<span color='#BF00FF'>  </span>",
+      "hands-free": "<span color='#BF00FF'>  </span>",
+      "headset": "<span color='#BF00FF'>  </span>",
+      "phone": "<span color='#00FFFF'>  </span>",
+      "portable": "<span color='#00FFFF'>  </span>",
+      "car": "<span color='#FFA500'>  </span>",
+      "default": [
+        "<span color='#808080'>  </span>",
+        "<span color='#FFFF66'>  </span>",
+        "<span color='#00FF7F'>  </span>"
+      ]
+    },
+    "scroll-step": 5,
+    "on-click": "pactl -- set-sink-mute 0 toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  },
+  "pulseaudio#mic": {
+    "format": "{format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "tooltip-format": "{volume}% {format_source} ",
+    "on-click": "pactl set-source-mute 0 toggle",
+    "on-scroll-down": "pactl set-source-volume 0 -1%",
+    "on-scroll-up": "pactl set-source-volume 0 +1%"
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
+    },
+    "modules": ["pulseaudio", "pulseaudio/slider"]
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 140,
+    "orientation": "horizontal"
+  },
+  "custom/hotspot": {
+    "format": "{icon}",
+    "interval": 1,
+    "tooltip": true,
+    "return-type": "json",
+    "format-icons": {
+      "active": "󱜠",
+      "notactive": "󱜡"
+    },
+    "exec": "waybar-hotspot -a watch",
+    "on-click": "waybar-hotspot -a toggle"
+  },
+  "bluetooth": {
+    "format-on": "  󰂰  ",
+    "format-off": "",
+    "format-disabled": "  󰂲  ",
+    "format-connected": "  󰂴  ",
+    "format-connected-battery": "{device_battery_percentage}% 󰂴",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueman-manager"
+  },
+  "idle_inhibitor": {
+    "format": "  {icon}  ",
+    "format-icons": {
+      "activated": "󰾪",
+      "deactivated": "󰅶"
+    }
+  },
+  "group/networking": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
+    },
+    "modules": ["network", "network#speed"]
+  }
+}
