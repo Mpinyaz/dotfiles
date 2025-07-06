@@ -123,7 +123,7 @@
     "on-click": "sleep 1 && ~/.config/waybar/scripts/colorpicker.sh"
   },
   "custom/system": {
-    "format": "",
+    "format": "<span font='20px' color='#ff6699'>⚙️</span>",
     "tooltip": false
   },
 
@@ -172,13 +172,12 @@
   },
 
   "group/hardware": {
-    "orientation": "inherit",
+    "orientation": "horizontal",
     "drawer": {
       "transition-duration": 300,
-      "children-class": "not-memory",
       "transition-left-to-right": false
     },
-    "modules": ["custom/system", "disk", "cpu", "memory", "hyprland/language"]
+    "modules": ["custom/system", "disk", "cpu", "memory", "battery"]
   },
 
   "network": {

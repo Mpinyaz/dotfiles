@@ -108,17 +108,18 @@ tooltip label {
   border-radius: 13px;
 }
 #custom-weather,
+#custom-system,
 #custom-notification,
 #idle_inhibitor,
-#cpu,
-#disk,
 #custom-updates,
-#memory,
 #bluetooth,
 #clock,
-#battery,
 #pulseaudio,
 #network,
+#cpu,
+#disk,
+#memory,
+#battery,
 #tray {
   opacity: 1;
   padding: 0px 10px 0px 10px;
@@ -127,6 +128,12 @@ tooltip label {
   box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.6);
 }
 
+#cpu,
+#disk,
+#memory,
+#battery {
+  margin: 0px 2px 0px 2px;
+}
 #window,
 #custom-appmenu {
   opacity: 1;
@@ -149,7 +156,6 @@ tooltip label {
 
 #battery {
   color: @green;
-  border-radius: 5px 0px 0px 5px;
 }
 
 #battery.discharging {
@@ -195,7 +201,7 @@ tooltip label {
   padding-top: 1;
 }
 #clock {
-  color: @white;
+  color: @brgreen;
 }
 #cpu {
   color: @orange;
@@ -214,6 +220,9 @@ tooltip label {
 }
 #bluetooth {
   color: @pink;
+}
+#custom-system {
+  font-size: 22px;
 }
 #battery.charging {
   color: #ffffff;

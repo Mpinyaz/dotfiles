@@ -1,7 +1,6 @@
 {
         "layer": "top",
         "position": "top",
-        "width": 1900,
         "spacing": 4,
         "include": [
                 "~/.config/waybar/modules.json"
@@ -16,15 +15,10 @@
         ],
         "modules-right": [
                 "clock",
-                "disk",
-                "memory",
-                "cpu",
+    "group/hardware",
                 "custom/weather",
-                "custom/clipboard",
-                "group/blight",
-                "idle_inhibitor",
-                "bluetooth",
                 "group/audio",
+    "bluetooth",
                 "group/networking",
                 "custom/notification"
         ],

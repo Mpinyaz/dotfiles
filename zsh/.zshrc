@@ -150,3 +150,5 @@ autoload -U colors && colors # Load colors
 for config in ~/.config/zsh/*.zsh; do
         source "$config"
 done
+
+. "$HOME/.local/share/../bin/env"
