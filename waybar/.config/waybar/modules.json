@@ -2,6 +2,9 @@
   "hyprland/workspaces": {
     "on-click": "activate",
     "active-only": false,
+    "disable-scroll": false,
+    "on-scroll-up": "hyprctl dispatch workspace -1",
+    "on-scroll-down": "hyprctl dispatch workspace +1",
     "format": "{id} <span font='20px'>{icon}</span> ",
     "show-special": true,
     "persistent-workspaces": {
@@ -21,9 +24,26 @@
       "default": ""
     }
   },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 14,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "ignore-list": ["Alacritty"],
+    "app_ids-mapping": {
+      "firefoxdeveloperedition": "firefox-developer-edition"
+    },
+    "rewrite": {
+      "Firefox Web Browser": "Firefox",
+      "Foot Server": "Terminal"
+    }
+  },
 
   "hyprland/window": {
-    "format": " {title}",
+    "format": "{class}",
+    "on-click": "rofi -show drun -replace",
     "rewrite": {
       "(.*) - Mozilla Firefox": "🌎 $1",
       "org.telegram.desktop": "> [$1]",
@@ -36,13 +56,13 @@
     "format": "{icon}",
     "format-icons": {
       "notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
-      "none": "    ",
+      "none": "",
       "dnd-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
-      "dnd-none": "    ",
+      "dnd-none": " ",
       "inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
-      "inhibited-none": "    ",
+      "inhibited-none": "",
       "dnd-inhibited-notification": "<span rise='8pt'><span foreground='red'><sup></sup></span></span>",
-      "dnd-inhibited-none": "   "
+      "dnd-inhibited-none": " "
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
@@ -91,7 +111,7 @@
     "on-click": "firefox https://wttr.in"
   },
   "clock": {
-    "format": "    {:%H:%M}",
+    "format": " {:%H:%M}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "year",
@@ -128,13 +148,13 @@
   },
 
   "memory": {
-    "format": "  {percentage}%",
+    "format": " {percentage}%",
     "tooltip": true,
     "tooltip-format": "{used:0.2f}G/{total:0.2f}G",
     "on-click": "ghostty -e htop"
   },
   "cpu": {
-    "format": "   {usage}%",
+    "format": " {usage}%",
     "interval": 1,
     "tooltip": true,
     "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
@@ -143,7 +163,7 @@
 
   "disk": {
     "interval": 30,
-    "format": "   {percentage_used}%",
+    "format": " {percentage_used}%",
     "path": "/",
     "on-click": "ghostty -e htop"
   },
@@ -181,12 +201,12 @@
   },
 
   "network": {
-    "format-wifi": "     ",
-    "format-ethernet": "  󰈀  ",
-    "format-disconnected": "  󱐅  ",
+    "format-wifi": " ",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󱐅",
     "tooltip-format": "{ipaddr}",
-    "tooltip-format-wifi": "   {essid} ({signalStrength}%)\n {ipaddr}",
-    "tooltip-format-ethernet": "{ifname}  󰈀  | {ipaddr}",
+    "tooltip-format-wifi": " {essid} ({signalStrength}%)\n {ipaddr}",
+    "tooltip-format-ethernet": "{ifname} 󰈀 | {ipaddr}",
     "on-click": "ghostty -e nmtui"
   },
   "network#speed": {
@@ -241,7 +261,7 @@
     "tooltip-format-disconnected": "MPD (disconnected)"
   },
   "pulseaudio": {
-    "format": "{icon}  {volume}% ",
+    "format": "{icon}{volume}% ",
     "format-muted": "<span color='#FF4040'> 󰖁 </span>0% ",
     "format-icons": {
       "headphone": "<span color='#BF00FF'>  </span>",
@@ -251,9 +271,9 @@
       "portable": "<span color='#00FFFF'>  </span>",
       "car": "<span color='#FFA500'>  </span>",
       "default": [
-        "<span color='#808080'>  </span>",
-        "<span color='#FFFF66'>  </span>",
-        "<span color='#00FF7F'>  </span>"
+        "<span color='#808080'></span>",
+        "<span color='#FFFF66'></span>",
+        "<span color='#00FF7F'> </span>"
       ]
     },
     "scroll-step": 5,
@@ -297,10 +317,10 @@
     "on-click": "waybar-hotspot -a toggle"
   },
   "bluetooth": {
-    "format-on": "  󰂰  ",
+    "format-on": "󰂰",
     "format-off": "",
-    "format-disabled": "  󰂲  ",
-    "format-connected": "  󰂴  ",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂴 ",
     "format-connected-battery": "{device_battery_percentage}% 󰂴",
     "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",

@@ -1,5 +1,6 @@
 {
         "layer": "top",
+      "mod": "dock",
         "position": "top",
         "spacing": 4,
         "include": [
@@ -7,12 +8,11 @@
         ],
         "modules-left": [
                 "custom/logo",
-                "custom/appmenu",
-                "hyprland/workspaces"
+                "wlr/taskbar",
+                "hyprland/window",
         ],
         "modules-center": [
-                "hyprland/window"
-        ],
+                    "hyprland/workspaces" ],
         "modules-right": [
                 "clock",
     "group/hardware",
@@ -23,6 +23,7 @@
                 "custom/notification"
         ],
         "reload_style_on_change": true,
+
         "custom/logo": {
                 "format": "󰊠",
                 "tooltip": false,

@@ -44,7 +44,7 @@
   border: none;
   border-radius: 0;
   font-weight: bold;
-  font-family: "Mono-space";
+  font-family: "JetBrainsMono Nerd Font Propo";
   font-size: 16px;
   min-height: 0;
 }
@@ -83,11 +83,34 @@ window#waybar {
   color: @bryellow;
 }
 #taskbar {
-  background: @background;
-  border-radius: 5px;
-  margin: 5px 10px 5px 50px;
+  padding: 0px;
+  margin: 0px 5px 0px 5px;
+}
+#taskbar button {
+  box-shadow: none;
+  text-shadow: none;
+  padding: 0px;
+  border-radius: 9px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-left: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-right: 0px;
+  color: @wb-color;
+  animation: tb_normal 20s ease-in-out 1;
 }
 
+#taskbar button.active {
+  background: alpha(@brgreen, 0.4);
+  color: @cyan;
+  margin-left: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-right: 3px;
+  animation: tb_active 20s ease-in-out 1;
+  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
 tooltip {
   background: @background;
   opacity: 0.95;
@@ -119,6 +142,7 @@ tooltip label {
 #cpu,
 #disk,
 #memory,
+#taskbar,
 #battery,
 #tray {
   opacity: 1;
