@@ -197,9 +197,12 @@
       "transition-duration": 300,
       "transition-left-to-right": false
     },
-    "modules": ["custom/system", "disk", "cpu", "memory", "battery"]
+    "modules": ["custom/system", "disk", "cpu", "memory"]
   },
-
+  "group/connect": {
+    "orientation": "horizontal",
+    "modules": ["group/networking", "bluetooth"]
+  },
   "network": {
     "format-wifi": " ",
     "format-ethernet": "󰈀",
@@ -227,12 +230,12 @@
       "warning": 30,
       "critical": 20
     },
-    "format": "{capacity}% <span font='16px'>{icon}</span>",
+    "format": "{icon} {capacity}% ",
     "format-time": "{H}h {M}min",
     "tooltip": "{time}",
-    "format-charging": "{capacity}% <span font='16px'>{icon}</span>",
+    "format-charging": "{icon} {capacity}%",
     "format-plugged": "{capacity}% 󰠠",
-    "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "on-click": "~/.config/rofi/scripts/powermenu.sh"
   },
   "mpd": {

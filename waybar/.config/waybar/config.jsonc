@@ -8,19 +8,19 @@
         ],
         "modules-left": [
                 "custom/logo",
+    "custom/notification",
                 "wlr/taskbar",
                 "hyprland/window",
         ],
         "modules-center": [
                     "hyprland/workspaces" ],
         "modules-right": [
-                "clock",
+    "group/connect",
     "group/hardware",
-                "custom/weather",
                 "group/audio",
-    "bluetooth",
-                "group/networking",
-                "custom/notification"
+                "custom/weather",
+    "clock",
+    "battery",
         ],
         "reload_style_on_change": true,
 
