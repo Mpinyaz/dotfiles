@@ -2,6 +2,7 @@
         "layer": "top",
       "mod": "dock",
         "position": "top",
+        "height": 33,
         "spacing": 4,
         "include": [
                 "~/.config/waybar/modules.json"
@@ -9,6 +10,7 @@
         "modules-left": [
                 "custom/logo",
     "custom/notification",
+    "group/hardware",
                 "wlr/taskbar",
                 "hyprland/window",
         ],
@@ -16,7 +18,7 @@
                     "hyprland/workspaces" ],
         "modules-right": [
     "group/connect",
-    "group/hardware",
+        "group/brightness",
                 "group/audio",
                 "custom/weather",
     "clock",

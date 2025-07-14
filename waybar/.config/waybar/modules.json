@@ -143,10 +143,14 @@
     "on-click": "sleep 1 && ~/.config/waybar/scripts/colorpicker.sh"
   },
   "custom/system": {
-    "format": "<span font='20px' color='#ff6699'>⚙️</span>",
+    "format": "<span font='20px' color='#ff6699'></span>",
     "tooltip": false
   },
-
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": ["", ""]
+  },
   "memory": {
     "format": " {percentage}%",
     "tooltip": true,
@@ -195,9 +199,17 @@
     "orientation": "horizontal",
     "drawer": {
       "transition-duration": 300,
-      "transition-left-to-right": false
+      "transition-left-to-right": true
     },
     "modules": ["custom/system", "disk", "cpu", "memory"]
+  },
+  "group/brightness": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 300,
+      "transition-left-to-right": false
+    },
+    "modules": ["backlight", "backlight/slider"]
   },
   "group/connect": {
     "orientation": "horizontal",
@@ -237,6 +249,12 @@
     "format-plugged": "{capacity}% 󰠠",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "on-click": "~/.config/rofi/scripts/powermenu.sh"
+  },
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "device": "intel_backlight"
   },
   "mpd": {
     "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) <U+F001>",
