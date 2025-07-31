@@ -6,7 +6,8 @@
 	email = ebmpinyuri@gmail.com
 [core]
     pager = delta
-
+    compression = 9
+    preloadindex = true
 [interactive]
     diffFilter = delta --color-only
 
@@ -23,6 +24,10 @@
 
 [diff]
     colorMoved = default
+[status]
+        branch = true
+        showStash = true
+        showUntrackedFiles = true
 [pull]
         rebase = true
 [fetch]
@@ -30,8 +35,8 @@
 [http]
 	postBuffer = 157286400
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential

@@ -22,7 +22,7 @@
                 "group/audio",
                 "custom/weather",
     "clock",
-    "battery",
+    "group/powerstatus"
         ],
         "reload_style_on_change": true,
 

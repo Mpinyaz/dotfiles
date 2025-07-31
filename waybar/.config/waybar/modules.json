@@ -146,6 +146,15 @@
     "format": "<span font='20px' color='#ff6699'></span>",
     "tooltip": false
   },
+  "custom/power-profile": {
+    "exec": "~/.config/waybar/scripts/powerprofile.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "~/.config/waybar/scripts/power-profile-toggle.sh",
+    "on-click-right": "~/.config/waybar/scripts/power-profile-menu.sh menu",
+    "format": "{}",
+    "tooltip": true
+  },
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
@@ -214,6 +223,14 @@
   "group/connect": {
     "orientation": "horizontal",
     "modules": ["group/networking", "bluetooth"]
+  },
+  "group/powerstatus": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 300,
+      "transition-left-to-right": false
+    },
+    "modules": ["battery", "custom/power-profile"]
   },
   "network": {
     "format-wifi": " ",
