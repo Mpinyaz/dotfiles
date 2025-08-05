@@ -43,6 +43,7 @@ local options = {
   scrolloff = 8,
   sidescrolloff = 8,
   ttyfast = true,
+  undodir = os.getenv("HOME") .. "/.config/nvim/undodir",
   title = true,
   undofile = true,
   list = true,
