@@ -13,7 +13,7 @@ return {
     highlight = {
       on_put = true,
       on_yank = true,
-      timer = 500,
+      timer = 1500,
     },
     preserve_cursor_position = {
       enabled = true,
@@ -22,8 +22,6 @@ return {
   keys = {
     { "gp", "`[v`]", desc = "Select last paste" },
     { "y", "<Plug>(YankyYank)", mode = { "n", "x" } },
-    { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" } },
-    { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" } },
     { "<c-p>", "<Plug>(YankyCycleForward)" },
     { "<c-n>", "<Plug>(YankyCycleBackward)" },
     { "<leader>pp", "<cmd>YankyRingHistory<cr>" },
