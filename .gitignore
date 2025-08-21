@@ -24,4 +24,5 @@ dist-ssr
 *.sw?
 nvim/.config/nvim/db_ui
 nvim/.config/nvim/lazy-lock.json
-undodir/
+undodir/*
+nvim/.config/nvim/undodir

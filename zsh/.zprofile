@@ -69,7 +69,7 @@ alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
             echo -n "    AUR Dependent Packages: "
             pacman -Qdm | wc -l
     }
-         pacman -Qqe > ./pkglist.txt
+         pacman -Qqe > ~/pkglist.txt
 
 
 fi
