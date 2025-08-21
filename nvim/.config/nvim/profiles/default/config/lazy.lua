@@ -117,7 +117,7 @@ local lazy_plugins = {
 
 require("lazy").setup({
   lazy_plugins,
-  { import = "plugins" },
+  { import = "config.plugins" },
 }, {
   ui = {
     border = "shadow",
