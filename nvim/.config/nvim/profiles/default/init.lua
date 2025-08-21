@@ -112,7 +112,7 @@ local lazy_plugins = {
 
 require("lazy").setup({
   lazy_plugins,
-  { import = "plugins" },
+  { import = "default.plugins" },
 }, {
   ui = {
     border = "shadow",

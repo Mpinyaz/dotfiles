@@ -31,7 +31,7 @@ return {
       "nvim-telescope/telescope-file-browser.nvim",
     },
     keys = {
-      { "<leader>gf", require("config.pickers").git_diff_picker, desc = "Diff Files" },
+      { "<leader>gf", require("utils.pickers").git_diff_picker, desc = "Diff Files" },
       {
         "<leader>f",
         function()
@@ -71,7 +71,7 @@ return {
       local make_entry = require("telescope.make_entry")
       local os_sep = Path.path.sep
       local scan = require("plenary.scandir")
-      local custom_pickers = require("config.pickers")
+      local custom_pickers = require("utils.pickers")
       ---Keep track of the active extension and folders for `live_grep`
       local live_grep_filters = {
         ---@type nil|string
