@@ -1,3 +1,10 @@
+local profile_path = vim.fn.stdpath("config") .. "/profiles/default"
+
+dofile(profile_path .. "/config/options.lua")
+dofile(profile_path .. "/config/keymaps.lua")
+dofile(profile_path .. "/config/autocmds.lua")
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
@@ -63,13 +70,6 @@ local lazy_plugins = {
     "echasnovski/mini.nvim",
     version = "*",
   },
-  -- {
-  --   "lukas-reineke/virt-column.nvim",
-  --   opts = {},
-  --   config = function()
-  --     require("virt-column").setup()
-  --   end,
-  -- },
   { "echasnovski/mini.animate", version = "*" },
   {
     "yamatsum/nvim-cursorline",
@@ -93,11 +93,6 @@ local lazy_plugins = {
     },
   },
   { "svrana/neosolarized.nvim" },
-  -- {
-  -- 	"Zeioth/dooku.nvim",
-  -- 	cmd = { "DookuGenerate", "DookuOpen", "DookuAutoSetup" },
-  -- 	opts = {},
-  -- },
   {
     "mvllow/modes.nvim",
     tag = "v0.2.0",
@@ -117,7 +112,7 @@ local lazy_plugins = {
 
 require("lazy").setup({
   lazy_plugins,
-  { import = "plugins" },
+  { import = "default.plugins" },
 }, {
   ui = {
     border = "shadow",
