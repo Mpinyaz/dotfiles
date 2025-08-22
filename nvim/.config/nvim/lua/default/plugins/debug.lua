@@ -156,6 +156,32 @@ return {
         },
         {
           type = "go",
+          name = "Debug Main (auto-find)",
+          request = "launch",
+          program = function()
+            -- Smart main.go finder
+            local cwd = vim.fn.getcwd()
+            local possible_mains = {
+              cwd .. "/main.go",
+              cwd .. "/cmd/main.go",
+              cwd .. "/cmd/" .. vim.fn.fnamemodify(cwd, ":t") .. "/main.go",
+            }
+
+            for _, main_path in ipairs(possible_mains) do
+              if vim.fn.filereadable(main_path) == 1 then
+                print("Found main.go at: " .. main_path)
+                return main_path
+              end
+            end
+
+            -- If not found, let user specify
+            local input = vim.fn.input("Path to main.go: ", "./main.go")
+            return input
+          end,
+          cwd = "${workspaceFolder}",
+        },
+        {
+          type = "go",
           name = "Debug Main (custom path)",
           request = "launch",
           program = function()
