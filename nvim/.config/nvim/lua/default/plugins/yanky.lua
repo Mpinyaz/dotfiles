@@ -21,7 +21,6 @@ return {
   },
   keys = {
     { "gp", "`[v`]", desc = "Select last paste" },
-    { "y", "<Plug>(YankyYank)", mode = { "n", "x" } },
     { "<c-p>", "<Plug>(YankyCycleForward)" },
     { "<c-n>", "<Plug>(YankyCycleBackward)" },
     { "<leader>pp", "<cmd>YankyRingHistory<cr>" },
