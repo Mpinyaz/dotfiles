@@ -10,19 +10,25 @@ return {
   --   end,
   -- },
 
-  -- {
-  --   "scottmckendry/cyberdream.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {
-  --     transparent = true,
-  --   },
-  --   config = function()
-  --     vim.cmd("colorscheme cyberdream")
-  --   end,
-  -- },
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      italic_comments = false,
+      cache = true,
+      extensions = {
+        telescope = true,
+        notify = true,
+        mini = true,
+      },
+    },
+    config = function()
+      vim.cmd("colorscheme cyberdream")
+    end,
+  },
   { "edeneast/nightfox.nvim" },
-
   -- {
   -- 	"rose-pine/neovim",
   -- 	name = "rose-pine",
@@ -80,16 +86,16 @@ return {
   -- 	vim.cmd.colorscheme("catppuccin")
   -- end,
   -- },
-  {
-    "tiagovla/tokyodark.nvim",
-    opts = {
-      -- custom options here
-    },
-    config = function(_, opts)
-      require("tokyodark").setup(opts) -- calling setup is optional
-      vim.cmd([[colorscheme tokyodark]])
-    end,
-  },
+  -- {
+  --   "tiagovla/tokyodark.nvim",
+  --   opts = {
+  --     -- custom options here
+  --   },
+  --   config = function(_, opts)
+  --     require("tokyodark").setup(opts) -- calling setup is optional
+  --     vim.cmd([[colorscheme tokyodark]])
+  --   end,
+  -- },
   -- {
   -- 	"EdenEast/nightfox.nvim",
   -- 	config = function()
