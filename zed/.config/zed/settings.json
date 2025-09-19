@@ -1,18 +1,97 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run the `open default settings` command
-// from the command palette or from `Zed` application menu.
 {
-  "theme": "Colorizer",
-  "autosave": "on_window_change",
-  "auto_update": true,
+  "show_edit_predictions": true,
+  "notification_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "indent_size": 25,
+    "dock": "right"
+  },
+  "project_panel": {
+    "auto_fold_dirs": true,
+    "dock": "right"
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "fixed"
+  },
+  "tabs": {
+    "git_status": true,
+    "file_icons": true
+  },
+  "centered_layout": {
+    "left_padding": 0.1,
+    "right_padding": 0.1
+  },
+  "features": {
+    "edit_prediction_provider": "none"
+  },
   "telemetry": {
+    "diagnostics": false,
     "metrics": false
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 16
+  "inlay_hints": {
+    "enabled": true
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+      "delay_ms": 500,
+      "min_column": 80
+    }
+  },
+  "scrollbar": {
+    "show": "auto"
+  },
+  "vim_mode": false,
+  "seed_search_query_from_cursor": "selection",
+  "ui_font_family": "FiraCode Nerd Font",
+  "buffer_font_family": "FiraCode Nerd Font",
+  "ui_font_size": 15,
+  "buffer_font_size": 13,
+  "buffer_line_height": "comfortable",
+  "base_keymap": "VSCode",
+  "relative_line_numbers": true,
+  "theme": {
+    "mode": "system",
+    "light": "Fleet Light",
+    "dark": "Fleet Dark"
+  },
+  "terminal": {
+    "blinking": "on",
+    "copy_on_select": true,
+    "env": {
+      "EDITOR": "zed --wait"
+    },
+    "detect_venv": {
+      "on": {
+        "directories": [".venv", "venv"],
+        "activate_script": "default"
+      }
+    }
+  },
+  "auto_install_extensions": {
+    "git-firefly": true,
+    "html": true,
+    "ruff": true,
+    "toml": true
+  },
+  "restore_on_startup": "none",
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/dist",
+    "**/.vscode"
+  ],
+  "remove_trailing_whitespace_on_save": true,
+  "always_treat_brackets_as_autoclosed": true
 }
