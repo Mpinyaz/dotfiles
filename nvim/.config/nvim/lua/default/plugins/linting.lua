@@ -32,6 +32,8 @@ return {
         sh = { "shellcheck" },
         stylelint = { "stylelint" },
         go = { "golangcilint" },
+        json = { "biome" },
+        tex = { "vale" },
       }
       local eslint = lint.linters.eslint_d
 

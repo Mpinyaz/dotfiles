@@ -1,4 +1,5 @@
 local servers = require("utils.servers")
+local icons = require("utils.icons")
 -- ----------------------------------------------------------------------
 -- --                        LSP Client attach                         --
 -- ----------------------------------------------------------------------
@@ -197,7 +198,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 --                         Lsp Diagnostics                          --
 ----------------------------------------------------------------------
 --
-local icons = require("utils.icons")
 
 local config = {
   -- virtual_text = true, -- appears after the line
@@ -243,7 +243,6 @@ return {
     "mason-org/mason.nvim",
 
     config = function()
-      local servers = require("utils.servers")
       local mason_ok, mason = pcall(require, "mason")
       if not mason_ok then
         return
@@ -382,5 +381,66 @@ return {
     event = { "CmdlineEnter" },
     ft = { "go", "gomod", "templ" },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    dependencies = "neovim/nvim-lspconfig",
+    version = "^6", -- Recommended
+    ft = { "rust" },
+    opts = {
+      server = {
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", "<leader>cR", function()
+            vim.cmd.RustLsp("codeAction")
+          end, { desc = "Code Action", buffer = bufnr })
+        end,
+        default_settings = {
+          -- rust-analyzer language server configuration
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              buildScripts = {
+                enable = true,
+              },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                leptos_macro = {
+                  -- optional: --
+                  -- "component",
+                  "server",
+                },
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+              },
+            },
+            check = {
+              command = "clippy",
+            },
+            checkOnSave = {
+              command = "clippy",
+              extraArgs = { "--all", "--", "-W", "clippy::all" },
+            },
+            assist = {
+              importEnforceGranularity = true,
+              importPrefix = "crate",
+            },
+            inlayHints = {
+              locationLinks = true,
+              lifetimeElisionHints = {
+                enable = true,
+                useParameterNames = true,
+              },
+            },
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+    end,
   },
 }

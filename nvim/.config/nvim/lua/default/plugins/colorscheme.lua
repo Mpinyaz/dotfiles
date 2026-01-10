@@ -9,25 +9,42 @@ return {
   --     vim.cmd("colorscheme kanagawa-wave")
   --   end,
   -- },
-
   {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
+    "AetherSyscall/AetherAmethyst.nvim",
     priority = 1000,
-    opts = {
-      transparent = true,
-      italic_comments = false,
-      cache = true,
-      extensions = {
-        telescope = true,
-        notify = true,
-        mini = true,
-      },
-    },
     config = function()
-      vim.cmd("colorscheme cyberdream")
+      require("aetheramethyst").setup({
+        transparent = false, -- Enable transparent background
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = { bold = true },
+          variables = {},
+        },
+      })
+
+      -- Load the variant: 'eclipse' (dark) or 'bliss' (light)
+      vim.cmd("colorscheme aetheramethyst-eclipse")
     end,
   },
+  -- {
+  --   "scottmckendry/cyberdream.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --     italic_comments = false,
+  --     cache = true,
+  --     extensions = {
+  --       telescope = true,
+  --       notify = true,
+  --       mini = true,
+  --     },
+  --   },
+  --   config = function()
+  --     vim.cmd("colorscheme cyberdream")
+  --   end,
+  -- },
   { "edeneast/nightfox.nvim" },
   -- {
   -- 	"rose-pine/neovim",

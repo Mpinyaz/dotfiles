@@ -1,4 +1,5 @@
 {
+  "icon_theme": "Zed (Default)",
   "show_edit_predictions": true,
   "notification_panel": {
     "dock": "right"
@@ -56,9 +57,9 @@
   "base_keymap": "VSCode",
   "relative_line_numbers": true,
   "theme": {
-    "mode": "system",
-    "light": "Fleet Light",
-    "dark": "Fleet Dark"
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark"
   },
   "terminal": {
     "blinking": "on",

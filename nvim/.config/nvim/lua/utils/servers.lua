@@ -20,5 +20,6 @@ return {
   "typescript-language-server",
   "markdown_oxide",
   "yamlls",
+  "texlab",
   "templ",
 }
