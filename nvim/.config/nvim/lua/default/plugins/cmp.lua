@@ -235,7 +235,8 @@ return {
                   if require("blink.cmp.sources.lsp.hacks.tailwind").get_hex_color(ctx.item) then
                     return "󱓻"
                   end
-                  return require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
+                  -- return require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
+                  return require("lspkind").symbol_map[ctx.kind]
                 end,
               },
               label = {
