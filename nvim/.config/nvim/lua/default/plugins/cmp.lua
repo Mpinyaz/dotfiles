@@ -235,8 +235,18 @@ return {
                   if require("blink.cmp.sources.lsp.hacks.tailwind").get_hex_color(ctx.item) then
                     return "󱓻"
                   end
+                  local icon = ctx.kind_icon
+                  if vim.tbl_contains({ "Path" }, ctx.source_name) then
+                    local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+                    if dev_icon then
+                      icon = dev_icon
+                    end
+                  else
+                    icon = require("lspkind").symbol_map[ctx.kind] or ""
+                  end
+
                   -- return require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
-                  return require("lspkind").symbol_map[ctx.kind]
+                  return " " .. icon .. ctx.icon_gap .. " "
                 end,
               },
               label = {
@@ -356,6 +366,24 @@ return {
       for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
         loadfile(ft_path)()
       end
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "roobert/tailwindcss-colorizer-cmp.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+    },
+    config = function()
+      local cmp = require("cmp")
+
+      cmp.setup.filetype({ "html", "css", "scss", "javascriptreact", "typescriptreact" }, {
+        sources = cmp.config.sources({
+          -- { name = "nvim_lsp" },
+          { name = "tailwindcss-colorizer-cmp" },
+        }),
+      })
     end,
   },
 }

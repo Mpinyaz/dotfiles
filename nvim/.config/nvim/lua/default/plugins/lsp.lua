@@ -241,7 +241,10 @@ vim.lsp.enable(servers)
 return {
   {
     "mason-org/mason.nvim",
-
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "mason-org/mason-lspconfig.nvim",
+    },
     config = function()
       local mason_ok, mason = pcall(require, "mason")
       if not mason_ok then
@@ -256,6 +259,9 @@ return {
           check_outdated_packages_on_open = true,
         },
       })
+      -- require("mason-lspconfig").setup({
+      --   ensure_installed = servers,
+      -- })
     end,
   },
   {
@@ -265,6 +271,15 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "stevearc/conform.nvim",
+    },
+  },
+  {
+    "MaximilianLloyd/tw-values.nvim",
+    keys = {
+      { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
+    },
+    opts = {
+      show_unknown_classes = true, --
     },
   },
   {
@@ -441,6 +456,24 @@ return {
     },
     config = function(_, opts)
       vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+    end,
+  },
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    config = function()
+      require("ts-error-translator").setup({
+        auto_attach = true,
+
+        servers = {
+          "astro",
+          "svelte",
+          "ts_ls",
+          -- "tsserver", -- deprecated, use ts_ls
+          "typescript-tools",
+          "volar",
+          "vtsls",
+        },
+      })
     end,
   },
 }

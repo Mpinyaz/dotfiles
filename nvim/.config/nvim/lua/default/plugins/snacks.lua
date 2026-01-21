@@ -53,6 +53,13 @@ return {
       desc = "Git Blame Line",
     },
     {
+      "<leader>k",
+      function()
+        Snacks.picker.keymaps()
+      end,
+      desc = "Keymaps",
+    },
+    {
       "<leader>fR",
       function()
         Snacks.rename.rename_file()
