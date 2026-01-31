@@ -35,6 +35,7 @@ return {
         json = { "biome" },
         tex = { "vale" },
       }
+
       local eslint = lint.linters.eslint_d
 
       eslint.args = {

@@ -77,4 +77,4 @@ vim.scriptencoding = "utf-8"
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
 vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
-vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")

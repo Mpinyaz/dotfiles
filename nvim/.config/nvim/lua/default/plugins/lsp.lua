@@ -83,7 +83,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     }, bufnr)
     -- Mappings
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
+    map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
+    map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
     map("n", "ge", "<Cmd>Lspsaga show_line_diagnostic<CR>", "Show diagnostics of the current line")
     map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the current line")
     map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
@@ -91,16 +92,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
     map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
     map("n", "go", "<cmd>Lspsaga outline<CR>", "Show Lsp outline")
-    map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
     map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
+
     if telescope_ok then
       map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
     else
-      map("n", "<leader>E", function()
-        vim.diagnostic.setloclist()
-      end, "Show all diagnostics")
+      map(
+        "n",
+        "<leader>d",
+        "<Cmd>Lspsaga show_workspace_diagnostics ++float<CR>",
+        "Show all diagnostics"
+      )
     end
-
     if client.server_capabilities.documentFormattingProvider then
       buf_set_keymap("n", "<leader>Cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
     end
@@ -200,7 +203,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 --
 
 local config = {
-  -- virtual_text = true, -- appears after the line
+  virtual_text = false, -- appears after the line
   virtual_lines = true, -- appears under the line
   signs = {
     text = {
@@ -209,11 +212,6 @@ local config = {
       [vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
       [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
     },
-    -- numhl = {
-    --
-    -- 	[vim.diagnostic.severity.ERROR] = "ErrorMsg",
-    -- 	[vim.diagnostic.severity.WARN] = "WarningMsg",
-    -- },
   },
   flags = {
     debounce_text_changes = 200,
@@ -320,7 +318,12 @@ return {
       local lspsaga = require("lspsaga")
       lspsaga.setup({
         -- defaults ...
-        debug = false,
+        debug = true,
+        diagnostic = {
+          keys = {
+            quit = { "q", "<ESC>" },
+          },
+        },
         use_saga_diagnostic_sign = false,
         -- diagnostic sign
         error_sign = "",
@@ -385,17 +388,37 @@ return {
   },
   {
     "ray-x/go.nvim",
-    dependencies = { -- optional packages
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
+    -- ... dependencies and other keys ...
     config = function()
-      require("go").setup()
+      require("go").setup({
+        -- Disable built-in linting to let nvim-lint handle it
+        luasnip = true,
+        lsp_codelens = true,
+        lint_on_save = false, -- THIS IS THE KEY FIX
+        lsp_keymaps = false,
+        lsp_diag_update_in_insert = false,
+        lsp_inlay_hints = {
+          enable = true,
+        },
+        golangci_lint = {
+          default = "all", -- set to one of { 'standard', 'fast', 'all', 'none' }
+          enable = { "govet", "ineffassign", "revive", "gosimple" }, -- linters to enable; empty by default
+          config = nil, -- set to a config file path
+          no_config = false, -- true: golangci-lint --no-config
+        },
+        -- Ensure gopls is configured for your environment
+        lsp_cfg = {
+          settings = {
+            gopls = {
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+              },
+            },
+          },
+        },
+      })
     end,
-    event = { "CmdlineEnter" },
-    ft = { "go", "gomod", "templ" },
-    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
   {
     "mrcjkb/rustaceanvim",
