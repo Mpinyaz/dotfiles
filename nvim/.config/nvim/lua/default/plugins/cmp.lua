@@ -1,40 +1,40 @@
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.shortmess:append("c")
-local winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel"
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.shortmess:append 'c'
+local winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel'
 return {
   {
-    "saghen/blink.cmp",
-    version = "1.*",
+    'saghen/blink.cmp',
+    version = '1.*',
     enabled = true,
     dependencies = {
       {
-        "saghen/blink.compat",
-        version = "*",
+        'saghen/blink.compat',
+        version = '*',
         lazy = true,
         opts = {},
       },
-      "moyiz/blink-emoji.nvim",
-      "L3MON4D3/LuaSnip",
-      "philosofonusus/ecolog.nvim",
+      'moyiz/blink-emoji.nvim',
+      'L3MON4D3/LuaSnip',
+      'philosofonusus/ecolog.nvim',
 
-      "Kaiser-Yang/blink-cmp-dictionary",
-      { "mikavilpas/blink-ripgrep.nvim", lazy = true },
-      { "onsails/lspkind.nvim", lazy = true },
-      { "rafamadriz/friendly-snippets", lazy = true },
+      'Kaiser-Yang/blink-cmp-dictionary',
+      { 'mikavilpas/blink-ripgrep.nvim', lazy = true },
+      { 'onsails/lspkind.nvim', lazy = true },
+      { 'rafamadriz/friendly-snippets', lazy = true },
       {
-        "David-Kunz/cmp-npm",
-        event = "BufRead package.json",
+        'David-Kunz/cmp-npm',
+        event = 'BufRead package.json',
         opts = {},
       },
-      "nvim-tree/nvim-web-devicons",
+      'nvim-tree/nvim-web-devicons',
       {
-        "saecki/crates.nvim",
-        event = { "BufRead Cargo.toml" },
-        tag = "stable",
-        ft = { "rust", "toml" },
-        requires = { { "nvim-lua/plenary.nvim" } },
+        'saecki/crates.nvim',
+        event = { 'BufRead Cargo.toml' },
+        tag = 'stable',
+        ft = { 'rust', 'toml' },
+        requires = { { 'nvim-lua/plenary.nvim' } },
         config = function()
-          require("crates").setup({
+          require('crates').setup {
             autoload = true,
             autoupdate = true,
             completion = {
@@ -45,14 +45,12 @@ return {
                 enabled = true,
               },
             },
-          })
+          }
         end,
       },
       {
-        "xzbdmw/colorful-menu.nvim",
-        config = function()
-          require("colorful-menu").setup({})
-        end,
+        'xzbdmw/colorful-menu.nvim',
+        config = function() require('colorful-menu').setup {} end,
       },
     },
     opts = function(_, opts)
@@ -63,11 +61,11 @@ return {
       local function transform_items_capitalization(ctx, items)
         local keyword = ctx.get_keyword()
         local correct, case
-        if keyword:match("^%l") then
-          correct = "^%u%l+$"
+        if keyword:match '^%l' then
+          correct = '^%u%l+$'
           case = string.lower
-        elseif keyword:match("^%u") then
-          correct = "^%l+$"
+        elseif keyword:match '^%u' then
+          correct = '^%l+$'
           case = string.upper
         else
           return items
@@ -100,9 +98,7 @@ return {
       ---@diagnostic disable-next-line: unused-local
       local function transform_items_label(_ctx, items, label)
         for _, item in ipairs(items) do
-          if label ~= nil then
-            item.labelDetails = { description = "(" .. label .. ")" }
-          end
+          if label ~= nil then item.labelDetails = { description = '(' .. label .. ')' } end
         end
 
         return items
@@ -111,102 +107,92 @@ return {
         -- Get the current buffer's filetype
         local filetype = vim.bo[0].filetype
         -- Disable for Telescope buffers
-        if
-          filetype == "TelescopePrompt"
-          or filetype == "minifiles"
-          or filetype == "snacks_picker_input"
-        then
-          return false
-        end
+        if filetype == 'TelescopePrompt' or filetype == 'minifiles' or filetype == 'snacks_picker_input' then return false end
         return true
       end
-      opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
+      opts.sources = vim.tbl_deep_extend('force', opts.sources or {}, {
         default = {
-          "lsp",
-          "snippets",
-          "path",
-          "buffer",
-          "emoji",
-          "lazydev",
-          "ripgrep",
-          "crates",
-          "npm",
-          "ecolog",
+          'lsp',
+          'snippets',
+          'path',
+          'buffer',
+          'emoji',
+          'lazydev',
+          'ripgrep',
+          'crates',
+          'npm',
+          'ecolog',
         },
-        per_filetype = { sql = { "dadbod" } },
+        per_filetype = { sql = { 'dadbod' } },
         providers = {
           crates = {
-            name = "crates",
-            module = "blink.compat.source",
+            name = 'crates',
+            module = 'blink.compat.source',
             score_offset = 5, -- the higher the number, the higher the priority
           },
           npm = {
-            name = "npm",
-            module = "blink.compat.source",
+            name = 'npm',
+            module = 'blink.compat.source',
           },
           lsp = {
-            name = "lsp",
+            name = 'lsp',
             enabled = true,
-            module = "blink.cmp.sources.lsp",
+            module = 'blink.cmp.sources.lsp',
             min_keyword_length = 2,
             score_offset = 90, -- the higher the number, the higher the priority
           },
-          ecolog = { name = "ecolog", module = "ecolog.integrations.cmp.blink_cmp" },
+          ecolog = { name = 'ecolog', module = 'ecolog.integrations.cmp.blink_cmp' },
           path = {
-            name = "Path",
-            module = "blink.cmp.sources.path",
+            name = 'Path',
+            module = 'blink.cmp.sources.path',
 
             score_offset = 25,
 
-            fallbacks = { "snippets", "buffer" },
+            fallbacks = { 'snippets', 'buffer' },
             -- min_keyword_length = 2,
             opts = {
               trailing_slash = false,
               label_trailing_slash = true,
-              get_cwd = function(context)
-                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
-              end,
+              get_cwd = function(context) return vim.fn.expand(('#%d:p:h'):format(context.bufnr)) end,
               show_hidden_files_by_default = true,
             },
           },
           lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
             -- make lazydev completions top priority (see `:h blink.cmp`)
             score_offset = 100,
           },
           buffer = {
-            name = "Buffer",
+            name = 'Buffer',
             enabled = true,
             max_items = 3,
-            module = "blink.cmp.sources.buffer",
+            module = 'blink.cmp.sources.buffer',
             min_keyword_length = 4,
             score_offset = 15, -- the higher the number, the higher the priority
           },
           ripgrep = {
-            module = "blink-ripgrep",
-            name = "Ripgrep",
+            module = 'blink-ripgrep',
+            name = 'Ripgrep',
             ---@module "blink-ripgrep"
             ---@type blink-ripgrep.Options
             opts = { prefix_min_len = 3 },
             async = true,
-            transform_items = function(ctx, items)
-              return transform_items_label(ctx, transform_items_capitalization(ctx, items), "rg")
-            end,
+            transform_items = function(ctx, items) return transform_items_label(ctx, transform_items_capitalization(ctx, items), 'rg') end,
             min_keyword_length = 3,
           },
           -- Example on how to configure dadbod found in the main repo
           -- https://github.com/kristijanhusak/vim-dadbod-completion
           dadbod = {
-            name = "Dadbod",
-            module = "vim_dadbod_completion.blink",
+            name = 'Dadbod',
+            module = 'vim_dadbod_completion.blink',
             min_keyword_length = 2,
             score_offset = 85, -- the higher the number, the higher the priority
           },
           -- https://github.com/moyiz/blink-emoji.nvim
           emoji = {
-            module = "blink-emoji",
-            name = "Emoji",
+            module = 'blink-emoji',
+            name = 'Emoji',
             score_offset = 93, -- the higher the number, the higher the priority
             min_keyword_length = 2,
             opts = { insert = true }, -- Insert emoji (default) or complete its name
@@ -219,55 +205,41 @@ return {
       }
       opts.appearance = {
         use_nvim_cmp_as_default = true,
-        nerd_font_variant = "mono",
+        nerd_font_variant = 'mono',
       }
 
       opts.completion = {
         menu = {
-          border = "rounded",
+          border = 'rounded',
           draw = {
-            treesitter = { "lsp" },
-            columns = { { "kind_icon" }, { "label", "label_description", gap = 1 } },
+            treesitter = { 'lsp' },
+            columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
             components = {
               kind_icon = {
                 ellipsis = false,
                 text = function(ctx)
-                  if require("blink.cmp.sources.lsp.hacks.tailwind").get_hex_color(ctx.item) then
-                    return "󱓻"
-                  end
+                  if require('blink.cmp.sources.lsp.hacks.tailwind').get_hex_color(ctx.item) then return '󱓻' end
                   local icon = ctx.kind_icon
-                  if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                    local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
-                    if dev_icon then
-                      icon = dev_icon
-                    end
+                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                    local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                    if dev_icon then icon = dev_icon end
                   else
-                    icon = require("lspkind").symbol_map[ctx.kind] or ""
+                    icon = require('lspkind').symbol_map[ctx.kind] or ''
                   end
 
                   -- return require("lspkind").symbolic(ctx.kind, { mode = "symbol" })
-                  return " " .. icon .. ctx.icon_gap .. " "
+                  return ' ' .. icon .. ctx.icon_gap .. ' '
                 end,
               },
               label = {
-                text = function(ctx)
-                  return require("colorful-menu").blink_components_text(ctx)
-                end,
-                highlight = function(ctx)
-                  return require("colorful-menu").blink_components_highlight(ctx)
-                end,
+                text = function(ctx) return require('colorful-menu').blink_components_text(ctx) end,
+                highlight = function(ctx) return require('colorful-menu').blink_components_highlight(ctx) end,
               },
               label_description = {
                 text = function(ctx)
-                  if ctx.source_id == "lsp" then
-                    local label = require("colorful-menu").blink_highlights(ctx).label
-                    if
-                      label ~= ctx.label
-                      or label == ctx.label_description
-                      or ctx.label == ctx.label_description
-                    then
-                      return nil
-                    end
+                  if ctx.source_id == 'lsp' then
+                    local label = require('colorful-menu').blink_highlights(ctx).label
+                    if label ~= ctx.label or label == ctx.label_description or ctx.label == ctx.label_description then return nil end
                   end
                   return ctx.label_description
                 end,
@@ -280,7 +252,7 @@ return {
           auto_show = true,
           auto_show_delay_ms = 500,
           window = {
-            border = "rounded",
+            border = 'rounded',
           },
         },
         -- Displays a preview of the selected item on the current line
@@ -288,59 +260,57 @@ return {
           enabled = false,
         },
       }
-      opts.fuzzy = { implementation = "prefer_rust_with_warning" }
+      opts.fuzzy = { implementation = 'prefer_rust_with_warning' }
       opts.snippets = {
-        preset = "luasnip", -- Choose LuaSnip as the snippet engine
+        preset = 'luasnip', -- Choose LuaSnip as the snippet engine
       }
       -- opts.signature = { enabled = true }
       opts.keymap = {
-        preset = "default",
+        preset = 'default',
 
-        ["<Tab>"] = { "snippet_forward", "fallback" },
-        ["<S-Tab>"] = { "snippet_backward", "fallback" },
-        ["<Up>"] = {},
-        ["<Down>"] = {},
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-n>"] = { "select_next", "fallback" },
-        ["<S-k>"] = { "scroll_documentation_up", "fallback" },
-        ["<S-j>"] = { "scroll_documentation_down", "fallback" },
-        ["<C-space>"] = {
-          function(cmp)
-            cmp.show({ providers = { "snippets" } })
-          end,
+        ['<Tab>'] = { 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+        ['<Up>'] = {},
+        ['<Down>'] = {},
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<S-k>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<S-j>'] = { 'scroll_documentation_down', 'fallback' },
+        ['<C-space>'] = {
+          function(cmp) cmp.show { providers = { 'snippets' } } end,
         },
-        ["<C-e>"] = { "hide", "fallback" },
+        ['<C-e>'] = { 'hide', 'fallback' },
       }
 
       return opts
     end,
   },
   {
-    "ray-x/lsp_signature.nvim",
-    event = "InsertEnter",
-    cond = vim.g.completer ~= "blink",
+    'ray-x/lsp_signature.nvim',
+    event = 'InsertEnter',
+    cond = vim.g.completer ~= 'blink',
   },
   {
-    "L3MON4D3/LuaSnip",
-    version = "v2.*",
+    'L3MON4D3/LuaSnip',
+    version = 'v2.*',
     dependencies = { {
-      "garymjr/nvim-snippets",
-    }, { "rafamadriz/friendly-snippets" } },
+      'garymjr/nvim-snippets',
+    }, { 'rafamadriz/friendly-snippets' } },
     opts = function()
-      local types = require("luasnip.util.types")
+      local types = require 'luasnip.util.types'
       return {
         history = true,
-        delete_check_events = "TextChanged",
+        delete_check_events = 'TextChanged',
         ext_opts = {
           [types.insertNode] = {
             unvisited = {
-              virt_text = { { "|", "Conceal" } },
+              virt_text = { { '|', 'Conceal' } },
               -- virt_text_pos = "inline",
             },
           },
           [types.exitNode] = {
             unvisited = {
-              virt_text = { { "|", "Conceal" } },
+              virt_text = { { '|', 'Conceal' } },
               -- virt_text_pos = "inline",
             },
           },
@@ -348,41 +318,39 @@ return {
       }
     end,
     config = function()
-      local snip_status_ok, luasnip = pcall(require, "luasnip")
-      if not snip_status_ok then
-        return
-      end
-      require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/snippets/" })
+      local snip_status_ok, luasnip = pcall(require, 'luasnip')
+      if not snip_status_ok then return end
+      require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_lua').lazy_load { paths = '~/.config/nvim/snippets/' }
 
-      luasnip.config.set_config({
+      luasnip.config.set_config {
         history = true,
-        region_check_events = "InsertEnter",
-        updateevents = "TextChanged,TextChangedI",
+        region_check_events = 'InsertEnter',
+        updateevents = 'TextChanged,TextChangedI',
         enable_autosnippets = true,
-      })
+      }
 
       -- Load custom Lua snippets
-      for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("nvim/snippets/*.lua", true)) do
+      for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('nvim/snippets/*.lua', true)) do
         loadfile(ft_path)()
       end
     end,
   },
   {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     dependencies = {
-      "roobert/tailwindcss-colorizer-cmp.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      'roobert/tailwindcss-colorizer-cmp.nvim',
+      'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-      local cmp = require("cmp")
+      local cmp = require 'cmp'
 
-      cmp.setup.filetype({ "html", "css", "scss", "javascriptreact", "typescriptreact" }, {
-        sources = cmp.config.sources({
+      cmp.setup.filetype({ 'html', 'css', 'scss', 'javascriptreact', 'typescriptreact' }, {
+        sources = cmp.config.sources {
           -- { name = "nvim_lsp" },
-          { name = "tailwindcss-colorizer-cmp" },
-        }),
+          { name = 'tailwindcss-colorizer-cmp' },
+        },
       })
     end,
   },

@@ -1,84 +1,62 @@
 return {
-  "folke/snacks.nvim",
+  'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
   keys = {
     {
-      "<leader>lg",
-      function()
-        Snacks.lazygit()
-      end,
-      desc = "Lazygit",
+      '<leader>lg',
+      function() Snacks.lazygit() end,
+      desc = 'Lazygit',
     },
     {
-      "<leader>gh",
-      function()
-        Snacks.picker.gh_issue({ state = "all" })
-      end,
-      desc = "Lazygit",
+      '<leader>gh',
+      function() Snacks.picker.gh_issue { state = 'all' } end,
+      desc = 'Lazygit',
     },
     {
-      "<leader>gl",
-      function()
-        Snacks.lazygit.log()
-      end,
-      desc = "Lazygit Log (cwd)",
+      '<leader>gl',
+      function() Snacks.lazygit.log() end,
+      desc = 'Lazygit Log (cwd)',
     },
     {
-      "<leader>nh",
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = "Notification History",
+      '<leader>nh',
+      function() Snacks.notifier.show_history() end,
+      desc = 'Notification History',
     },
     {
-      "<Leader>nd",
-      function()
-        Snacks.notifier.hide()
-      end,
-      desc = "Dismiss All Notifications",
+      '<Leader>nd',
+      function() Snacks.notifier.hide() end,
+      desc = 'Dismiss All Notifications',
     },
     {
-      "<leader>gb",
-      function()
-        Snacks.gitbrowse()
-      end,
-      desc = "Git Browse",
+      '<leader>gb',
+      function() Snacks.gitbrowse() end,
+      desc = 'Git Browse',
     },
     {
-      "<leader>gB",
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = "Git Blame Line",
+      '<leader>gB',
+      function() Snacks.git.blame_line() end,
+      desc = 'Git Blame Line',
     },
     {
-      "<leader>k",
-      function()
-        Snacks.picker.keymaps()
-      end,
-      desc = "Keymaps",
+      '<leader>k',
+      function() Snacks.picker.keymaps() end,
+      desc = 'Keymaps',
     },
     {
-      "<leader>fR",
-      function()
-        Snacks.rename.rename_file()
-      end,
-      desc = "Rename File",
+      '<leader>fR',
+      function() Snacks.rename.rename_file() end,
+      desc = 'Rename File',
     },
     {
-      "]]",
-      function()
-        Snacks.words.jump(vim.v.count1)
-      end,
-      desc = "Next Reference",
+      ']]',
+      function() Snacks.words.jump(vim.v.count1) end,
+      desc = 'Next Reference',
     },
     {
-      "[[",
-      function()
-        Snacks.words.jump(-vim.v.count1)
-      end,
-      desc = "Prev Reference",
+      '[[',
+      function() Snacks.words.jump(-vim.v.count1) end,
+      desc = 'Prev Reference',
     },
   },
   ---@type snacks.Config
@@ -86,9 +64,10 @@ return {
     gh = { enabled = true },
     lazygit = { enabled = true },
     bigfile = { enabled = true },
-    notifier = { enabled = true, timeout = 5000, style = "fancy", top_down = false },
+    notifier = { enabled = true, timeout = 5000, style = 'fancy', top_down = false },
     toggle = { enabled = true },
     -- input = { enabled = true },
+    terminal = { enabled = true },
 
     styles = {
       notification = {
@@ -98,75 +77,78 @@ return {
     scroll = {
       animate = {
         duration = { step = 15, total = 250 },
-        easing = "linear",
+        easing = 'linear',
       },
       -- what buffers to animate
-      filter = function(buf)
-        return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false
-      end,
+      filter = function(buf) return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false end,
     },
   },
   config = function(_, opts)
-    vim.api.nvim_create_user_command("Gbrowse", function()
-      Snacks.gitbrowse()
-    end, {})
-    vim.api.nvim_create_user_command("Gitbranch", function()
-      local gbok, gb = pcall(require, "snacks.gitbrowse")
-      if not gbok then
-        return
-      end
-      gb.open({ what = "branch" })
-    end, { desc = "Open branch in origin git site" })
+    vim.keymap.set({ 'n', 't' }, '<leader>ld', function()
+      Snacks.terminal.toggle('lazydocker', {
+        win = {
+          position = 'float', -- Centered floating window
+          border = 'rounded',
+          width = 0.9, -- 90% of screen width
+          height = 0.9, -- 90% of screen height
+        },
+      })
+    end, { desc = 'Lazydocker (Snacks)' })
+    vim.keymap.set({ 'n', 't' }, '<C-\\>', function()
+      Snacks.terminal.toggle(nil, {
+        win = {
+          position = 'float',
+          border = 'rounded', -- Adds a clean rounded border
+        },
+      })
+    end, { desc = 'Toggle Terminal' })
+    vim.api.nvim_create_user_command('Gbrowse', function() Snacks.gitbrowse() end, {})
+    vim.api.nvim_create_user_command('Gitbranch', function()
+      local gbok, gb = pcall(require, 'snacks.gitbrowse')
+      if not gbok then return end
+      gb.open { what = 'branch' }
+    end, { desc = 'Open branch in origin git site' })
 
-    vim.api.nvim_create_user_command("Gitrepo", function()
-      local gbok, gb = pcall(require, "snacks.gitbrowse")
-      if not gbok then
-        return
-      end
-      gb.open({ what = "repo" })
-    end, { desc = "Open repo root in origin git site" })
+    vim.api.nvim_create_user_command('Gitrepo', function()
+      local gbok, gb = pcall(require, 'snacks.gitbrowse')
+      if not gbok then return end
+      gb.open { what = 'repo' }
+    end, { desc = 'Open repo root in origin git site' })
     vim.notify = Snacks.notifier
 
     ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
     local progress = vim.defaulttable()
-    vim.api.nvim_create_autocmd("LspProgress", {
+    vim.api.nvim_create_autocmd('LspProgress', {
       ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
       callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         local value = ev.data.params.value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
-        if not client or type(value) ~= "table" then
-          return
-        end
+        if not client or type(value) ~= 'table' then return end
         local p = progress[client.id]
 
         for i = 1, #p + 1 do
           if i == #p + 1 or p[i].token == ev.data.params.token then
             p[i] = {
               token = ev.data.params.token,
-              msg = ("[%3d%%] %s%s"):format(
-                value.kind == "end" and 100 or value.percentage or 100,
-                value.title or "",
-                value.message and (" **%s**"):format(value.message) or ""
+              msg = ('[%3d%%] %s%s'):format(
+                value.kind == 'end' and 100 or value.percentage or 100,
+                value.title or '',
+                value.message and (' **%s**'):format(value.message) or ''
               ),
-              done = value.kind == "end",
+              done = value.kind == 'end',
             }
             break
           end
         end
 
         local msg = {} ---@type string[]
-        progress[client.id] = vim.tbl_filter(function(v)
-          return table.insert(msg, v.msg) or not v.done
-        end, p)
+        progress[client.id] = vim.tbl_filter(function(v) return table.insert(msg, v.msg) or not v.done end, p)
 
-        local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-        vim.notify(table.concat(msg, "\n"), "info", {
-          id = "lsp_progress",
+        local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+        vim.notify(table.concat(msg, '\n'), 'info', {
+          id = 'lsp_progress',
           title = client.name,
-          opts = function(notif)
-            notif.icon = #progress[client.id] == 0 and " "
-              or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
-          end,
+          opts = function(notif) notif.icon = #progress[client.id] == 0 and ' ' or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1] end,
         })
       end,
     })

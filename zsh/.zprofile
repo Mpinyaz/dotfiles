@@ -1,5 +1,4 @@
-export GOPATH=$HOME/go
-export PATH="$PATH:$GOPATH/bin"
+export PATH=$PATH:$(go env GOPATH)/bin
 if grep -qi 'arch' /etc/os-release 2>/dev/null || command -v pacman &>/dev/null; then
 
 alias p="sudo pacman"

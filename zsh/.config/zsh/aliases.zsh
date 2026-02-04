@@ -33,6 +33,7 @@ alias cp="cp -r"
 alias ZZ="exit"
 # alias pip="pip3"
 alias fo='nvim "$(fzf --preview "bat --color=always --style=header,grid --line-range :500 {}")"'
+alias kvim='NVIM_APPNAME=kickstart nvim'
 alias nv="fd --type f --hidden --exclude .git | fzf | xargs nvim"
 alias python="python3"
 alias zc="eza -l -g --icons"

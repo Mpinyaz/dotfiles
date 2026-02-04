@@ -1,14 +1,14 @@
 ----@type vim.lsp.Config
 return {
-  cmd = { "texlab" },
-  filetypes = { "tex", "plaintex", "bib" },
-  root_markers = { ".git", ".latexmkrc", "latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" },
+  cmd = { 'texlab' },
+  filetypes = { 'tex', 'plaintex', 'bib' },
+  root_markers = { '.git', '.latexmkrc', 'latexmkrc', '.texlabroot', 'texlabroot', 'Tectonic.toml' },
   settings = {
     texlab = {
       rootDirectory = nil,
       build = {
-        executable = "latexmk",
-        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+        executable = 'latexmk',
+        args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
         onSave = false,
         forwardSearchAfter = false,
       },
@@ -21,12 +21,12 @@ return {
         onEdit = false,
       },
       diagnosticsDelay = 300,
-      latexFormatter = "latexindent",
+      latexFormatter = 'latexindent',
       latexindent = {
-        ["local"] = nil, -- local is a reserved keyword
+        ['local'] = nil, -- local is a reserved keyword
         modifyLineBreaks = false,
       },
-      bibtexFormatter = "texlab",
+      bibtexFormatter = 'texlab',
       formatterLineLength = 80,
     },
   },

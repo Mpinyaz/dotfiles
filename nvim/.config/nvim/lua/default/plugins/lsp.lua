@@ -402,9 +402,11 @@ return {
         },
         golangci_lint = {
           default = "all", -- set to one of { 'standard', 'fast', 'all', 'none' }
+          disable = { "errcheck", "staticcheck" }, -- linters to disable empty by default
           enable = { "govet", "ineffassign", "revive", "gosimple" }, -- linters to enable; empty by default
           config = nil, -- set to a config file path
           no_config = false, -- true: golangci-lint --no-config
+          severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
         },
         -- Ensure gopls is configured for your environment
         lsp_cfg = {
