@@ -1,11 +1,11 @@
 vim.loader.enable()
--- Automatically delete trailing newlines on file write
-vim.cmd [[
-        autocmd BufWritePre * let currPos = getpos(".")
-        autocmd BufWritePre * %s/\s\+$//e
-        autocmd BufWritePre * %s/\n\+\%$//e
-        autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
-]]
+-- -- Automatically delete trailing newlines on file write
+-- vim.cmd [[
+--         autocmd BufWritePre * let currPos = getpos(".")
+--         autocmd BufWritePre * %s/\s\+$//e
+--         autocmd BufWritePre * %s/\n\+\%$//e
+--         autocmd BufWritePre * cal cursor(currPos[1], currPos[2])
+-- ]]
 
 vim.cmd [[
         augroup sh_auto_exe

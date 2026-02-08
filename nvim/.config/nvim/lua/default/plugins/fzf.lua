@@ -91,23 +91,23 @@ return {
       desc = 'References',
     },
     {
-      '<leader>nld',
+      'gf',
+      function() require('fzf-lua').lsp_finder() end,
+      desc = 'Lsp Finder',
+    },
+    {
+      '<leader>gd',
       function() require('fzf-lua').lsp_definitions() end,
       desc = 'Definitions',
     },
     {
-      '<leader>nle',
-      function() require('fzf-lua').lsp_declarations() end,
-      desc = 'Declarations',
-    },
-    {
-      '<leader>nli',
+      '<leader>gi',
       function() require('fzf-lua').lsp_implementations() end,
       desc = 'Implementations',
     },
     {
-      '<leader>nla',
-      function() require('fzf-lua').lsp_code_actions() end,
+      '<leader>d',
+      function() require('fzf-lua').lsp_workspace_diagnostics() end,
       desc = 'Code Actions',
     },
   },

@@ -1,9 +1,9 @@
-local servers = require("utils.servers")
-local icons = require("utils.icons")
+local servers = require 'utils.servers'
+local icons = require 'utils.icons'
 -- ----------------------------------------------------------------------
 -- --                        LSP Client attach                         --
 -- ----------------------------------------------------------------------
-local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), {
+local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), {
   textDocument = {
     foldingRange = { dynamicRegistration = false, lineFoldingOnly = true },
     completion = {
@@ -18,11 +18,11 @@ local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_c
         tagSupport = { valueSet = { 1 } },
         resolveSupport = {
           properties = {
-            "documentation",
-            "additionalTextEdits",
-            "insertTextFormat",
-            "insertTextMode",
-            "command",
+            'documentation',
+            'additionalTextEdits',
+            'insertTextFormat',
+            'insertTextMode',
+            'command',
           },
         },
       },
@@ -30,143 +30,113 @@ local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_c
     },
   },
 })
-capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 local function on_init(client, result)
-  client.server_capabilities =
-    vim.tbl_deep_extend("force", client.server_capabilities, capabilities)
+  client.server_capabilities = vim.tbl_deep_extend('force', client.server_capabilities, capabilities)
 
   -- Set empty trigger characters for signatureHelp if supported
-  if client:supports_method("textDocument/signatureHelp") then
-    client.server_capabilities.signatureHelpProvider.triggerCharacters = {}
-  end
+  if client:supports_method 'textDocument/signatureHelp' then client.server_capabilities.signatureHelpProvider.triggerCharacters = {} end
 
   -- Handle off-spec "offsetEncoding" server capability
-  if result.offsetEncoding then
-    client.offset_encoding = result.offsetEncoding
-  end
+  if result.offsetEncoding then client.offset_encoding = result.offsetEncoding end
 end
 
 -- Create an augroup for LSP-related autocommands
-vim.api.nvim_create_augroup("lsp", { clear = true })
-local telescope_ok, telescope = pcall(require, "telescope.builtin")
+vim.api.nvim_create_augroup('lsp', { clear = true })
+local telescope_ok, telescope = pcall(require, 'telescope.builtin')
 
 -- Wrapper for keymapping with default opts
 local map = function(mode, lhs, rhs, desc)
   local opts = {
     noremap = true,
     silent = true,
-    desc = "LSP: " .. desc,
+    desc = 'LSP: ' .. desc,
   }
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-vim.api.nvim_create_augroup("lsp", { clear = true })
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = "lsp",
+vim.api.nvim_create_augroup('lsp', { clear = true })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = 'lsp',
   callback = function(args)
     local bufnr = args.buf
     local client_id = args.data.client_id
     local client = vim.lsp.get_client_by_id(client_id)
 
-    local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local opts = { noremap = true, silent = true }
     -- Store LSP client name in buffer-local variable
     vim.b[bufnr].lsp = client.name
-    require("lsp_signature").on_attach({
+    require('lsp_signature').on_attach({
       bind = true,
       floating_window = true,
       always_trigger = true,
       hint_enable = true,
-      hint_prefix = "🔍 ",
+      hint_prefix = '🔍 ',
     }, bufnr)
-    -- Mappings
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Go to next diagnostic")
-    map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "Go to the previous diagnostic")
-    map("n", "ge", "<Cmd>Lspsaga show_line_diagnostic<CR>", "Show diagnostics of the current line")
-    map("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", "Show diagnostics of the current line")
-    map("n", "gr", "<Cmd>Lspsaga rename ++projects<CR>", "Rename variable under cursor")
-    map("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", "Code actions")
-    map("n", "gf", "<Cmd>Lspsaga finder<CR>", "Find references and implementation under cursor")
-    map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
-    map("n", "go", "<cmd>Lspsaga outline<CR>", "Show Lsp outline")
-    map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Show hover doc")
+    vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1, float = true } end, { desc = 'Next Diagnostic' })
 
-    if telescope_ok then
-      map("n", "<leader>d", telescope.diagnostics, "Show all diagnostics")
-    else
-      map(
-        "n",
-        "<leader>d",
-        "<Cmd>Lspsaga show_workspace_diagnostics ++float<CR>",
-        "Show all diagnostics"
-      )
-    end
+    vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1, float = true } end, { desc = 'Previous Diagnostic' })
+    vim.keymap.set('n', '<leader>ge', vim.diagnostic.open_float)
+    vim.keymap.set({ 'n', 'x' }, '<leader>ca', function() require('tiny-code-action').code_action() end, { noremap = true, silent = true })
+
     if client.server_capabilities.documentFormattingProvider then
-      buf_set_keymap("n", "<leader>Cf", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
+      buf_set_keymap('n', '<leader>Cf', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
     end
 
     if client.server_capabilities.documentRangeFormattingProvider then
-      buf_set_keymap("v", "<leader>cf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+      buf_set_keymap('v', '<leader>cf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
     end
 
     if client.server_capabilities.documentHighlightProvider then
-      vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = "lsp_document_highlight" })
-      vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
-        desc = "Highlight references under the cursor",
+      vim.api.nvim_create_augroup('lsp_document_highlight', { clear = true })
+      vim.api.nvim_clear_autocmds { buffer = bufnr, group = 'lsp_document_highlight' }
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave' }, {
+        desc = 'Highlight references under the cursor',
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
-      vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter", "BufLeave" }, {
-        desc = "Clear highlight references",
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
+        desc = 'Clear highlight references',
         buffer = bufnr,
         callback = vim.lsp.buf.clear_references,
       })
     end
 
     -- Document highlight
-    if client:supports_method("textDocument/documentHighlight", bufnr) then
-      vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
-        group = "lsp",
+    if client:supports_method('textDocument/documentHighlight', bufnr) then
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave' }, {
+        group = 'lsp',
         buffer = bufnr,
         callback = vim.lsp.buf.document_highlight,
       })
-      vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter" }, {
-        group = "lsp",
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter' }, {
+        group = 'lsp',
         buffer = bufnr,
         callback = vim.lsp.buf.clear_references,
       })
     end
 
     -- Inlay hints toggle
-    if client:supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    end
+    if client:supports_method 'textDocument/inlayHint' then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
 
     -- Code lens
-    if client:supports_method("textDocument/codeLens", bufnr) then
-      vim.api.nvim_create_autocmd("LspProgress", {
-        group = "lsp",
-        pattern = "end",
+    if client:supports_method('textDocument/codeLens', bufnr) then
+      vim.api.nvim_create_autocmd('LspProgress', {
+        group = 'lsp',
+        pattern = 'end',
         callback = function(progress_args)
-          if progress_args.buf == bufnr then
-            vim.lsp.codelens.refresh({ bufnr = bufnr })
-          end
+          if progress_args.buf == bufnr then vim.lsp.codelens.refresh { bufnr = bufnr } end
         end,
       })
 
-      vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "InsertLeave" }, {
-        group = "lsp",
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'InsertLeave' }, {
+        group = 'lsp',
         buffer = bufnr,
-        callback = function()
-          vim.lsp.codelens.refresh({ bufnr = bufnr })
-        end,
+        callback = function() vim.lsp.codelens.refresh { bufnr = bufnr } end,
       })
 
-      vim.lsp.codelens.refresh({ bufnr = bufnr })
+      vim.lsp.codelens.refresh { bufnr = bufnr }
     end
 
     -- Folding
@@ -176,21 +146,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- end
 
     -- Formatting
-    if client:supports_method("textDocument/formatting", bufnr) then
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = "lsp",
+    if client:supports_method('textDocument/formatting', bufnr) then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = 'lsp',
         buffer = bufnr,
         callback = function()
-          local autoformat = vim.F.if_nil(
-            client.settings.autoformat,
-            vim.b[bufnr].lsp and vim.b[bufnr].lsp.autoformat,
-            vim.g.lsp and vim.g.lsp.autoformat,
-            false
-          )
+          local autoformat =
+            vim.F.if_nil(client.settings.autoformat, vim.b[bufnr].lsp and vim.b[bufnr].lsp.autoformat, vim.g.lsp and vim.g.lsp.autoformat, false)
 
-          if autoformat then
-            vim.lsp.buf.format({ bufnr = bufnr, id = client_id })
-          end
+          if autoformat then vim.lsp.buf.format { bufnr = bufnr, id = client_id } end
         end,
       })
     end
@@ -221,16 +185,40 @@ local config = {
   underline = true,
   severity_sort = true,
   float = {
+    header = '',
+    prefix = '',
     focus = false,
     focusable = true,
-    style = "minimal",
-    border = "shadow",
-    source = "always",
+    style = 'minimal',
+    border = 'rounded',
+    source = 'always',
+    format = function(diagnostic)
+      -- Add icons based on severity
+      local iconsFloat = {
+        [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+        [vim.diagnostic.severity.WARN] = icons.diagnostics.Warning,
+        [vim.diagnostic.severity.INFO] = icons.diagnostics.Information,
+        [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+      }
+      return string.format('%s %s', iconsFloat[diagnostic.severity] or '', diagnostic.message)
+    end,
   },
 }
+-- Custom highlight groups for better colors
+vim.cmd [[
+  highlight DiagnosticFloatingError guifg=#db4b4b guibg=#1a1b26
+  highlight DiagnosticFloatingWarn guifg=#e0af68 guibg=#1a1b26
+  highlight DiagnosticFloatingInfo guifg=#0db9d7 guibg=#1a1b26
+  highlight DiagnosticFloatingHint guifg=#1abc9c guibg=#1a1b26
+
+  highlight DiagnosticVirtualTextError guifg=#db4b4b
+  highlight DiagnosticVirtualTextWarn guifg=#e0af68
+  highlight DiagnosticVirtualTextInfo guifg=#0db9d7
+  highlight DiagnosticVirtualTextHint guifg=#1abc9c
+]]
 vim.diagnostic.config(config)
 
-vim.lsp.config("*", {
+vim.lsp.config('*', {
   capabilities = capabilities,
   on_init = on_init,
 })
@@ -238,159 +226,121 @@ vim.lsp.config("*", {
 vim.lsp.enable(servers)
 return {
   {
-    "mason-org/mason.nvim",
+    'mason-org/mason.nvim',
     dependencies = {
-      "neovim/nvim-lspconfig",
-      "mason-org/mason-lspconfig.nvim",
+      'neovim/nvim-lspconfig',
+      'mason-org/mason-lspconfig.nvim',
     },
     config = function()
-      local mason_ok, mason = pcall(require, "mason")
-      if not mason_ok then
-        return
-      end
-      mason.setup({
+      local mason_ok, mason = pcall(require, 'mason')
+      if not mason_ok then return end
+      mason.setup {
         ensure_installed = servers,
         automatic_installation = true,
         ui = {
-          border = "shadow",
-          icons = require("utils.icons").mason,
+          border = 'shadow',
+          icons = require('utils.icons').mason,
           check_outdated_packages_on_open = true,
         },
-      })
+      }
       -- require("mason-lspconfig").setup({
       --   ensure_installed = servers,
       -- })
     end,
   },
   {
-    "zapling/mason-conform.nvim",
-    event = "BufReadPre",
+    'lewis6991/hover.nvim',
+    config = function()
+      require('hover').setup {
+        init = function()
+          require 'hover.providers.lsp'
+          require 'hover.providers.gh' -- GitHub issues/PRs
+          require 'hover.providers.gh_user' -- GitHub users
+          require 'hover.providers.man' -- Man pages
+          require 'hover.providers.dictionary' -- Dictionary definitions
+        end,
+        preview_opts = {
+          border = 'rounded',
+        },
+        preview_window = false,
+        title = true,
+        mouse_providers = {
+          'LSP',
+        },
+        mouse_delay = 1000,
+      }
+
+      -- Setup keymaps
+      vim.keymap.set('n', 'K', function() require('hover').open() end, { desc = 'hover.nvim (open)' })
+      vim.keymap.set('n', '<C-b>', function() require('hover').hover_switch 'previous' end, { desc = 'hover.nvim (previous source)' })
+      vim.keymap.set('n', '<C-f>', function() require('hover').hover_switch 'next' end, { desc = 'hover.nvim (next source)' })
+    end,
+  },
+  {
+    'zapling/mason-conform.nvim',
+    event = 'BufReadPre',
     config = true,
     dependencies = {
-      "williamboman/mason.nvim",
-      "stevearc/conform.nvim",
+      'williamboman/mason.nvim',
+      'stevearc/conform.nvim',
     },
   },
   {
-    "MaximilianLloyd/tw-values.nvim",
+    'rachartier/tiny-code-action.nvim',
+    dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+
+      { 'nvim-telescope/telescope.nvim' },
+      { 'ibhagwan/fzf-lua' },
+      {
+        'folke/snacks.nvim',
+        opts = {
+          terminal = {},
+        },
+      },
+    },
+    event = 'LspAttach',
+    opts = { picker = {
+      'snacks',
+      opts = {
+        hotkeys = true,
+        layout = 'vertical',
+      },
+    } },
+  },
+  {
+    'MaximilianLloyd/tw-values.nvim',
     keys = {
-      { "<Leader>cv", "<CMD>TWValues<CR>", desc = "Tailwind CSS values" },
+      { '<Leader>cv', '<CMD>TWValues<CR>', desc = 'Tailwind CSS values' },
     },
     opts = {
       show_unknown_classes = true, --
     },
   },
   {
-    "ThePrimeagen/refactoring.nvim",
+    'ThePrimeagen/refactoring.nvim',
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
     },
     lazy = false,
     opts = {},
   },
   {
-    "nvimdev/lspsaga.nvim",
-    config = function()
-      require("lspsaga").setup({
-        text = {
-          spinner = "dots",
-          done = "✓",
-          commenced = "Started",
-          completed = "Completed",
-        },
-        align = {
-          bottom = true,
-          right = true,
-        },
-        timer = {
-          spinner_rate = 125,
-          fidget_decay = 2000,
-          task_decay = 1000,
-        },
-        window = {
-          relative = "win",
-          blend = 0,
-          zindex = nil,
-          border = "rounded",
-        },
-      })
-      local lspsaga = require("lspsaga")
-      lspsaga.setup({
-        -- defaults ...
-        debug = true,
-        diagnostic = {
-          keys = {
-            quit = { "q", "<ESC>" },
-          },
-        },
-        use_saga_diagnostic_sign = false,
-        -- diagnostic sign
-        error_sign = "",
-        warn_sign = "",
-        hint_sign = "",
-        infor_sign = "",
-        diagnostic_header_icon = "   ",
-        -- code action title icon
-        code_action_icon = " ",
-        code_action_prompt = {
-          enable = true,
-          sign = true,
-          sign_priority = 40,
-          virtual_text = false,
-        },
-        finder_definition_icon = "  ",
-        finder_reference_icon = "  ",
-        max_preview_lines = 10,
-        finder_action_keys = {
-          open = "o",
-          vsplit = "s",
-          split = "i",
-          quit = "q",
-          scroll_down = "<C-f>",
-          scroll_up = "<C-b>",
-        },
-        code_action_keys = {
-          quit = "q",
-          exec = "<CR>",
-        },
-        rename_action_keys = {
-          quit = "<C-c>",
-          exec = "<CR>",
-        },
-        definition_preview_icon = "",
-        border_style = "single",
-        rename_prompt_prefix = "➤",
-        rename_output_qflist = {
-          enable = false,
-          auto_open_qflist = false,
-        },
-        server_filetype_map = {},
-        diagnostic_prefix_format = "%d. ",
-        diagnostic_message_format = "%m %c",
-        highlight_prefix = false,
-      })
-    end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter", -- optional
-      "nvim-tree/nvim-web-devicons", -- optional
-    },
-  },
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {
       jsx_close_tag = {
         enable = true,
-        filetypes = { "javascriptreact", "typescriptreact" },
+        filetypes = { 'javascriptreact', 'typescriptreact' },
       },
     },
   },
   {
-    "ray-x/go.nvim",
+    'ray-x/go.nvim',
     -- ... dependencies and other keys ...
     config = function()
-      require("go").setup({
+      require('go').setup {
         -- Disable built-in linting to let nvim-lint handle it
         luasnip = true,
         lsp_codelens = true,
@@ -401,9 +351,9 @@ return {
           enable = true,
         },
         golangci_lint = {
-          default = "all", -- set to one of { 'standard', 'fast', 'all', 'none' }
-          disable = { "errcheck", "staticcheck" }, -- linters to disable empty by default
-          enable = { "govet", "ineffassign", "revive", "gosimple" }, -- linters to enable; empty by default
+          default = 'all', -- set to one of { 'standard', 'fast', 'all', 'none' }
+          disable = { 'errcheck', 'staticcheck' }, -- linters to disable empty by default
+          enable = { 'govet', 'ineffassign', 'revive', 'gosimple' }, -- linters to enable; empty by default
           config = nil, -- set to a config file path
           no_config = false, -- true: golangci-lint --no-config
           severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
@@ -419,24 +369,59 @@ return {
             },
           },
         },
-      })
+      }
     end,
   },
   {
-    "mrcjkb/rustaceanvim",
-    dependencies = "neovim/nvim-lspconfig",
-    version = "^6", -- Recommended
-    ft = { "rust" },
+    'hedyhli/outline.nvim',
+    config = function()
+      -- Example mapping to toggle outline
+      vim.keymap.set('n', 'go', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+
+      require('outline').setup {
+        -- Your setup opts here (leave empty to use defaults)
+      }
+    end,
+  },
+  {
+    'smjonas/inc-rename.nvim',
+    dependencies = {
+      'folke/noice.nvim',
+    },
+    cmd = 'IncRename',
+    config = function()
+      require('inc_rename').setup {
+        input_buffer_type = 'dressing',
+        show_message = true,
+      }
+      require('noice').setup {
+        presets = { inc_rename = true },
+      }
+    end,
+    vim.keymap.set('n', 'gr', ':IncRename ', { desc = 'Rename' }),
+  },
+  {
+    'stevearc/dressing.nvim',
+    opts = {
+      input = {
+        border = 'rounded',
+        relative = 'cursor',
+      },
+    },
+  },
+  {
+    'mrcjkb/rustaceanvim',
+    dependencies = 'neovim/nvim-lspconfig',
+    version = '^6', -- Recommended
+    ft = { 'rust' },
     opts = {
       server = {
         on_attach = function(_, bufnr)
-          vim.keymap.set("n", "<leader>cR", function()
-            vim.cmd.RustLsp("codeAction")
-          end, { desc = "Code Action", buffer = bufnr })
+          vim.keymap.set('n', '<leader>cR', function() vim.cmd.RustLsp 'codeAction' end, { desc = 'Code Action', buffer = bufnr })
         end,
         default_settings = {
           -- rust-analyzer language server configuration
-          ["rust-analyzer"] = {
+          ['rust-analyzer'] = {
             cargo = {
               allFeatures = true,
               loadOutDirsFromCheck = true,
@@ -450,23 +435,21 @@ return {
                 leptos_macro = {
                   -- optional: --
                   -- "component",
-                  "server",
+                  'server',
                 },
-                ["async-trait"] = { "async_trait" },
-                ["napi-derive"] = { "napi" },
-                ["async-recursion"] = { "async_recursion" },
+                ['async-trait'] = { 'async_trait' },
+                ['napi-derive'] = { 'napi' },
+                ['async-recursion'] = { 'async_recursion' },
               },
             },
             check = {
-              command = "clippy",
+              command = 'clippy',
+              extraArgs = { '--all', '--', '-W', 'clippy::all' },
             },
-            checkOnSave = {
-              command = "clippy",
-              extraArgs = { "--all", "--", "-W", "clippy::all" },
-            },
+            checkOnSave = true,
             assist = {
               importEnforceGranularity = true,
-              importPrefix = "crate",
+              importPrefix = 'crate',
             },
             inlayHints = {
               locationLinks = true,
@@ -479,26 +462,35 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
-    end,
+    config = function(_, opts) vim.g.rustaceanvim = vim.tbl_deep_extend('keep', vim.g.rustaceanvim or {}, opts or {}) end,
   },
   {
-    "dmmulroy/ts-error-translator.nvim",
+    'alexpasmantier/krust.nvim',
+    ft = 'rust',
+    opts = {
+      keymap = '<leader>ge', -- Set a keymap for Rust buffers (default: false)
+      float_win = {
+        border = 'rounded', -- Border style: "none", "single", "double", "rounded", "solid", "shadow"
+        auto_focus = false, -- Auto-focus float (default: false)
+      },
+    },
+  },
+  {
+    'dmmulroy/ts-error-translator.nvim',
     config = function()
-      require("ts-error-translator").setup({
+      require('ts-error-translator').setup {
         auto_attach = true,
 
         servers = {
-          "astro",
-          "svelte",
-          "ts_ls",
+          'astro',
+          'svelte',
+          'ts_ls',
           -- "tsserver", -- deprecated, use ts_ls
-          "typescript-tools",
-          "volar",
-          "vtsls",
+          'typescript-tools',
+          'volar',
+          'vtsls',
         },
-      })
+      }
     end,
   },
 }
