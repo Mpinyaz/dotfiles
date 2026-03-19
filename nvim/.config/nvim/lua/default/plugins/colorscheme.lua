@@ -1,5 +1,5 @@
 return {
-  "craftzdog/solarized-osaka.nvim",
+  'craftzdog/solarized-osaka.nvim',
   -- {
   --   "rebelot/kanagawa.nvim",
   --   opts = {
@@ -52,24 +52,24 @@ return {
   --     end
   --   end,
   -- },
-  {
-    "AetherSyscall/AetherAmethyst.nvim",
-    priority = 1000,
-    config = function()
-      require("aetheramethyst").setup({
-        transparent = false, -- Enable transparent background
-        styles = {
-          comments = { italic = true },
-          keywords = { italic = true },
-          functions = { bold = true },
-          variables = {},
-        },
-      })
-
-      -- Load the variant: 'eclipse' (dark) or 'bliss' (light)
-      vim.cmd("colorscheme aetheramethyst-eclipse")
-    end,
-  },
+  -- {
+  --   "AetherSyscall/AetherAmethyst.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     require("aetheramethyst").setup({
+  --       transparent = false, -- Enable transparent background
+  --       styles = {
+  --         comments = { italic = true },
+  --         keywords = { italic = true },
+  --         functions = { bold = true },
+  --         variables = {},
+  --       },
+  --     })
+  --
+  --     -- Load the variant: 'eclipse' (dark) or 'bliss' (light)
+  --     vim.cmd("colorscheme aetheramethyst-eclipse")
+  --   end,
+  -- },
   -- {
   --   "scottmckendry/cyberdream.nvim",
   --   lazy = false,
@@ -88,16 +88,16 @@ return {
   --     vim.cmd("colorscheme cyberdream")
   --   end,
   -- },
-  { "edeneast/nightfox.nvim" },
-  -- {
-  -- 	"rose-pine/neovim",
-  -- 	name = "rose-pine",
-  -- 	config = function()
-  -- 		vim.g.rose_pine_variant = "auto"
-  -- 		vim.g.rose_pine_disable_background = true
-  -- 		vim.cmd("colorscheme rose-pine")
-  -- 	end,
-  -- },
+  { 'edeneast/nightfox.nvim' },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    config = function()
+      vim.g.rose_pine_variant = 'auto'
+      vim.g.rose_pine_disable_background = true
+      vim.cmd 'colorscheme rose-pine'
+    end,
+  },
   -- {
   --         'eldritch-theme/eldritch.nvim',
   --         lazy = false,

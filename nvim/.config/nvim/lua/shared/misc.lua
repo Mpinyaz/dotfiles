@@ -57,7 +57,6 @@ return {
   },
   'chrisbra/csv.vim',
   { 'jbyuki/one-small-step-for-vimkind', module = 'osv' },
-  'nvim-lua/popup.nvim',
   { 'j-hui/fidget.nvim', tag = 'legacy' },
   'lunarvim/darkplus.nvim',
   { 'nanotee/zoxide.vim' },
@@ -94,7 +93,7 @@ return {
       miniTrailspace.setup {
         only_in_normal_buffers = true,
       }
-      vim.keymap.set('n', '<leader>cw', function() miniTrailspace.trim() end, { desc = 'Erase Whitespace' })
+      vim.keymap.set('n', '<F1>', function() miniTrailspace.trim() end, { desc = 'Erase Whitespace' })
 
       -- Ensure highlight never reappears by removing it on CursorMoved
       vim.api.nvim_create_autocmd('CursorMoved', {

@@ -3,17 +3,20 @@ alias rs='exec -l $SHELL'
 alias lt='eza -aT --color=always --group-directories-first'             # tree listing
 alias l.='eza -al --color=always --group-directories-first ../'         # ls on the PARENT directory
 alias l..='eza -al --color=always --group-directories-first ../../'     # ls on directory 2 levels up
+alias ls='eza -al --color=always --group-directories-first'
 alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
+alias l="ls -lF ${colorflag}"
+alias la="ls -lAF ${colorflag}"
+alias lc="eza -l -g --icons"
+alias lh="zc -a"
+alias zt="zh --tree --level=2"
 alias grep='grep --color=auto'
 alias ff='yazi'
 alias df='df -h'
 alias free='free -m'
-alias ls='eza -al --color=always --group-directories-first'
 # List all files colorized in long format
-alias l="ls -lF ${colorflag}"
 
 # List all files colorized in long format, excluding . and ..
-alias la="ls -lAF ${colorflag}"
 #ps
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
@@ -36,9 +39,6 @@ alias fo='nvim "$(fzf --preview "bat --color=always --style=header,grid --line-r
 alias kvim='NVIM_APPNAME=kickstart nvim'
 alias nv="fd --type f --hidden --exclude .git | fzf | xargs nvim"
 alias python="python3"
-alias zc="eza -l -g --icons"
-alias zh="zc -a"
-alias zt="zh --tree --level=2"
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
 

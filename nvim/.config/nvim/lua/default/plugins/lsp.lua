@@ -67,13 +67,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { noremap = true, silent = true }
     -- Store LSP client name in buffer-local variable
     vim.b[bufnr].lsp = client.name
-    require('lsp_signature').on_attach({
-      bind = true,
-      floating_window = true,
-      always_trigger = true,
-      hint_enable = true,
-      hint_prefix = '🔍 ',
-    }, bufnr)
     vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1, float = true } end, { desc = 'Next Diagnostic' })
 
     vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1, float = true } end, { desc = 'Previous Diagnostic' })
@@ -335,42 +328,6 @@ return {
         filetypes = { 'javascriptreact', 'typescriptreact' },
       },
     },
-  },
-  {
-    'ray-x/go.nvim',
-    -- ... dependencies and other keys ...
-    config = function()
-      require('go').setup {
-        -- Disable built-in linting to let nvim-lint handle it
-        luasnip = true,
-        lsp_codelens = true,
-        lint_on_save = false, -- THIS IS THE KEY FIX
-        lsp_keymaps = false,
-        lsp_diag_update_in_insert = false,
-        lsp_inlay_hints = {
-          enable = true,
-        },
-        golangci_lint = {
-          default = 'all', -- set to one of { 'standard', 'fast', 'all', 'none' }
-          disable = { 'errcheck', 'staticcheck' }, -- linters to disable empty by default
-          enable = { 'govet', 'ineffassign', 'revive', 'gosimple' }, -- linters to enable; empty by default
-          config = nil, -- set to a config file path
-          no_config = false, -- true: golangci-lint --no-config
-          severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
-        },
-        -- Ensure gopls is configured for your environment
-        lsp_cfg = {
-          settings = {
-            gopls = {
-              hints = {
-                assignVariableTypes = true,
-                compositeLiteralFields = true,
-              },
-            },
-          },
-        },
-      }
-    end,
   },
   {
     'hedyhli/outline.nvim',

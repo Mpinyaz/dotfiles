@@ -26,3 +26,4 @@ nvim/.config/nvim/db_ui
 nvim/.config/nvim/lazy-lock.json
 undodir/*
 nvim/.config/nvim/undodir
+/nvim/.config/nvim/lazy-lock.json

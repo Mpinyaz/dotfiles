@@ -58,6 +58,7 @@ return {
       function() Snacks.words.jump(-vim.v.count1) end,
       desc = 'Prev Reference',
     },
+    { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer' },
   },
   ---@type snacks.Config
   opts = {
@@ -68,6 +69,7 @@ return {
     toggle = { enabled = true },
     -- input = { enabled = true },
     terminal = { enabled = true },
+    scratch = { enabled = true },
 
     styles = {
       notification = {

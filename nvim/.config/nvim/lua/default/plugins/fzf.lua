@@ -56,6 +56,11 @@ return {
       desc = 'Search keymaps',
     },
     {
+      '<leader>r',
+      function() require('fzf-lua').registers() end,
+      desc = 'List Registers',
+    },
+    {
       '<leader>ns',
       function() require('fzf-lua').spell_suggest() end,
       desc = 'Spell suggestions',

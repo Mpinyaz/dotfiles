@@ -79,13 +79,6 @@ vim.keymap.set(
 )
 vim.keymap.set('n', '<Leader>fr', [[:%s/\<<C-r><C-w>\>//g<Left><Left>]])
 
-vim.keymap.set(
-  'i',
-  '<c-p>',
-  function() require('telescope.builtin').registers() end,
-  { remap = true, silent = false, desc = 'copy and paste register in insert mode' }
-)
-
 -- map leader+y to copy to system clipboard in normal and visual mode
 vim.keymap.set({ 'n', 'v' }, '<Leader>y', '"+y', { noremap = true, silent = true })
 

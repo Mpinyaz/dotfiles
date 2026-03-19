@@ -130,9 +130,15 @@ return {
             module = 'blink.compat.source',
             score_offset = 5, -- the higher the number, the higher the priority
           },
+          signature = {
+            name = 'signature',
+            module = 'blink.cmp.sources.signature',
+            enabled = true,
+          },
           npm = {
             name = 'npm',
             module = 'blink.compat.source',
+            enabled = true,
           },
           lsp = {
             name = 'lsp',
@@ -193,6 +199,7 @@ return {
           emoji = {
             module = 'blink-emoji',
             name = 'Emoji',
+            enabled = true,
             score_offset = 93, -- the higher the number, the higher the priority
             min_keyword_length = 2,
             opts = { insert = true }, -- Insert emoji (default) or complete its name
@@ -264,12 +271,21 @@ return {
       opts.snippets = {
         preset = 'luasnip', -- Choose LuaSnip as the snippet engine
       }
-      -- opts.signature = { enabled = true }
+      opts.signature = {
+        enabled = true,
+        trigger = {
+          show_on_insert = true, -- Show on entering insert mode
+        },
+        window = {
+          border = 'rounded',
+        },
+      }
       opts.keymap = {
         preset = 'default',
 
         ['<Tab>'] = { 'snippet_forward', 'fallback' },
         ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+        ['K'] = {},
         ['<Up>'] = {},
         ['<Down>'] = {},
         ['<C-p>'] = { 'select_prev', 'fallback' },
@@ -285,11 +301,12 @@ return {
       return opts
     end,
   },
-  {
-    'ray-x/lsp_signature.nvim',
-    event = 'InsertEnter',
-    cond = vim.g.completer ~= 'blink',
-  },
+  -- {
+  --   'ray-x/lsp_signature.nvim',
+  --   event = 'InsertEnter',
+  --   opts = { time_interval = 600 },
+  --   cond = vim.g.completer ~= 'blink',
+  -- },
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
