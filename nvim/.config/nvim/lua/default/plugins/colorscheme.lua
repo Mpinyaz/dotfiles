@@ -1,5 +1,6 @@
 return {
   'craftzdog/solarized-osaka.nvim',
+  'lunarvim/darkplus.nvim',
   -- {
   --   "rebelot/kanagawa.nvim",
   --   opts = {

@@ -1,9 +1,12 @@
 return {
   {
     'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
+    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
+    opts = function()
+      return {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
     lazy = false,
     init = function()
       local wk = require 'which-key'
@@ -22,11 +25,17 @@ return {
         },
       }
     end,
-    config = function(_, opts) require('Comment').setup(opts) end,
+    config = function(_, opts)
+      require('Comment').setup(opts)
+    end,
   },
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
-    config = function() require('ts_context_commentstring').setup {} end,
+    config = function()
+      require('ts_context_commentstring').setup {
+        enable_autocmd = false,
+      }
+    end,
   },
   {
     's1n7ax/nvim-comment-frame',

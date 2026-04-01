@@ -119,17 +119,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
         group = 'lsp',
         pattern = 'end',
         callback = function(progress_args)
-          if progress_args.buf == bufnr then vim.lsp.codelens.refresh { bufnr = bufnr } end
+          if progress_args.buf == bufnr then vim.lsp.codelens.enable(true, { bufnr = bufnr }) end
         end,
       })
 
       vim.api.nvim_create_autocmd({ 'BufEnter', 'TextChanged', 'InsertLeave' }, {
         group = 'lsp',
         buffer = bufnr,
-        callback = function() vim.lsp.codelens.refresh { bufnr = bufnr } end,
+        callback = function() vim.lsp.codelens.enable(true, { bufnr = bufnr }) end,
       })
 
-      vim.lsp.codelens.refresh { bufnr = bufnr }
+      vim.lsp.codelens.enable(true, { bufnr = bufnr })
     end
 
     -- Folding

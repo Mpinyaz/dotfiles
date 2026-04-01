@@ -58,7 +58,6 @@ return {
   'chrisbra/csv.vim',
   { 'jbyuki/one-small-step-for-vimkind', module = 'osv' },
   { 'j-hui/fidget.nvim', tag = 'legacy' },
-  'lunarvim/darkplus.nvim',
   { 'nanotee/zoxide.vim' },
   {
     'axkirillov/hbac.nvim',
