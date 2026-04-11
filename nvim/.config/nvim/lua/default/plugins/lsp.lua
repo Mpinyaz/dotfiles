@@ -45,16 +45,6 @@ end
 vim.api.nvim_create_augroup('lsp', { clear = true })
 local telescope_ok, telescope = pcall(require, 'telescope.builtin')
 
--- Wrapper for keymapping with default opts
-local map = function(mode, lhs, rhs, desc)
-  local opts = {
-    noremap = true,
-    silent = true,
-    desc = 'LSP: ' .. desc,
-  }
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
 vim.api.nvim_create_augroup('lsp', { clear = true })
 vim.api.nvim_create_autocmd('LspAttach', {
   group = 'lsp',
@@ -433,6 +423,14 @@ return {
     },
   },
   {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    -- overrides `require("mason-tool-installer").setup(...)`
+    opts = {
+      -- Make sure to use the names found in `:Mason`
+      -- ensure_installed = servers,
+    },
+  },
+  {
     'dmmulroy/ts-error-translator.nvim',
     config = function()
       require('ts-error-translator').setup {
@@ -442,7 +440,6 @@ return {
           'astro',
           'svelte',
           'ts_ls',
-          -- "tsserver", -- deprecated, use ts_ls
           'typescript-tools',
           'volar',
           'vtsls',

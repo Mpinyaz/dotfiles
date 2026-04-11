@@ -1,15 +1,14 @@
 return {
   'craftzdog/solarized-osaka.nvim',
   'lunarvim/darkplus.nvim',
-  -- {
-  --   "rebelot/kanagawa.nvim",
-  --   opts = {
-  --     theme = "lotus",
-  --   },
-  --   config = function()
-  --     vim.cmd("colorscheme kanagawa-wave")
-  --   end,
-  -- },
+  {
+    'rebelot/kanagawa.nvim',
+    opts = {
+      theme = 'wave',
+      transparent = true,
+    },
+    config = function() vim.cmd 'colorscheme kanagawa-wave' end,
+  },
   -- {
   --   "Mofiqul/dracula.nvim",
   --   dependencies = { "echasnovski/mini.hipatterns" },
@@ -90,15 +89,15 @@ return {
   --   end,
   -- },
   { 'edeneast/nightfox.nvim' },
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    config = function()
-      vim.g.rose_pine_variant = 'auto'
-      vim.g.rose_pine_disable_background = true
-      vim.cmd 'colorscheme rose-pine'
-    end,
-  },
+  -- {
+  --   'rose-pine/neovim',
+  --   name = 'rose-pine',
+  --   config = function()
+  --     vim.g.rose_pine_variant = 'auto'
+  --     vim.g.rose_pine_disable_background = true
+  --     vim.cmd 'colorscheme rose-pine'
+  --   end,
+  -- },
   -- {
   --         'eldritch-theme/eldritch.nvim',
   --         lazy = false,
