@@ -9,7 +9,7 @@ return {
   'biome',
   'vimls',
   'html',
-  'htmx',
+  -- 'htmx',
   'jsonls',
   'cssls',
   'clangd',

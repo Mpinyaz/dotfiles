@@ -2,6 +2,9 @@
 function mkdd() {
         mkdir -p ${1:+$1$prefix_separator}"$(date +%F)"
 }
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
 # Display calendar with day highlighted
 function cal() {
         if [ -t 1 ]; then alias cal="ncal -b"; else alias cal="/usr/bin/cal"; fi

@@ -5,13 +5,20 @@ return {
     ---@type render.md.UserConfig
     opts = {
       render_modes = { 'n', 'c', 't' },
-      file_types = { 'markdown', 'vimwiki', 'quarto' },
+      restart_highlighter = true,
+      file_types = { 'markdown', 'vimwiki', 'quarto', 'rmd' },
     },
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- Mandatory
       'nvim-tree/nvim-web-devicons', -- Optional but recommended
       'Mofiqul/dracula.nvim',
     },
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'markdown',
+        callback = function() vim.treesitter.start() end,
+      })
+    end,
     config = function()
       local colors = require('dracula').colors()
       local hl = vim.api.nvim_set_hl

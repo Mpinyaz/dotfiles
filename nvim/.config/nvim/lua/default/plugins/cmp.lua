@@ -267,7 +267,7 @@ return {
           enabled = false,
         },
       }
-      opts.fuzzy = { implementation = 'prefer_rust_with_warning' }
+      opts.fuzzy = { implementation = 'prefer_rust_with_warning', prebuilt_binaries = { download = true } }
       opts.snippets = {
         preset = 'luasnip', -- Choose LuaSnip as the snippet engine
       }
@@ -301,12 +301,6 @@ return {
       return opts
     end,
   },
-  -- {
-  --   'ray-x/lsp_signature.nvim',
-  --   event = 'InsertEnter',
-  --   opts = { time_interval = 600 },
-  --   cond = vim.g.completer ~= 'blink',
-  -- },
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',

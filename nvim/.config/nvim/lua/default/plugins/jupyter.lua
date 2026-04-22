@@ -1,144 +1,139 @@
 return {
-  {
-    'benlubas/molten-nvim',
-    build = ':UpdateRemotePlugins',
-    keys = {
-      { '<localleader>ji', ':MoltenInit<CR>' },
-      { '<localleader>jr', ':MoltenReevaluateCell<CR>' },
-      { '<localleader>jv', ':<C-u>MoltenEvaluateVisual<CR>gv', mode = 'v' },
-      { '<localleader>jh', ':MoltenHideOutput<CR>' },
-      { '<localleader>js', ':MoltenShowOutput<CR>' },
-      -- { '<localleader>hl', ':MoltenEvaluateLine<CR>' },
-      { '<localleader>jd', ':MoltenDelete<CR>' },
-      { '<localleader>jx', ':MoltenOpenInBrowser<CR>' },
-    },
-    dependencies = {
-      -- depends on jupytext converting .ipynb files on open.
-      'goerz/jupytext.vim',
-      'benlubas/quarto-nvim',
-      {
-        '3rd/image.nvim',
+
+  { -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
+    -- for complete functionality (language features)
+    'quarto-dev/quarto-nvim',
+    ft = { 'quarto' },
+    dev = false,
+    opts = {
+      lspFeatures = {
+        languages = { 'r', 'python', 'julia', 'bash', 'lua', 'html', 'dot', 'javascript', 'typescript', 'ojs' },
+      },
+      codeRunner = {
+        enabled = true,
+        default_method = 'slime',
       },
     },
-    init = function()
-      vim.g.molten_auto_open_output = true
-      vim.g.molten_image_provider = 'image.nvim'
-      vim.g.molten_output_crop_border = true
-
-      vim.g.molten_output_win_max_height = 40
-      vim.g.molten_virt_text_output = true
-      vim.g.molten_use_border_highlights = true
-      -- vim.g.molten_virt_lines_off_by_1 = true
-      vim.g.molten_wrap_output = true
-
-      vim.keymap.set('n', '<leader>mi', ':MoltenInit<CR>', { desc = 'Initialize Molten', silent = true })
-      vim.keymap.set('n', '<leader>ir', function()
-        local venv = os.getenv 'VIRTUAL_ENV'
-        if venv ~= nil then
-          venv = string.match(venv, '/.+/(.+)')
-          vim.cmd(('MoltenInit %s'):format(venv))
-        else
-          vim.cmd 'MoltenInit python3'
-        end
-      end, { desc = 'Initialize Molten for python3', silent = true, noremap = true })
-
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'MoltenInitPost',
-        callback = function()
-          -- change some vim settings
-          vim.opt.conceallevel = 0
-          vim.cmd [[ TSContextDisable ]]
-
-          -- ... always just activate quarto?
-          require('quarto').activate()
-          vim.notify 'Quarto activated.' -- maybe put this in a pcall w/ .activate() to actually check if we're good
-
-          local r = require 'quarto.runner'
-          vim.keymap.set('n', '<leader>rc', r.run_cell, { desc = 'run cell', silent = true })
-          vim.keymap.set('n', '<leader>rA', r.run_all, { desc = 'run all cells', silent = true })
-
-          vim.keymap.set('n', '<Esc>', ':noautocmd MoltenHideOutput<CR>', { desc = 'Close output window', silent = true })
-
-          vim.keymap.set('n', ']x', ':noautocmd MoltenNext<CR>', { desc = 'Next Molten Cell', silent = true })
-          vim.keymap.set('n', '[x', ':noautocmd MoltenPrev<CR>', { desc = 'Previous Molten Cell', silent = true })
-        end,
-      })
-    end,
-  },
-  {
-    'benlubas/quarto-nvim',
     dependencies = {
-      -- LSP for code embedded in other file formats (e.g. python in markdown)
-      -- (should this have its own config???)
+      -- for language features in code cells
+      -- configured in lua/plugins/lsp.lua and
+      -- added as a nvim-cmp source in lua/plugins/completion.lua
       'jmbuhr/otter.nvim',
+    },
+  },
 
-      -- make sure LSP niceties are loaded (is this a dep cycle?)
-      'hrsh7th/nvim-cmp',
-      'neovim/nvim-lspconfig',
-      'nvim-treesitter/nvim-treesitter',
-      'benlubas/molten-nvim',
-    },
-    keys = {
-      { '<localleader>hc', ':lua require("quarto.runner").run_cell()<CR>' },
-      { '<localleader>ha', ':lua require("quarto.runner").run_above()<CR>' },
-      { '<localleader>hb', ':lua require("quarto.runner").run_below()<CR>' },
-      { '<localleader>hA', ':lua require("quarto.runner").run_all()<CR>' },
-      { '<localleader>hl', ':lua require("quarto.runner").run_line()<CR>' },
-      { '<localleader>hr', ':lua require("quarto.runner").run_range()<CR>', mode = 'v' },
-    },
-    ft = { 'quarto', 'markdown' },
-    config = function()
-      local quarto = require 'quarto'
-      quarto.setup {
-        lspFeatures = {
-          languages = { 'python', 'rust' },
-          chunks = 'all',
-          diagnostics = {
-            enabled = true,
-            triggers = { 'BufWritePost' },
-          },
-          completion = {
-            enabled = true,
-          },
-        },
-        keymap = {
-          hover = 'K',
-          definition = 'gd',
-          rename = '<space>r',
-          references = 'gr',
-          format = '<space>f',
-        },
-        codeRunner = {
-          enabled = true,
-          default_method = 'molten',
-        },
-      }
-    end,
-  },
-  {
-    -- see the image.nvim readme for more information about configuring this plugin
-    '3rd/image.nvim',
-    opts = {
-      backend = 'kitty', -- whatever backend you would like to use
-      max_width = 100,
-      max_height = 12,
-      max_height_window_percentage = math.huge,
-      max_width_window_percentage = math.huge,
-      window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
-      window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', '' },
-    },
-  },
   { -- directly open ipynb files as quarto docuements
     -- and convert back behind the scenes
+    -- needs:
+    -- pip install jupytext
     'GCBallesteros/jupytext.nvim',
     opts = {
       custom_language_formatting = {
         python = {
-          extension = 'md',
-          style = 'markdown',
-          force_ft = 'markdown', -- you can set whatever filetype you want here
+          extension = 'qmd',
+          style = 'quarto',
+          force_ft = 'quarto', -- you can set whatever filetype you want here
+        },
+        r = {
+          extension = 'qmd',
+          style = 'quarto',
+          force_ft = 'quarto', -- you can set whatever filetype you want here
         },
       },
+    },
+  },
+
+  { -- send code from python/r/qmd documets to a terminal or REPL
+    -- like ipython, R, bash
+    'jpalardy/vim-slime',
+    init = function()
+      vim.b['quarto_is_python_chunk'] = false
+      Quarto_is_in_python_chunk = function() require('otter.tools.functions').is_otter_language_context 'python' end
+
+      vim.cmd [[
+      let g:slime_dispatch_ipython_pause = 100
+      function SlimeOverride_EscapeText_quarto(text)
+      call v:lua.Quarto_is_in_python_chunk()
+      if exists('g:slime_python_ipython') && len(split(a:text,"\n")) > 1 && b:quarto_is_python_chunk && !(exists('b:quarto_is_r_mode') && b:quarto_is_r_mode)
+      return ["%cpaste -q\n", g:slime_dispatch_ipython_pause, a:text, "--", "\n"]
+      else
+      if exists('b:quarto_is_r_mode') && b:quarto_is_r_mode && b:quarto_is_python_chunk
+      return [a:text, "\n"]
+      else
+      return [a:text]
+      end
+      end
+      endfunction
+      ]]
+
+      vim.g.slime_target = 'neovim'
+      vim.g.slime_python_ipython = 1
+    end,
+    config = function()
+      local function mark_terminal() vim.g.slime_last_channel = vim.b.terminal_job_id end
+
+      local function set_terminal() vim.b.slime_config = { jobid = vim.g.slime_last_channel } end
+      vim.keymap.set('n', '<leader>cm', mark_terminal, { desc = '[m]ark terminal' })
+      vim.keymap.set('n', '<leader>cs', set_terminal, { desc = '[s]et terminal' })
+    end,
+  },
+
+  { -- paste an image from the clipboard or drag-and-drop
+    'HakonHarnes/img-clip.nvim',
+    event = 'BufEnter',
+    ft = { 'markdown', 'quarto', 'latex' },
+    opts = {
+      default = {
+        dir_path = 'img',
+      },
+      filetypes = {
+        markdown = {
+          url_encode_path = true,
+          template = '![$CURSOR]($FILE_PATH)',
+          drag_and_drop = {
+            download_images = false,
+          },
+        },
+        quarto = {
+          url_encode_path = true,
+          template = '![$CURSOR]($FILE_PATH)',
+          drag_and_drop = {
+            download_images = false,
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require('img-clip').setup(opts)
+      vim.keymap.set('n', '<leader>ii', ':PasteImage<cr>', { desc = 'insert [i]mage from clipboard' })
+    end,
+  },
+
+  { -- preview equations
+    'jbyuki/nabla.nvim',
+    keys = {
+      { '<leader>qm', ':lua require"nabla".toggle_virt()<cr>', desc = 'toggle [m]ath equations' },
+    },
+  },
+
+  {
+    'benlubas/molten-nvim',
+    enabled = false,
+    build = ':UpdateRemotePlugins',
+    init = function()
+      vim.g.molten_image_provider = 'image.nvim'
+      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_auto_open_output = false
+    end,
+    keys = {
+      { '<leader>mi', ':MoltenInit<cr>', desc = '[m]olten [i]nit' },
+      {
+        '<leader>mv',
+        ':<C-u>MoltenEvaluateVisual<cr>',
+        mode = 'v',
+        desc = 'molten eval visual',
+      },
+      { '<leader>mr', ':MoltenReevaluateCell<cr>', desc = 'molten re-eval cell' },
     },
   },
 }
