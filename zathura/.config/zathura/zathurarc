@@ -10,6 +10,14 @@ map K zoom in
 map J zoom out
 map i recolor
 map p print
+
+set autoreload true
+# Adjust to fit width by default
+set pages-per-row 1
+set scroll-page-aware true
+set scroll-full-overlap 0.01
+set scroll-step 100
+
 set selection-clipboard clipboard
 
 set default-bg                  "#0E1018"

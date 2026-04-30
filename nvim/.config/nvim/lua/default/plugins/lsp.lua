@@ -44,7 +44,14 @@ end
 -- Create an augroup for LSP-related autocommands
 vim.api.nvim_create_augroup('lsp', { clear = true })
 local telescope_ok, telescope = pcall(require, 'telescope.builtin')
-
+local map = function(mode, lhs, rhs, desc)
+  local opts = {
+    noremap = true,
+    silent = true,
+    desc = 'LSP: ' .. desc,
+  }
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
 vim.api.nvim_create_augroup('lsp', { clear = true })
 vim.api.nvim_create_autocmd('LspAttach', {
   group = 'lsp',
@@ -57,12 +64,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { noremap = true, silent = true }
     -- Store LSP client name in buffer-local variable
     vim.b[bufnr].lsp = client.name
-    vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1, float = true } end, { desc = 'Next Diagnostic' })
-
-    vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1, float = true } end, { desc = 'Previous Diagnostic' })
-    vim.keymap.set('n', '<leader>ge', vim.diagnostic.open_float)
-    vim.keymap.set({ 'n', 'x' }, '<leader>ca', function() require('tiny-code-action').code_action() end, { noremap = true, silent = true })
-
+    map('n', ']d', '<Cmd>Lspsaga diagnostic_jump_next<CR>', 'Go to next diagnostic')
+    map('n', 'ge', '<Cmd>Lspsaga show_line_diagnostic<CR>', 'Show diagnostics of the current line')
+    map('n', 'gd', '<Cmd>Lspsaga peek_definition<CR>', 'Show diagnostics of the current line')
+    map('n', 'gr', '<Cmd>Lspsaga rename ++projects<CR>', 'Rename variable under cursor')
+    map('n', '<leader>ca', '<Cmd>Lspsaga code_action<CR>', 'Code actions')
+    map('n', 'gf', '<Cmd>Lspsaga finder<CR>', 'Find references and implementation under cursor')
+    map('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Show hover doc')
+    map('n', 'go', '<cmd>Lspsaga outline<CR>', 'Show Lsp outline')
+    map('n', '[d', '<Cmd>Lspsaga diagnostic_jump_prev<CR>', 'Go to the previous diagnostic')
+    map('n', 'K', '<cmd>Lspsaga hover_doc<CR>', 'Show hover doc')
     if client.server_capabilities.documentFormattingProvider then
       buf_set_keymap('n', '<leader>Cf', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>', opts)
     end
@@ -331,23 +342,6 @@ return {
     end,
   },
   {
-    'smjonas/inc-rename.nvim',
-    dependencies = {
-      'folke/noice.nvim',
-    },
-    cmd = 'IncRename',
-    config = function()
-      require('inc_rename').setup {
-        input_buffer_type = 'dressing',
-        show_message = true,
-      }
-      require('noice').setup {
-        presets = { inc_rename = true },
-      }
-    end,
-    vim.keymap.set('n', 'gr', ':IncRename ', { desc = 'Rename' }),
-  },
-  {
     'stevearc/dressing.nvim',
     opts = {
       input = {
@@ -446,5 +440,87 @@ return {
         },
       }
     end,
+  },
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup {
+        text = {
+          spinner = 'dots',
+          done = '✓',
+          commenced = 'Started',
+          completed = 'Completed',
+        },
+        align = {
+          bottom = true,
+          right = true,
+        },
+        timer = {
+          spinner_rate = 125,
+          fidget_decay = 2000,
+          task_decay = 1000,
+        },
+        window = {
+          relative = 'win',
+          blend = 0,
+          zindex = nil,
+          border = 'rounded',
+        },
+      }
+      local lspsaga = require 'lspsaga'
+      lspsaga.setup {
+        -- defaults ...
+        debug = false,
+        use_saga_diagnostic_sign = false,
+        -- diagnostic sign
+        error_sign = '',
+        warn_sign = '',
+        hint_sign = '',
+        infor_sign = '',
+        diagnostic_header_icon = '   ',
+        -- code action title icon
+        code_action_icon = ' ',
+        code_action_prompt = {
+          enable = true,
+          sign = true,
+          sign_priority = 40,
+          virtual_text = false,
+        },
+        finder_definition_icon = '  ',
+        finder_reference_icon = '  ',
+        max_preview_lines = 10,
+        finder_action_keys = {
+          open = 'o',
+          vsplit = 's',
+          split = 'i',
+          quit = 'q',
+          scroll_down = '<C-f>',
+          scroll_up = '<C-b>',
+        },
+        code_action_keys = {
+          quit = 'q',
+          exec = '<CR>',
+        },
+        rename_action_keys = {
+          quit = '<C-c>',
+          exec = '<CR>',
+        },
+        definition_preview_icon = '',
+        border_style = 'single',
+        rename_prompt_prefix = '➤',
+        rename_output_qflist = {
+          enable = false,
+          auto_open_qflist = false,
+        },
+        server_filetype_map = {},
+        diagnostic_prefix_format = '%d. ',
+        diagnostic_message_format = '%m %c',
+        highlight_prefix = false,
+      }
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
   },
 }
