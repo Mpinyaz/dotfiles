@@ -4,9 +4,25 @@ local winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Pmen
 return {
   {
     'saghen/blink.cmp',
-    version = '1.*',
-    enabled = true,
+    build = function()
+      -- build the fuzzy matcher, wait up to 60 seconds
+      -- you can use `gb` in `:Lazy` to rebuild the plugin as needed
+      require('blink.cmp').build():wait(60000)
+    end,
+    keymap = {
+      ['<A-1>'] = { function(cmp) cmp.accept { index = 1 } end },
+      ['<A-2>'] = { function(cmp) cmp.accept { index = 2 } end },
+      ['<A-3>'] = { function(cmp) cmp.accept { index = 3 } end },
+      ['<A-4>'] = { function(cmp) cmp.accept { index = 4 } end },
+      ['<A-5>'] = { function(cmp) cmp.accept { index = 5 } end },
+      ['<A-6>'] = { function(cmp) cmp.accept { index = 6 } end },
+      ['<A-7>'] = { function(cmp) cmp.accept { index = 7 } end },
+      ['<A-8>'] = { function(cmp) cmp.accept { index = 8 } end },
+      ['<A-9>'] = { function(cmp) cmp.accept { index = 9 } end },
+      ['<A-0>'] = { function(cmp) cmp.accept { index = 10 } end },
+    },
     dependencies = {
+      'saghen/blink.lib',
       {
         'saghen/blink.compat',
         version = '*',
@@ -20,7 +36,7 @@ return {
       'Kaiser-Yang/blink-cmp-dictionary',
       { 'mikavilpas/blink-ripgrep.nvim', lazy = true },
       { 'onsails/lspkind.nvim', lazy = true },
-      { 'rafamadriz/friendly-snippets', lazy = true },
+      { 'rafamadriz/friendly-snippets' },
       {
         'David-Kunz/cmp-npm',
         event = 'BufRead package.json',
@@ -53,6 +69,8 @@ return {
         config = function() require('colorful-menu').setup {} end,
       },
     },
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = function(_, opts)
       ---@module "blink.cmp"
       ---@param ctx blink.cmp.Context
@@ -159,7 +177,7 @@ return {
             opts = {
               trailing_slash = false,
               label_trailing_slash = true,
-              get_cwd = function(context) return vim.fn.expand(('#%d:p:h'):format(context.bufnr)) end,
+              get_cwd = function(_) return vim.fn.getcwd() end,
               show_hidden_files_by_default = true,
             },
           },
@@ -222,6 +240,10 @@ return {
             treesitter = { 'lsp' },
             columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
             components = {
+              item_idx = {
+                text = function(ctx) return ctx.idx == 10 and '0' or ctx.idx >= 10 and ' ' or tostring(ctx.idx) end,
+                highlight = 'BlinkCmpItemIdx', -- optional, only if you want to change its color
+              },
               kind_icon = {
                 ellipsis = false,
                 text = function(ctx)
@@ -267,7 +289,16 @@ return {
           enabled = false,
         },
       }
-      opts.fuzzy = { implementation = 'prefer_rust_with_warning', prebuilt_binaries = { download = true } }
+      opts.fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        prebuilt_binaries = { download = true },
+        sorts = {
+          'exact',
+          -- defaults
+          'score',
+          'sort_text',
+        },
+      }
       opts.snippets = {
         preset = 'luasnip', -- Choose LuaSnip as the snippet engine
       }
