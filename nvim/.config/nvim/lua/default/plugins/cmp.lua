@@ -1,6 +1,7 @@
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.shortmess:append 'c'
 local winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel'
+
 return {
   {
     'saghen/blink.cmp',
@@ -29,10 +30,9 @@ return {
         lazy = true,
         opts = {},
       },
-      'moyiz/blink-emoji.nvim',
       'L3MON4D3/LuaSnip',
       'philosofonusus/ecolog.nvim',
-
+      'moyiz/blink-emoji.nvim',
       'Kaiser-Yang/blink-cmp-dictionary',
       { 'mikavilpas/blink-ripgrep.nvim', lazy = true },
       { 'onsails/lspkind.nvim', lazy = true },
@@ -134,7 +134,6 @@ return {
           'snippets',
           'path',
           'buffer',
-          'emoji',
           'lazydev',
           'ripgrep',
           'crates',
@@ -158,6 +157,7 @@ return {
             module = 'blink.compat.source',
             enabled = true,
           },
+
           lsp = {
             name = 'lsp',
             enabled = true,
@@ -214,18 +214,11 @@ return {
             score_offset = 85, -- the higher the number, the higher the priority
           },
           -- https://github.com/moyiz/blink-emoji.nvim
-          emoji = {
-            module = 'blink-emoji',
-            name = 'Emoji',
-            enabled = true,
-            score_offset = 93, -- the higher the number, the higher the priority
-            min_keyword_length = 2,
-            opts = { insert = true }, -- Insert emoji (default) or complete its name
-          },
         },
       })
 
       opts.cmdline = {
+
         enabled = true,
       }
       opts.appearance = {
@@ -290,8 +283,7 @@ return {
         },
       }
       opts.fuzzy = {
-        implementation = 'prefer_rust_with_warning',
-        prebuilt_binaries = { download = true },
+        implementation = 'prefer_rust',
         sorts = {
           'exact',
           -- defaults

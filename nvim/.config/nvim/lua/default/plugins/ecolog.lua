@@ -1,7 +1,7 @@
 return {
   'philosofonusus/ecolog.nvim',
   keys = {
-    { '<leader>ge', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
+    -- { '<leader>ge', '<cmd>EcologGoto<cr>', desc = 'Go to env file' },
     { '<leader>gpe', '<cmd>EcologPeek<cr>', desc = 'Ecolog peek variable' },
     { '<leader>gps', '<cmd>EcologSelect<cr>', desc = 'Switch env file' },
     { '<leader>gpc', '<cmd>EcologCopy<cr>', desc = 'Copy var to clipboard' },
