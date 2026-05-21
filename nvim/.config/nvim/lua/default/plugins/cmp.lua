@@ -139,6 +139,7 @@ return {
           'crates',
           'npm',
           'ecolog',
+          'obsidian-tasks',
         },
         per_filetype = { sql = { 'dadbod' } },
         providers = {
@@ -213,7 +214,10 @@ return {
             min_keyword_length = 2,
             score_offset = 85, -- the higher the number, the higher the priority
           },
-          -- https://github.com/moyiz/blink-emoji.nvim
+          ['obsidian-tasks'] = {
+            module = 'obsidian-tasks.cmp.source',
+            name = 'ObsidianTasks',
+          },
         },
       })
 
@@ -229,6 +233,7 @@ return {
       opts.completion = {
         menu = {
           border = 'rounded',
+          winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
           draw = {
             treesitter = { 'lsp' },
             columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
@@ -275,6 +280,7 @@ return {
           auto_show_delay_ms = 500,
           window = {
             border = 'rounded',
+            winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
           },
         },
         -- Displays a preview of the selected item on the current line
@@ -301,6 +307,7 @@ return {
         },
         window = {
           border = 'rounded',
+          winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder,Search:None',
         },
       }
       opts.keymap = {
@@ -386,6 +393,16 @@ return {
           { name = 'tailwindcss-colorizer-cmp' },
         },
       })
+    end,
+  },
+  {
+    'derektata/lorem.nvim',
+    config = function()
+      require('lorem').opts {
+        sentence_length = 'mixed', -- using a default configuration
+        comma_chance = 0.3, -- 30% chance to insert a comma
+        max_commas = 2, -- maximum 2 commas per sentence
+      }
     end,
   },
 }

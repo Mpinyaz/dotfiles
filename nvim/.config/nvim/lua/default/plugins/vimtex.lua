@@ -2,19 +2,19 @@ return {
   'lervag/vimtex',
   init = function()
     -- Viewer settings
-    vim.g.vimtex_view_method = 'sioyek' -- Sioyek PDF viewer for academic documents
+    vim.g.vimtex_view_method = 'zathura' -- Sioyek PDF viewer for academic documents
     -- Note: Not setting vimtex_view_sioyek_options allows VimTeX to handle window management
     -- It will open new windows when needed but reuse for the same document
-    vim.g.vimtex_context_pdf_viewer = 'okular' -- External PDF viewer for the Vimtex menu
+    vim.g.vimtex_context_pdf_viewer = 'zathura' -- External PDF viewer for the Vimtex menu
 
     -- Formatting settings
     -- vim.g.vimtex_format_enabled = true             -- Enable formatting with latexindent
     -- vim.g.vimtex_format_program = 'latexindent'
 
     -- Indentation settings
-    vim.g.vimtex_indent_enabled = false -- Disable auto-indent from Vimtex
-    vim.g.tex_indent_items = false -- Disable indent for enumerate
-    vim.g.tex_indent_brace = false -- Disable brace indent
+    vim.g.vimtex_indent_enabled = true -- Disable auto-indent from Vimtex
+    vim.g.tex_indent_items = true -- Disable indent for enumerate
+    vim.g.tex_indent_brace = true -- Disable brace indent
 
     -- Compiler settings
     vim.g.vimtex_compiler_method = 'latexmk' -- Explicit compiler backend selection
@@ -47,7 +47,7 @@ return {
     }
 
     -- Other settings
-    vim.g.vimtex_mappings_enabled = false -- Disable default mappings
+    vim.g.vimtex_mappings_enabled = true -- Disable default mappings
     vim.g.tex_flavor = 'latex' -- Set file type for TeX files
   end,
 }

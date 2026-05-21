@@ -1,0 +1,56 @@
+# USER INFORMATION
+data.location=~/.local/share/task
+
+hooks.location=~/.config/task/hooks
+# Uncomment and set if you want to see your name in reports
+# user.name=Mpinyaz
+
+# COLOR AND THEME
+# Use the default 256-color theme (looks great on modern terminals)
+include solarized-dark-256.theme
+color=on
+
+# GENERAL CONFIGURATION
+confirmation=yes
+extensions=on
+echo.command=off
+indent.report=2
+row.padding=0
+column.padding=2
+
+# DEFAULT COMMANDS AND BEHAVIOR
+default.command=ready
+default.due=1week
+urgency.user.tag.next.coefficient=15.0
+
+# DATES AND CALENDAR
+dateformat=YYYY-MM-DD
+weekstart=Monday
+displaycalendar=yes
+
+# CUSTOM REPORTS
+# "Next" report: ordered by urgency, showing useful metadata
+report.next.description=Most urgent tasks
+report.next.columns=id,start,depends,priority,project,tags,description,urgency
+report.next.labels=ID,Active,Deps,Pri,Project,Tags,Description,Urgency
+report.next.sort=urgency-
+
+# "Work" report: focused purely on work projects
+report.work.description=Active Work Tasks
+report.work.filter=status:pending project:Work
+report.work.columns=id,priority,tags,description
+report.work.labels=ID,Pri,Tags,Description
+report.work.sort=priority-,due+
+
+# DOMINANT URGENCY COEFFICIENTS
+urgency.due.coefficient=12.0
+urgency.blocking.coefficient=8.0
+urgency.active.coefficient=4.0
+urgency.project.coefficient=1.0
+
+# ALIASES
+alias.l=list
+alias.n=next
+alias.a=add
+alias.d=done
+news.version=3.4.2

@@ -56,7 +56,7 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
-
+alias tt="taskwarrior-tui"
 # Lazygit alias
 alias lg="lazygit"
 alias ldc="lazydocker"

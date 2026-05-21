@@ -32,26 +32,7 @@ return {
     },
     keys = {
       { '<leader>gf', require('utils.pickers').git_diff_picker, desc = 'Diff Files' },
-      {
-        '<leader>f',
-        function()
-          local opts = require('telescope.themes').get_ivy()
-          require('telescope.builtin').find_files(opts)
-        end,
-        desc = 'telescope browser',
-      },
-      { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Help tags' },
-      -- { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
       { '<leader>fz', '<cmd>Telescope zoxide list<cr>', desc = 'Recent Folders' },
-      {
-        '<leader>lf',
-        function()
-          require('telescope.builtin').live_grep {
-            search_dirs = { vim.fs.dirname(vim.fn.expand '%') },
-          }
-        end,
-        desc = 'Grep (Current File Path)',
-      },
     },
     config = function()
       local status_ok, telescope = pcall(require, 'telescope')

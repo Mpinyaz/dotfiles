@@ -21,7 +21,7 @@ hl.bind(mainMod .. ' + mouse:272', hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. ' + mouse:273', hl.dsp.window.resize(), { mouse = true })
 -- === Browsers & Tools ===
 hl.bind(mainMod .. ' + B', hl.dsp.exec_cmd 'google-chrome-stable')
-hl.bind(subMod .. ' + B', hl.dsp.exec_cmd 'firefox')
+hl.bind(subMod .. ' + B', hl.dsp.exec_cmd 'brave')
 hl.bind('SUPER + Return', hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. ' + V', hl.dsp.exec_cmd 'pavucontrol')
 hl.bind(mainMod .. ' + M', hl.dsp.exec_cmd "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
@@ -108,6 +108,9 @@ end
 
 -- === Media & Brightness (bindel for repeat support) ===
 hl.bind('XF86AudioRaiseVolume', hl.dsp.exec_cmd(dms .. 'audio increment 3'))
+
+hl.bind('XF86AudioPlay', hl.dsp.exec_cmd 'playerctl play-pause')
+hl.bind('XF86AudioPause', hl.dsp.exec_cmd 'playerctl play-pause')
 hl.bind('XF86AudioLowerVolume', hl.dsp.exec_cmd(dms .. 'audio decrement 3'))
 hl.bind('XF86AudioMute', hl.dsp.exec_cmd(dms .. 'audio mute'))
 hl.bind('XF86MonBrightnessUp', hl.dsp.exec_cmd 'brightnessctl -e4 -n2 set 5%+', { locked = true, repeating = true })
@@ -118,6 +121,9 @@ hl.bind(mainMod .. ' + Print', hl.dsp.exec_cmd 'dms screenshot full')
 hl.bind('SUPER + SHIFT + T', hl.dsp.window.float { action = 'toggle' })
 
 hl.bind(mainMod .. ' + left', hl.dsp.focus { direction = 'left' }) -- Move focus left
+hl.bind(mainMod .. ' + h', hl.dsp.focus { direction = 'left' }) -- Move focus left
 hl.bind(mainMod .. ' + right', hl.dsp.focus { direction = 'right' }) -- Move focus right
+hl.bind(mainMod .. ' + l', hl.dsp.focus { direction = 'right' }) -- Move focus right
+hl.bind(mainMod .. ' + up', hl.dsp.focus { direction = 'up' }) -- Move focus up
 hl.bind(mainMod .. ' + up', hl.dsp.focus { direction = 'up' }) -- Move focus up
 hl.bind(mainMod .. ' + down', hl.dsp.focus { direction = 'down' }) -- Move focus down
