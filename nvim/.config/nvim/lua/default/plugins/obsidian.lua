@@ -7,6 +7,16 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
+    keys = {
+      { '<leader>ob', '<cmd>ObsidianBacklinks<CR>', desc = 'Obsidian backlinks' },
+      { '<leader>od', '<cmd>ObsidianToday<CR>', desc = 'Obsidian daily note' },
+      { '<leader>ol', '<cmd>ObsidianLinks<CR>', desc = 'Obsidian note links' },
+      { '<leader>oo', '<cmd>ObsidianOpen<CR>', desc = 'Open in Obsidian' },
+      { '<leader>oq', '<cmd>ObsidianQuickSwitch<CR>', desc = 'Obsidian quick switch' },
+      { '<leader>os', '<cmd>ObsidianSearch<CR>', desc = 'Search Obsidian notes' },
+      { '<leader>ot', '<cmd>ObsidianTemplate<CR>', desc = 'Insert Obsidian template' },
+      { '<leader>oT', '<cmd>ObsidianTOC<CR>', desc = 'Obsidian table of contents' },
+    },
     config = function()
       local function dir_exists(path)
         local stat = vim.loop.fs_stat(path)
@@ -46,10 +56,12 @@ return {
       }
     end,
   },
+
   {
     'snapwich/obsidian-tasks.nvim',
+    branch = 'main', -- Forces Lazy to track the latest branch updates
     dependencies = {
-      'obsidian-nvim/obsidian.nvim',
+      'epwalsh/obsidian.nvim', -- Fixed the typo in the dependency name here too
       'saghen/blink.cmp',
     },
     config = function() require('obsidian-tasks').setup {} end,

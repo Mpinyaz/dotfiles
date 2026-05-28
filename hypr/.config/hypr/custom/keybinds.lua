@@ -117,7 +117,7 @@ hl.bind('XF86MonBrightnessUp', hl.dsp.exec_cmd 'brightnessctl -e4 -n2 set 5%+', 
 hl.bind('XF86MonBrightnessDown', hl.dsp.exec_cmd 'brightnessctl -e4 -n2 set 5%-', { locked = true, repeating = true })
 
 -- === System & Floating ===
-hl.bind(mainMod .. ' + Print', hl.dsp.exec_cmd 'dms screenshot full')
+hl.bind(mainMod .. ' + Print', hl.dsp.exec_cmd 'dms screenshot window')
 hl.bind('SUPER + SHIFT + T', hl.dsp.window.float { action = 'toggle' })
 
 hl.bind(mainMod .. ' + left', hl.dsp.focus { direction = 'left' }) -- Move focus left
