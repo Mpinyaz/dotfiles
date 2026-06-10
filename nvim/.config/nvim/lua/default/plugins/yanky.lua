@@ -1,10 +1,10 @@
 return {
-  "gbprod/yanky.nvim",
-  event = "BufReadPre",
+  'gbprod/yanky.nvim',
+  event = 'BufReadPre',
   opts = {
     ring = {
       history_length = 1000,
-      storage = "shada",
+      storage = 'shada',
       sync_with_numbered_registers = true,
     },
     system_clipboard = {
@@ -15,14 +15,16 @@ return {
       on_yank = true,
       timer = 1500,
     },
-    preserve_cursor_position = {
-      enabled = true,
-    },
+    -- preserve_cursor_position = {
+    --   enabled = true,
+    -- },
   },
   keys = {
-    { "gp", "`[v`]", desc = "Select last paste" },
-    { "<c-p>", "<Plug>(YankyCycleForward)" },
-    { "<c-n>", "<Plug>(YankyCycleBackward)" },
-    { "<leader>pp", "<cmd>YankyRingHistory<cr>" },
+    { 'gp', '`[v`]', desc = 'Select last paste' },
+    { 'p', '<Plug>(YankyPutAfter)' },
+    { 'P', '<Plug>(YankyPutBefore)' },
+    { '[y', '<Plug>(YankyPreviousEntry)' },
+    { ']y', '<Plug>(YankyNextEntry)' },
+    { '<leader>pp', '<cmd>YankyRingHistory<cr>' },
   },
 }

@@ -2,38 +2,51 @@ return {
   'craftzdog/solarized-osaka.nvim',
   'lunarvim/darkplus.nvim',
   {
-    'rebelot/kanagawa.nvim',
-    opts = {
-      theme = 'wave',
-      transparent = true,
-    },
+    'Skardyy/makurai-nvim',
     config = function()
-      vim.cmd 'colorscheme kanagawa-wave'
+      -- you don't have to call setup
+      require('makurai').setup {
+        transparent = true, -- removes the bg color
+        cursor = false, -- rather or not to modify the cursor color too, changes the `Cursor` highlight
+        highlight_only_method_def = false, -- when true, highlights only methods definition, not calls
+      }
 
-      local function set_transparent() -- set UI component to transparent
-        local groups = {
-          'Normal',
-          'NormalNC',
-          'EndOfBuffer',
-          'NormalFloat',
-          'FloatBorder',
-          'SignColumn',
-          'StatusLine',
-          'StatusLineNC',
-          'TabLine',
-          'TabLineFill',
-          'TabLineSel',
-          'ColorColumn',
-        }
-        for _, g in ipairs(groups) do
-          vim.api.nvim_set_hl(0, g, { bg = 'none' })
-        end
-        vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'none', fg = '#767676' })
-      end
-
-      set_transparent()
+      vim.cmd.colorscheme 'makurai_dark'
     end,
   },
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   opts = {
+  --     theme = 'wave',
+  --     transparent = true,
+  --   },
+  --   config = function()
+  --     vim.cmd 'colorscheme kanagawa-wave'
+  --
+  --     local function set_transparent() -- set UI component to transparent
+  --       local groups = {
+  --         'Normal',
+  --         'NormalNC',
+  --         'EndOfBuffer',
+  --         'NormalFloat',
+  --         'FloatBorder',
+  --         'SignColumn',
+  --         'StatusLine',
+  --         'StatusLineNC',
+  --         'TabLine',
+  --         'TabLineFill',
+  --         'TabLineSel',
+  --         'ColorColumn',
+  --       }
+  --       for _, g in ipairs(groups) do
+  --         vim.api.nvim_set_hl(0, g, { bg = 'none' })
+  --       end
+  --       vim.api.nvim_set_hl(0, 'TabLineFill', { bg = 'none', fg = '#767676' })
+  --     end
+  --
+  --     set_transparent()
+  --   end,
+  -- },
   -- {
   --   "Mofiqul/dracula.nvim",
   --   dependencies = { "echasnovski/mini.hipatterns" },

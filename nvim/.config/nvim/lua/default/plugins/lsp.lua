@@ -66,8 +66,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.b[bufnr].lsp = client.name
     map('n', ']d', '<Cmd>Lspsaga diagnostic_jump_next<CR>', 'Go to next diagnostic')
     map('n', 'ge', '<Cmd>Lspsaga show_line_diagnostic<CR>', 'Show diagnostics of the current line')
-    map('n', 'gd', '<Cmd>Lspsaga peek_definition<CR>', 'Show diagnostics of the current line')
-    map('n', 'gt', '<Cmd>Lspsaga peek_type_definition<CR>', 'LSP - Peek Type Definition')
+    map('n', 'gd', '<CMD>Glance definitions<CR>', 'Show diagnostics of the current line')
+    map('n', 'gt', '<Cmd>Glance type_definitions<CR>', 'LSP - Peek Type Definition')
     map('n', 'gr', '<Cmd>Lspsaga rename ++projects<CR>', 'Rename variable under cursor')
     map('n', '<leader>ca', '<Cmd>Lspsaga code_action<CR>', 'Code actions')
     map('n', 'gf', '<Cmd>Lspsaga finder<CR>', 'Find references and implementation under cursor')
@@ -439,6 +439,10 @@ return {
         },
       }
     end,
+  },
+  {
+    'dnlhc/glance.nvim',
+    cmd = 'Glance',
   },
   {
     'nvimdev/lspsaga.nvim',
