@@ -1,19 +1,19 @@
 return {
   'craftzdog/solarized-osaka.nvim',
   'lunarvim/darkplus.nvim',
-  {
-    'Skardyy/makurai-nvim',
-    config = function()
-      -- you don't have to call setup
-      require('makurai').setup {
-        transparent = true, -- removes the bg color
-        cursor = false, -- rather or not to modify the cursor color too, changes the `Cursor` highlight
-        highlight_only_method_def = false, -- when true, highlights only methods definition, not calls
-      }
-
-      vim.cmd.colorscheme 'makurai_dark'
-    end,
-  },
+  -- {
+  --   'Skardyy/makurai-nvim',
+  --   config = function()
+  --     -- you don't have to call setup
+  --     require('makurai').setup {
+  --       transparent = true, -- removes the bg color
+  --       cursor = false, -- rather or not to modify the cursor color too, changes the `Cursor` highlight
+  --       highlight_only_method_def = false, -- when true, highlights only methods definition, not calls
+  --     }
+  --
+  --     vim.cmd.colorscheme 'makurai_dark'
+  --   end,
+  -- },
   -- {
   --   'rebelot/kanagawa.nvim',
   --   opts = {
@@ -48,21 +48,21 @@ return {
   --   end,
   -- },
   -- {
-  --   "Mofiqul/dracula.nvim",
-  --   dependencies = { "echasnovski/mini.hipatterns" },
+  --   'Mofiqul/dracula.nvim',
+  --   dependencies = { 'echasnovski/mini.hipatterns' },
   --   lazy = false,
   --   config = function()
-  --     vim.cmd.colorscheme("dracula")
+  --     vim.cmd.colorscheme 'dracula'
   --
-  --     local hipatterns = require("mini.hipatterns")
+  --     local hipatterns = require 'mini.hipatterns'
   --
-  --     hipatterns.setup({
+  --     hipatterns.setup {
   --       highlighters = {
   --         hex_color = hipatterns.gen_highlighter.hex_color(),
   --       },
-  --     })
+  --     }
   --
-  --     local colors = require("dracula").colors()
+  --     local colors = require('dracula').colors()
   --
   --     local highlights = {
   --       -- Blink completion
@@ -74,14 +74,14 @@ return {
   --
   --       -- Diff/Git - toned down for readability
   --       Added = { fg = colors.green },
-  --       DiffAdd = { bg = "#2a3a2a" },
-  --       DiffText = { bg = "#3a3a2a" },
-  --       SnacksDiffAdd = { bg = "#2a3a2a" },
+  --       DiffAdd = { bg = '#2a3a2a' },
+  --       DiffText = { bg = '#3a3a2a' },
+  --       SnacksDiffAdd = { bg = '#2a3a2a' },
   --       SnacksPickerGitStatusAdded = { fg = colors.green },
   --
   --       Removed = { fg = colors.red },
-  --       DiffDelete = { bg = "#3a2a2a" },
-  --       SnacksDiffDelete = { bg = "#3a2a2a" },
+  --       DiffDelete = { bg = '#3a2a2a' },
+  --       SnacksDiffDelete = { bg = '#3a2a2a' },
   --       SnacksPickerGitStatusDeleted = { fg = colors.red },
   --     }
   --
@@ -127,15 +127,26 @@ return {
   --   end,
   -- },
   { 'edeneast/nightfox.nvim' },
-  -- {
-  --   'rose-pine/neovim',
-  --   name = 'rose-pine',
-  --   config = function()
-  --     vim.g.rose_pine_variant = 'auto'
-  --     vim.g.rose_pine_disable_background = true
-  --     vim.cmd 'colorscheme rose-pine'
-  --   end,
-  -- },
+  {
+    'rose-pine/neovim',
+    opts = {
+      styles = {
+        bold = true,
+        italic = true,
+        transparency = true,
+      },
+    },
+    name = 'rose-pine',
+    config = function()
+      require('rose-pine').setup { styles = {
+        bold = true,
+        italic = true,
+        transparency = true,
+      } }
+
+      vim.cmd 'colorscheme rose-pine'
+    end,
+  },
   -- {
   --         'eldritch-theme/eldritch.nvim',
   --         lazy = false,

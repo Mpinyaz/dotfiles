@@ -65,11 +65,7 @@ if [[ ! -d ~/.tmux/plugins/tpm ]]; then
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-if [[ ! -d ~/.autoenv ]]; then
-        echo "autoenv is being installed..."
-        git clone https://github.com/hyperupcall/autoenv ~/.autoenv
-fi
-[[ -f ~/.autoenv/activate.sh ]] && source ~/.autoenv/activate.sh
+## [[ -f ~/.autoenv/activate.sh ]] && source ~/.autoenv/activate.sh
 # Function to check if a plugin is installed, and if not, clone it
 install_plugin() {
         local plugin_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/$1"
@@ -105,8 +101,7 @@ else
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
-# Removed redundant zsh-syntax-highlighting (fast-syntax-highlighting is a faster replacement)
-plugins=(git zsh-autosuggestions command-not-found fzf-tab fast-syntax-highlighting zsh-autocomplete sudo copypath dircycle autoenv)
+plugins=(git zsh-autosuggestions command-not-found fzf-tab gh pip uv docker docker-compose virtualenv zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete sudo copypath dircycle)
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 HYPHEN_INSENSITIVE="true"
@@ -118,7 +113,7 @@ HIST_STAMPS="yyyy-mm-dd"
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
-export LANG=en_US.UTF-8
+export LANG=en_ZA.UTF-8
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -176,7 +171,6 @@ fi
 for config in ~/.config/zsh/*.zsh(N); do
         source "$config"
 done
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/mpinyaz/.local/bin:$PATH"

@@ -30,7 +30,20 @@ return {
         lazy = true,
         opts = {},
       },
-      'L3MON4D3/LuaSnip',
+      {
+        'L3MON4D3/LuaSnip',
+        version = 'v2.*',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        config = function()
+          local ls = require 'luasnip'
+          require('luasnip.loaders.from_vscode').lazy_load()
+          ls.config.set_config {
+            history = true,
+            updateevents = 'TextChanged,TextChangedI',
+            enable_autosnippets = true,
+          }
+        end,
+      },
       'philosofonusus/ecolog.nvim',
       'moyiz/blink-emoji.nvim',
       'Kaiser-Yang/blink-cmp-dictionary',
@@ -164,7 +177,7 @@ return {
             enabled = true,
             module = 'blink.cmp.sources.lsp',
             min_keyword_length = 2,
-            score_offset = 90, -- the higher the number, the higher the priority
+            score_offset = 100, -- the higher the number, the higher the priority
           },
           ecolog = { name = 'ecolog', module = 'ecolog.integrations.cmp.blink_cmp' },
           path = {
@@ -274,7 +287,7 @@ return {
             },
           },
         },
-
+        accept = { auto_brackets = { enabled = true } },
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 500,
