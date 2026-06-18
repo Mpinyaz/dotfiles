@@ -61,6 +61,7 @@ return {
       vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_previous)
     end,
   },
+
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     branch = 'main',
@@ -131,6 +132,7 @@ return {
       vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr)
     end,
   },
+  { 'nvim-treesitter/nvim-treesitter-context', opts = { multiwindow = true, multiline_threshold = 2 } },
   {
     'fei6409/log-highlight.nvim',
     opts = {},
