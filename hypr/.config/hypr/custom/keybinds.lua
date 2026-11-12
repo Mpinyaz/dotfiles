@@ -127,3 +127,4 @@ hl.bind(mainMod .. ' + l', hl.dsp.focus { direction = 'right' }) -- Move focus r
 hl.bind(mainMod .. ' + up', hl.dsp.focus { direction = 'up' }) -- Move focus up
 hl.bind(mainMod .. ' + up', hl.dsp.focus { direction = 'up' }) -- Move focus up
 hl.bind(mainMod .. ' + down', hl.dsp.focus { direction = 'down' }) -- Move focus down
+hl.bind('SUPER + SHIFT + TAB', function() hl.plugin.overview.toggle 'all' end, { description = 'Toggle Hyprspace overview on all monitors' })

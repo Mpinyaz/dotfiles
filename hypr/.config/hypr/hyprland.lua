@@ -7,7 +7,9 @@ require 'custom/layouts'
 require 'custom/colors'
 require 'custom/input'
 require 'custom/env'
+require 'custom/autostart'
 require 'custom.gesture'
+require 'custom/liquidglass'
 require 'custom/misc'
 
 ------------------
@@ -33,10 +35,13 @@ local menu = 'hyprlauncher'
 hl.on('hyprland.start', function()
   hl.exec_cmd 'dbus-update-activation-environment --systemd --all'
   hl.exec_cmd 'systemctl --user start hyprland-session.target'
-  hl.exec_cmd 'hyprpaper'
   hl.exec_cmd 'hypridle'
+  hl.exec_cmd 'hyprpaper'
+  hl.exec_cmd 'hyprpm reload'
   hl.exec_cmd 'qs -c overview'
 end)
+
+hl.plugin.load '/usr/lib/libhyprliquid.so'
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
